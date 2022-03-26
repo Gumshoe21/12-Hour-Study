@@ -5,6 +5,9 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import timerSlice from '../../store/slices/timer';
 import ModeSwitcherButton from './ModeSwitcherButton';
+import TimerSwitcher from './TimerSwitcher';
+import TimerToggleButton from './TimerToggleButton';
+
 import {
   Button,
   Box,
@@ -77,28 +80,6 @@ const Timer = ({ timer, auth }) => {
   console.log(ticking);
   const dispatch = useDispatch();
 
-  const TimerSwitcher = () => {
-    return (
-      <Flex flexDirection="row" mb={2} gap={5} justifyContent="space-between">
-        <ModeSwitcherButton
-          onClick={setActiveMode}
-          text={'Session'}
-          mode={'session'}
-        />
-        <ModeSwitcherButton
-          onClick={setActiveMode}
-          text={'Short Break'}
-          mode={'short_break'}
-        />
-        <ModeSwitcherButton
-          onClick={setActiveMode}
-          text={'Long Break'}
-          mode={'long_break'}
-        />
-      </Flex>
-    );
-  };
-
   const Countdown = () => {
     return (
       <Flex justifyContent="center" mb={5} fontSize={96}>
@@ -116,22 +97,6 @@ const Timer = ({ timer, auth }) => {
     );
   };
 
-  const TimerToggleButton = () => {
-    return (
-      <Button
-        onClick={setTickingHandler}
-        fontSize={24}
-        padding={10}
-        letterSpacing={10}
-        textAlign="center"
-        borderRadius={8}
-        size="lg"
-      >
-        START
-      </Button>
-    );
-  };
-
   return (
     <Box
       py={10}
@@ -144,9 +109,9 @@ const Timer = ({ timer, auth }) => {
       borderRadius="8"
       flexDirection="column"
     >
-      <TimerSwitcher />
+      <TimerSwitcher onClick={setActiveMode} />
       <Countdown />
-      <TimerToggleButton />
+      <TimerToggleButton onClick={setTickingHandler} />
     </Box>
   );
 };
