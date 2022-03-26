@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 
 dayjs.extend(duration);
+
 const formatTime = (time) => {
   return dayjs.duration(time, 'seconds').format('mm:ss');
 };
@@ -32,20 +33,20 @@ const Timer = ({ timer, auth }) => {
   };
 
   const { colorMode, toggleColorMode } = useColorMode();
-  const timerBgColor = useColorModeValue('gray.500', 'whiteAlpha.100');
+  const timerBgColor = useColorModeValue('gray.400', 'whiteAlpha.100');
   const countdownFontColor = useColorModeValue(
     'whiteAlpha.900',
     'whiteAlpha.900'
   );
 
   const [timeLeft, setTimeLeft] = useState(
-    timer.modes[timer.active_mode].length
+    timer.modes[timer.active_mode].length * 60
   );
 
   const setActiveMode = (e) => {
     dispatch(timerSlice.actions.setActiveMode(e.target.value));
     console.log(e.target.value);
-    setTimeLeft(timer.modes[e.target.value].length);
+    setTimeLeft(timer.modes[e.target.value].length * 60);
 
     console.log(timeLeft);
   };
@@ -85,7 +86,7 @@ const Timer = ({ timer, auth }) => {
       <Flex justifyContent="center" mb={5} fontSize={96}>
         <Box
           color={countdownFontColor}
-          letterSpacing="1rem"
+          letterSpacing=".5rem"
           fontWeight="600"
           fontFamily="Arial"
           overflow="hidden"

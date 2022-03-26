@@ -7,7 +7,7 @@ import store from './store/index';
 
 // COLORS
 const buttonBgDark = 'purple.700';
-const buttonBgLight = 'gray.700';
+const buttonBgLight = 'gray.500';
 
 // THEME
 const theme = extendTheme({
