@@ -23,6 +23,7 @@ import {
   FaInstagram,
   FaTwitch
 } from 'react-icons/fa';
+import SocialLink from './SocialLink';
 
 const Profile = () => {
   const socialIconDimension = '10';
@@ -37,8 +38,8 @@ const Profile = () => {
             <Flex flexDirection="column" align="center" rowGap={4}>
               <WrapItem>
                 <Avatar
-                  h="200px"
-                  w="200px"
+                  h="100px"
+                  w="100px"
                   name="Matthew Smilansky"
                   src="https://bit.ly/dan-abramov"
                 />
@@ -52,8 +53,10 @@ const Profile = () => {
               rowGap={6}
             >
               <Flex>
-                <Icon w="10" h="10" as={FaGithubSquare} />
-                <Heading>github.com/Gumshoe21</Heading>
+                <SocialLink
+                  icon={FaGithubSquare}
+                  link={'github.com/Gumshoe21'}
+                />
               </Flex>
               <Flex>
                 <Icon

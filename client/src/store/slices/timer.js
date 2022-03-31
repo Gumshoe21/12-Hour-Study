@@ -5,18 +5,22 @@ const timerSlice = createSlice({
   initialState: {
     active_mode: 'session',
     long_break_interval: 4,
+    round: 0,
     modes: {
       session: {
         name: 'Session',
-        length: 30
+        length: 30,
+        progress: 0
       },
       short_break: {
         name: 'Short Break',
-        length: 5
+        length: 5,
+        progress: 0
       },
       long_break: {
         name: 'Long Break',
-        length: 15
+        length: 15,
+        progress: 0
       }
     }
   },
@@ -32,7 +36,19 @@ const timerSlice = createSlice({
       state.ticking = action.payload;
     },
     setTimeLeft(state, action) {
-      state.timeLeft = state.timeLeft - 1;
+      state.timeLeft -= 1;
+    },
+    incrementRound(state, action) {
+      state.round += 1;
+    },
+    resetRound(state, action) {
+      state.round = 0;
+    },
+    incrementProgress(state, action) {
+      state.modes[state.active_mode].progress += 1;
+    },
+    clearProgress(state, action) {
+      state.modes[state.active_mode].progress = 0;
     }
   }
 });

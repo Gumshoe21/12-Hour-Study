@@ -47,7 +47,7 @@ const TimerSchema = new mongoose.Schema({
   },
   active_mode: {
     type: String,
-    default: 'Session',
+    default: 'session',
     required: true
   },
   ticking: {
