@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   Flex,
   Button,
@@ -27,11 +27,15 @@ const NavbarModalNumberInput = (props) => {
       width="100%"
       columnGap="4rem"
     >
-      <Flex flexWrap="nowrap" fontSize="1.4rem">
-        {props.label} Length
-      </Flex>
-      <NumberInput size="lg" defaultValue={30}>
-        <NumberInputField />
+      <Flex fontSize="1.4rem">{props.label} Length</Flex>
+      <NumberInput min={1}>
+        <NumberInputField
+          name={props.name}
+          value={props.value}
+          size="lg"
+          min={1}
+          onBlur={props.onChange}
+        />
         <NumberInputStepper>
           <NumberIncrementStepper />
           <NumberDecrementStepper />
@@ -43,6 +47,22 @@ const NavbarModalNumberInput = (props) => {
 
 const NavbarModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [timerSettings, setTimerSettings] = useState({
+    sessionLength: '',
+    shortBreakLength: '',
+    longBreakLength: '',
+    longBreakInterval: ''
+  });
+  const {
+    sessionLength,
+    shortBreakLength,
+    longBreakLength,
+    longBreakInterval
+  } = timerSettings;
+  const onChange = (e) => {
+    setTimerSettings({ ...timerSettings, [e.target.name]: e.target.value });
+  };
+  console.log(timerSettings);
 
   return (
     <Fragment>
@@ -61,11 +81,24 @@ const NavbarModal = () => {
                 alignItems="center"
                 flexDirection="column"
               >
-                <NavbarModalNumberInput label={'Session'} />
+                <NavbarModalNumberInput
+                  name="sessionLength"
+                  value={sessionLength}
+                  label={'Session'}
+                  onChange={onChange}
+                />
                 <Spacer />
-                <NavbarModalNumberInput label={'Short Break'} />
+                <NavbarModalNumberInput
+                  name="shortBreakLength"
+                  value={shortBreakLength}
+                  label={'Short Break'}
+                />
                 <Spacer />
-                <NavbarModalNumberInput label={'Long Break'} />
+                <NavbarModalNumberInput
+                  name="longBreakLength"
+                  value={longBreakLength}
+                  label={'Long Break'}
+                />
               </Flex>
             </Flex>
           </ModalBody>

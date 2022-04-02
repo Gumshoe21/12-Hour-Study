@@ -1,6 +1,7 @@
 import axios from 'axios';
 import authSlice from '../slices/auth';
 import setAuthToken from './../../utils/setAuthToken';
+export const APIVersion = 'v1';
 // Load User
 export const loadUser = () => async (dispatch) => {
   // if the auth token is in the user's localStorage, set the auth token to that
@@ -36,7 +37,7 @@ export const login =
       console.log(err.response);
     }
   };
-const APIVersion = 'v1';
+
 export const register =
   ({ email, password, passwordConfirm }) =>
   async (dispatch) => {

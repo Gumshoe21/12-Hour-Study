@@ -6,6 +6,7 @@ const timerSlice = createSlice({
     active_mode: 'session',
     long_break_interval: 4,
     round: 0,
+    ticking: false,
     modes: {
       session: {
         name: 'Session',
@@ -29,11 +30,11 @@ const timerSlice = createSlice({
     setActiveMode(state, action) {
       state.active_mode = action.payload;
     },
-    setLongBreakInterval(state, action) {
-      state.long_break_interval = action.payload.long_break_interval;
-    },
     setTicking(state, action) {
       state.ticking = action.payload;
+    },
+    setLongBreakInterval(state, action) {
+      state.long_break_interval = action.payload.long_break_interval;
     },
     setTimeLeft(state, action) {
       state.timeLeft -= 1;

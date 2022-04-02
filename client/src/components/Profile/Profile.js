@@ -3,19 +3,10 @@ import {
   Container,
   Box,
   Flex,
-  VStack,
-  HStack,
-  Heading,
-  Divider,
-  StackDivider,
-  Center,
   Avatar,
-  AvatarBadge,
-  AvatarGroup,
   WrapItem,
   Text,
-  Spacer,
-  Icon
+  useColorModeValue
 } from '@chakra-ui/react';
 import {
   FaGithubSquare,
@@ -26,66 +17,38 @@ import {
 import SocialLink from './SocialLink';
 
 const Profile = () => {
-  const socialIconDimension = '10';
+  const profileBgColor = useColorModeValue('gray.400', 'whiteAlpha.100');
   return (
-    <Container maxW="container.md" overflow="hidden">
-      <Flex justify="center" w="full" h="full" p={10} spacing={10}>
-        <Flex flexDirection="column">
-          <Flex
-            flexDirection={{ md: 'row', sm: 'column' }}
-            gap={{ md: 40, sm: 20 }}
-          >
-            <Flex flexDirection="column" align="center" rowGap={4}>
-              <WrapItem>
-                <Avatar
-                  h="100px"
-                  w="100px"
-                  name="Matthew Smilansky"
-                  src="https://bit.ly/dan-abramov"
-                />
-              </WrapItem>
-              <Heading>Gumshoe21</Heading>
-            </Flex>
-            <Flex
-              flexDirection="column"
-              align="flex-start"
-              justify="center"
-              rowGap={6}
-            >
-              <Flex>
-                <SocialLink
-                  icon={FaGithubSquare}
-                  link={'github.com/Gumshoe21'}
-                />
-              </Flex>
-              <Flex>
-                <Icon
-                  w={socialIconDimension}
-                  h={socialIconDimension}
-                  as={FaTwitterSquare}
-                />
-                <Heading>@Gumshoe21</Heading>
-              </Flex>
-              <Flex spacing={2}>
-                <Icon
-                  w={socialIconDimension}
-                  h={socialIconDimension}
-                  as={FaInstagram}
-                />
-                <Heading>@Gumshoe21</Heading>
-              </Flex>
-              <Flex>
-                <Icon
-                  w={socialIconDimension}
-                  h={socialIconDimension}
-                  as={FaTwitch}
-                />
-                <Heading>twitch.tv/Gumshoe21</Heading>
-              </Flex>
-            </Flex>
+    <Container maxW="container.xl" overflow="hidden">
+      <Box
+        margin="0 auto"
+        maxW="480px"
+        h="full"
+        py={10}
+        px={20}
+        bg={profileBgColor}
+        borderRadius={8}
+      >
+        <Flex flexDirection="column" align="center" justify="center" gap={6}>
+          <WrapItem>
+            <Avatar
+              h="128px"
+              w="128px"
+              name="Matthew Smilansky"
+              src="https://bit.ly/dan-abramov"
+            />
+          </WrapItem>
+          <Text fontSize="16px" letterSpacing={2}>
+            Gumshoe21
+          </Text>
+          <Flex align="center" justify="center" border="none" gap={8}>
+            <SocialLink icon={FaGithubSquare} />
+            <SocialLink icon={FaTwitterSquare} />
+            <SocialLink icon={FaInstagram} />
+            <SocialLink icon={FaTwitch} />
           </Flex>
         </Flex>
-      </Flex>
+      </Box>
     </Container>
   );
 };
