@@ -6,54 +6,45 @@ const TimerSchema = new mongoose.Schema({
     session: {
       name: {
         type: String,
-        default: 'Session',
-        required: true
+        default: 'Session'
       },
       length: {
         type: Number,
-        default: 30,
-        required: true
+        default: 30
       }
     },
     short_break: {
       name: {
         type: String,
-        default: 'Short Break',
-        required: true
+        default: 'Short Break'
       },
       length: {
         type: Number,
-        default: 5,
-        required: true
+        default: 5
       }
     },
     long_break: {
       name: {
         type: String,
-        default: 'Long Break',
-        required: true
+        default: 'Long Break'
       },
       length: {
         type: Number,
-        default: 15,
-        required: true
+        default: 15
       }
     }
   },
   long_break_interval: {
     type: Number,
-    default: 4,
-    required: true
+    default: 4
   },
   active_mode: {
     type: String,
-    default: 'session',
-    required: true
+    default: 'session'
   },
   ticking: {
     type: Boolean,
-    default: false,
-    required: true
+    default: false
   },
   user: {
     type: mongoose.Schema.ObjectId,

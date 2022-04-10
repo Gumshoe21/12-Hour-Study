@@ -53,9 +53,11 @@ app.use((req, res, next) => {
 });
 
 const APIVersion = 'v1';
+/*
 app.get('/', function (req, res, next) {
   res.redirect('/dashboard');
 });
+*/
 app.use(`/api/${APIVersion}/users`, userRouter);
 app.use(`/api/${APIVersion}/timers/`, timerRouter);
 

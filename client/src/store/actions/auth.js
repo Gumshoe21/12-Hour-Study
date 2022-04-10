@@ -11,10 +11,7 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/${APIVersion}/users/me`);
     dispatch(authSlice.actions.userLoaded(res.data));
-    console.log(res.data);
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const login =

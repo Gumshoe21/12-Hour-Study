@@ -19,15 +19,17 @@ import {
   AspectRatio
 } from '@chakra-ui/react';
 import { logout } from '../../store/actions/auth';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadUserTimer } from './../../store/actions/timer';
 import store from './../../store/index';
 
 const Dashboard = ({ auth }) => {
+  const dispatch = useDispatch();
   useEffect(() => {
     if (auth.user) store.dispatch(loadUserTimer(auth.user));
-  });
+    console.log('navbar');
+  }, [dispatch]);
 
   return (
     <Fragment>

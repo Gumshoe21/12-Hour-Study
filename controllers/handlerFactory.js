@@ -40,7 +40,7 @@ exports.createOne = (Model) =>
     res.status(201).json({
       status: 'success',
       data: {
-        data: doc
+        data: parseInt(doc)
       }
     });
   });

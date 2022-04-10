@@ -4,7 +4,7 @@ import { Link } from '@chakra-ui/react';
 
 const NavLink = (props) => {
   return (
-    <Link fontSize="1.8rem" as={ReactLink} to={props.to}>
+    <Link fontSize={14} as={ReactLink} to={props.to}>
       {props.text}
     </Link>
   );

@@ -4,8 +4,11 @@ import { logout } from '../../store/actions/auth';
 import { connect } from 'react-redux';
 import NavbarModal from './NavbarModal';
 import NavLink from './NavLink';
-
+import { OwlLogo } from './OwlLogo';
+import { Link as ReactLink } from 'react-router-dom';
+import { Link } from '@chakra-ui/react';
 import {
+  Icon,
   Box,
   Flex,
   Avatar,
@@ -21,7 +24,8 @@ import {
   Stack,
   useColorMode,
   Container,
-  Spacer
+  Spacer,
+  Text
 } from '@chakra-ui/react';
 
 import { SunIcon, MoonIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
@@ -37,16 +41,24 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, timer }) => {
     </Fragment>
   );
 
-  const iconWidthAndHeight = '8';
+  const iconWidthAndHeight = '6';
 
   const authLinks = (
     <Fragment>
+      <Flex align="center" justify="center" columnGap={2}>
+        <OwlLogo w={14} h={14} fill="purple.800" />
+        <Text fontSize={14} fontWeight="700">
+          12 Hour Study
+        </Text>
+      </Flex>
+      <Spacer />
+      <Spacer />
+      <Spacer />
+      <Spacer />
+      <Spacer />
       <NavLink to="/dashboard" text="Dashboard" />
-      <NavLink to="/profile" text="Profile" />
       <NavbarModal />
 
-      <Spacer />
-      <Spacer />
       <IconButton
         variant="ghost"
         size="lg"
@@ -77,7 +89,11 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, timer }) => {
           />
         </MenuButton>
         <MenuList fontSize="1.4rem" size="lg">
-          <MenuItem>Profile</MenuItem>
+          <MenuItem>
+            <Link as={ReactLink} to="/profile">
+              Profile
+            </Link>
+          </MenuItem>
           <MenuDivider />
           <MenuItem onClick={logout}>Logout</MenuItem>
         </MenuList>
@@ -93,7 +109,6 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, timer }) => {
             h="6rem"
             alignItems="center"
             justify={{ md: 'center', sm: 'flex-start' }}
-            columnGap="5rem"
           >
             <IconButton
               size={'lg'}
@@ -105,7 +120,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout, timer }) => {
 
             <HStack
               as={'nav'}
-              spacing={10}
+              spacing={6}
               display={{ base: 'none', md: 'flex' }}
             >
               {!loading && (

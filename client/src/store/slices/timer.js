@@ -26,7 +26,15 @@ const timerSlice = createSlice({
     }
   },
   reducers: {
-    loadTimer(state, action) {},
+    updateTimer(state, action) {
+      state.modes.session.length = action.payload;
+      // state.modes.short_break.length = action.payload.shortBreakRef;
+      // state.modes.long_break.length = action.payload.longBreakRef;
+      // state.long_break_interval = action.payload.setLongBreakInterval;
+    },
+    loadTimer(state, action) {
+      state.modes.session.length = action.payload.modes.session.length;
+    },
     setActiveMode(state, action) {
       state.active_mode = action.payload;
     },
