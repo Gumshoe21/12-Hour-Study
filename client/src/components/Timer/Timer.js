@@ -1,24 +1,17 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
+
 import timerSlice from '../../store/slices/timer';
 import SwitchTimer from './SwitchTimer.js/SwitchTimer';
 import TimerToggleButton from './TimerToggleButton';
 import TimerBox from './TimerBox';
 import ProgressBar from './ProgressBar';
 import Round from './Round';
-import { Box, Flex, useColorModeValue, Progress } from '@chakra-ui/react';
-
-dayjs.extend(duration);
-const formatTime = (time) => {
-  return dayjs.duration(time, 'seconds').format('mm:ss');
-};
-
+import Countdown from './Countdown';
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
-  // Timer Actions
+
   const {
     setTicking,
     clearProgress,
@@ -33,7 +26,10 @@ const Timer = ({ timer, auth }) => {
     //    timer.modes[timer.active_mode].length * 60
     2
   );
-  // COLORS
+
+  useEffect(() => {
+    setTimeLeft(timer.modes[timer.activeMode].length * 60);
+  }, [timer.modes[timer.activeMode]]);
 
   const clearTimer = () => {
     clearInterval(tickingIntervalRef.current);
@@ -53,36 +49,41 @@ const Timer = ({ timer, auth }) => {
   const onNoTimeLeft = (mode, reset = null) => {
     dispatch(setActiveMode(`${mode}`));
     setTimeLeft(timer.modes[`${mode}`].length * 60);
-    if (reset === true) dispatch(resetRound());
-    if (reset === false) dispatch(incrementRound());
+    reset ? dispatch(resetRound()) : dispatch(incrementRound());
   };
 
   const timerComplete = useEffect(() => {
     if (timeLeft === 0) {
       clearProgress();
       if (
-        timer.active_mode === 'session' &&
-        timer.round === timer.long_break_interval
+        timer.activeMode === 'session' &&
+        timer.round === timer.longBreakInterval
       ) {
-        onNoTimeLeft('short_break', true);
+        onNoTimeLeft('shortBreak', true);
       } else if (
-        timer.active_mode === 'session' &&
-        timer.round < timer.long_break_interval &&
-        timer.round !== timer.long_break_interval - 1
+        timer.activeMode === 'session' &&
+        timer.round < timer.longBreakInterval &&
+        timer.round !== timer.longBreakInterval - 1
       ) {
-        onNoTimeLeft('short_break', false);
+        onNoTimeLeft('shortBreak', false);
       } else if (
-        timer.active_mode === 'session' &&
-        timer.round === timer.long_break_interval - 1
+        timer.activeMode === 'session' &&
+        timer.round === timer.longBreakInterval - 1
       ) {
-        onNoTimeLeft('long_break', false);
-      } else if (timer.active_mode === 'short_break') {
+        onNoTimeLeft('longBreak', false);
+      } else if (timer.activeMode === 'shortBreak') {
         onNoTimeLeft('session');
-      } else if (timer.active_mode === 'long_break') {
+      } else if (timer.activeMode === 'longBreak') {
         onNoTimeLeft('session', true);
       }
     }
-  }, [timeLeft]);
+  }, [
+    timeLeft,
+    clearProgress,
+    timer.activeMode,
+    timer.longBreakInterval,
+    timer.round
+  ]);
 
   const setTickingHandler = () => {
     dispatch(setTicking(timer.ticking === true ? false : true));
@@ -95,9 +96,9 @@ const Timer = ({ timer, auth }) => {
     if (timeLeft === 0) {
       dispatch(setTicking(false));
       clearTimer();
-      console.log(timer.active_mode);
+      console.log(timer.activeMode);
     }
-  }, [timeLeft]);
+  }, [timeLeft, dispatch, setTicking, timer.activeMode]);
 
   const setTickingInterval = useEffect(() => {
     if (timer.ticking) {
@@ -112,44 +113,24 @@ const Timer = ({ timer, auth }) => {
     if (timer.ticking) {
       dispatch(incrementProgress());
     }
-  }, [tick]);
+  }, [tick, dispatch, incrementProgress, timer.ticking]);
 
+  /*
   console.log(`time left: ${timeLeft}`);
   console.log(`ticking = ${timer.ticking}`);
-  console.log(`progress: ${timer.modes[timer.active_mode].progress}`);
-  console.log(`active mode: ${timer.active_mode}`);
+  console.log(`progress: ${timer.modes[timer.activeMode].progress}`);
+  console.log(`active mode: ${timer.activeMode}`);
+  */
 
-  const countdownFontColor = useColorModeValue(
-    'whiteAlpha.900',
-    'whiteAlpha.900'
-  );
-
-  const Countdown = () => {
-    return (
-      <Flex justifyContent="center" mb={5} fontSize={96}>
-        <Box
-          color={countdownFontColor}
-          letterSpacing=".5rem"
-          fontWeight="600"
-          fontFamily="Arial"
-          overflow="hidden"
-          width="100%"
-        >
-          {formatTime(timeLeft)}
-        </Box>
-      </Flex>
-    );
-  };
-
-  const { progress } = timer.modes[timer.active_mode];
-  const timerDuration = timer.modes[timer.active_mode].length * 60;
+  const { progress } = timer.modes[timer.activeMode];
+  const timerDuration = timer.modes[timer.activeMode].length * 60;
 
   return (
     <TimerBox>
       <SwitchTimer onClick={switchTimerMode} />
-      <Countdown />
+      <Countdown timeLeft={timeLeft} />
       <ProgressBar max={timerDuration} value={progress} />
-      <Round round={timer.round} interval={timer.long_break_interval} />
+      <Round round={timer.round} interval={timer.longBreakInterval} />
       <TimerToggleButton
         onClick={setTickingHandler}
         text={timer.ticking ? 'STOP' : 'START'}

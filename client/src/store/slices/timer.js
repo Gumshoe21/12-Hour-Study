@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const timerSlice = createSlice({
   name: 'timer',
   initialState: {
-    active_mode: 'session',
-    long_break_interval: 4,
+    activeMode: 'session',
+    longBreakInterval: 4,
     round: 0,
     ticking: false,
     modes: {
@@ -13,12 +13,12 @@ const timerSlice = createSlice({
         length: 30,
         progress: 0
       },
-      short_break: {
+      shortBreak: {
         name: 'Short Break',
         length: 5,
         progress: 0
       },
-      long_break: {
+      longBreak: {
         name: 'Long Break',
         length: 15,
         progress: 0
@@ -27,22 +27,25 @@ const timerSlice = createSlice({
   },
   reducers: {
     updateTimer(state, action) {
-      state.modes.session.length = action.payload;
-      // state.modes.short_break.length = action.payload.shortBreakRef;
-      // state.modes.long_break.length = action.payload.longBreakRef;
-      // state.long_break_interval = action.payload.setLongBreakInterval;
+      state.modes.session.length = action.payload.sessionRef;
+      state.modes.shortBreak.length = action.payload.shortBreakRef;
+      state.modes.longBreak.length = action.payload.longBreakRef;
+      state.longBreakInterval = action.payload.LongBreakInterval;
     },
     loadTimer(state, action) {
       state.modes.session.length = action.payload.modes.session.length;
+      state.modes.shortBreak.length = action.payload.modes.shortBreak.length;
+      state.modes.longBreak.length = action.payload.modes.longBreak.length;
+      state.longBreakInterval = action.payload.longBreakInterval;
     },
     setActiveMode(state, action) {
-      state.active_mode = action.payload;
+      state.activeMode = action.payload;
     },
     setTicking(state, action) {
       state.ticking = action.payload;
     },
     setLongBreakInterval(state, action) {
-      state.long_break_interval = action.payload.long_break_interval;
+      state.longBreakInterval = action.payload.longBreakInterval;
     },
     setTimeLeft(state, action) {
       state.timeLeft -= 1;
@@ -54,10 +57,10 @@ const timerSlice = createSlice({
       state.round = 0;
     },
     incrementProgress(state, action) {
-      state.modes[state.active_mode].progress += 1;
+      state.modes[state.activeMode].progress += 1;
     },
     clearProgress(state, action) {
-      state.modes[state.active_mode].progress = 0;
+      state.modes[state.activeMode].progress = 0;
     }
   }
 });

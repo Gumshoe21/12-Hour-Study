@@ -9,67 +9,47 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
   NumberDecrementStepper,
   useDisclosure,
   IconButton,
   FormControl
 } from '@chakra-ui/react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SettingsIcon } from '@chakra-ui/icons';
-import { updateTimer } from '../../store/actions/timer';
-import timerSlice from '../../store/slices/timer';
-
+import { updateTimer, loadUserTimer } from '../../store/actions/timer';
+import store from './../../store/index';
+import NavbarModalInput from './NavbarModalInput';
 const NavbarModal = ({ timer, auth }) => {
-  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const sessionRef = useRef(null);
-  const shortBreakRef = useRef(null);
-  const longBreakRef = useRef(null);
-  const longBreakIntRef = useRef(null);
+  let sessionRef = useRef(null);
+  let shortBreakRef = useRef(null);
+  let longBreakRef = useRef(null);
+  let longBreakIntRef = useRef(null);
 
-  const onBlur = (e) => {
-    console.log(sessionRef.current.value);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const session = sessionRef.current.value;
+    const shortBreak = shortBreakRef.current.value;
+    const longBreak = longBreakRef.current.value;
+    const longBreakInterval = longBreakIntRef.current.value;
+
+    try {
+      await store.dispatch(
+        updateTimer({
+          auth,
+          session,
+          shortBreak,
+          longBreak,
+          longBreakInterval
+        })
+      );
+    } catch (err) {
+    } finally {
+      store.dispatch(loadUserTimer(auth.user));
+    }
   };
-
-  // Ensure that when modal is closed without being saved, the next time it is opened, its values will be the default values again.
-  const onCloseModal = (e) => {};
-
-  const NavbarModalInput = forwardRef((props, ref) => {
-    return (
-      <Flex
-        justifyContent="space-between"
-        alignItems="center"
-        width="100%"
-        columnGap="4rem"
-      >
-        <Flex fontSize="1.4rem">{props.label}</Flex>
-
-        <NumberInput defaultValue={props.defaultValue}>
-          <NumberInputField
-            ref={ref}
-            name={props.name}
-            onBlur={props.onBlur}
-            size="lg"
-          />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </Flex>
-    );
-  });
-
-  const onSubmit = (e) => {
-    dispatch(timerSlice.actions.updateTimer(sessionRef.current.value));
-  };
-
   return (
     <Fragment>
       <IconButton
@@ -85,7 +65,6 @@ const NavbarModal = ({ timer, auth }) => {
             isOpen={isOpen}
             onClose={() => {
               onClose();
-              onCloseModal();
             }}
           >
             <ModalOverlay />
@@ -103,29 +82,25 @@ const NavbarModal = ({ timer, auth }) => {
                       ref={sessionRef}
                       name={'session'}
                       label={'Session'}
-                      onBlur={onBlur}
                       defaultValue={timer.modes['session'].length}
                     />
                     <NavbarModalInput
                       ref={shortBreakRef}
-                      name={'short_break'}
+                      name={'shortBreak'}
                       label={'Short Break'}
-                      onBlur={onBlur}
-                      defaultValue={timer.modes['short_break'].length}
+                      defaultValue={timer.modes['shortBreak'].length}
                     />
                     <NavbarModalInput
                       ref={longBreakRef}
-                      name={'long_break'}
+                      name={'longBreak'}
                       label={'Long Break'}
-                      onBlur={onBlur}
-                      defaultValue={timer.modes['long_break'].length}
+                      defaultValue={timer.modes['longBreak'].length}
                     />
                     <NavbarModalInput
                       ref={longBreakIntRef}
-                      name={'long_break_interval'}
+                      name={'longBreakInterval'}
                       label={'Long Break Interval'}
-                      onBlur={onBlur}
-                      defaultValue={timer.long_break_interval}
+                      defaultValue={timer.longBreakInterval}
                     />
                   </Flex>
                 </Flex>
@@ -135,8 +110,8 @@ const NavbarModal = ({ timer, auth }) => {
                 <Button
                   type="submit"
                   value="Update Timer"
-                  onClick={() => {
-                    onSubmit();
+                  onClick={(e) => {
+                    onSubmit(e);
                     onClose();
                   }}
                   variant="ghost"
@@ -151,7 +126,6 @@ const NavbarModal = ({ timer, auth }) => {
     </Fragment>
   );
 };
-
 NavbarModal.propTypes = {
   timer: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,

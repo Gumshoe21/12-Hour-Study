@@ -1,24 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate
-} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import Timer from '../Timer/Timer';
-import Register from '../Auth/Register';
-import {
-  Heading,
-  Container,
-  Box,
-  Flex,
-  VStack,
-  Grid,
-  GridItem,
-  AspectRatio
-} from '@chakra-ui/react';
-import { logout } from '../../store/actions/auth';
+import { Container, Flex } from '@chakra-ui/react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadUserTimer } from './../../store/actions/timer';
@@ -28,8 +12,7 @@ const Dashboard = ({ auth }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (auth.user) store.dispatch(loadUserTimer(auth.user));
-    console.log('navbar');
-  }, [dispatch]);
+  }, [auth.user]);
 
   return (
     <Fragment>

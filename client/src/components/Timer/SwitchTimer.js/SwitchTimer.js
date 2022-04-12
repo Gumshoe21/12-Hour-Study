@@ -11,12 +11,12 @@ const TimerSwitcher = (props) => {
       <SwitchTimerButton
         onClick={props.onClick}
         text={'Short Break'}
-        mode={'short_break'}
+        mode={'shortBreak'}
       />
       <SwitchTimerButton
         onClick={props.onClick}
         text={'Long Break'}
-        mode={'long_break'}
+        mode={'longBreak'}
       />
     </Flex>
   );

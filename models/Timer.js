@@ -13,7 +13,7 @@ const TimerSchema = new mongoose.Schema({
         default: 30
       }
     },
-    short_break: {
+    shortBreak: {
       name: {
         type: String,
         default: 'Short Break'
@@ -23,7 +23,7 @@ const TimerSchema = new mongoose.Schema({
         default: 5
       }
     },
-    long_break: {
+    longBreak: {
       name: {
         type: String,
         default: 'Long Break'
@@ -34,11 +34,11 @@ const TimerSchema = new mongoose.Schema({
       }
     }
   },
-  long_break_interval: {
+  longBreakInterval: {
     type: Number,
     default: 4
   },
-  active_mode: {
+  activeMode: {
     type: String,
     default: 'session'
   },

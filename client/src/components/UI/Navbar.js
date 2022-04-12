@@ -8,7 +8,6 @@ import { OwlLogo } from './OwlLogo';
 import { Link as ReactLink } from 'react-router-dom';
 import { Link } from '@chakra-ui/react';
 import {
-  Icon,
   Box,
   Flex,
   Avatar,

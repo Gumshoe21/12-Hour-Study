@@ -18,7 +18,7 @@ export const loadUserTimer =
   };
 
 export const updateTimer =
-  ({ session, short_break, long_break, long_break_interval, id }) =>
+  ({ auth, session, shortBreak, longBreak, longBreakInterval }) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -29,12 +29,23 @@ export const updateTimer =
       modes: {
         session: {
           length: session
+        },
+        shortBreak: {
+          length: shortBreak
+        },
+        longBreak: {
+          length: longBreak
         }
-      }
+      },
+      longBreakInterval: longBreakInterval
     });
     try {
-      const res = await axios.patch(`/api/v1/timers/${id}`, body, config);
-      // dispatch(timerSlice.actions.updateTimer(res.data));
+      const res = await axios.patch(
+        `/api/v1/timers/${auth.user.timer._id}`,
+        body,
+        config
+      );
+      dispatch(timerSlice.actions.updateTimer(res.data));
       console.log(res);
     } catch (err) {
       console.log(err);
