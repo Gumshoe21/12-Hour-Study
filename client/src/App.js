@@ -31,11 +31,19 @@ const App = ({ auth }) => {
   return (
     <Fragment>
       <Router>
-        {auth.isAuthenticated && <Navbar />}
+        <Navbar />
         <Routes>
           <Route index element={<Dashboard />} />
-          <Route exact path="/signup" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route
+            exact
+            path="/signup"
+            element={<PrivateRoute component={Register} />}
+          />
+          <Route
+            exact
+            path="/login"
+            element={<PrivateRoute component={Login} />}
+          />
           <Route exact path="/profile" element={<Profile />} />
           <Route
             path="/dashboard"

@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  Fragment
+} from 'react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -9,6 +15,7 @@ import TimerBox from './TimerBox';
 import ProgressBar from './ProgressBar';
 import Round from './Round';
 import Countdown from './Countdown';
+import { Spinner } from '@chakra-ui/react';
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
 
@@ -26,10 +33,6 @@ const Timer = ({ timer, auth }) => {
     //    timer.modes[timer.active_mode].length * 60
     2
   );
-
-  useEffect(() => {
-    setTimeLeft(timer.modes[timer.activeMode].length * 60);
-  }, [timer.modes[timer.activeMode]]);
 
   const clearTimer = () => {
     clearInterval(tickingIntervalRef.current);
@@ -126,7 +129,7 @@ const Timer = ({ timer, auth }) => {
   const timerDuration = timer.modes[timer.activeMode].length * 60;
 
   return (
-    <TimerBox>
+    <TimerBox py={5}>
       <SwitchTimer onClick={switchTimerMode} />
       <Countdown timeLeft={timeLeft} />
       <ProgressBar max={timerDuration} value={progress} />

@@ -43,11 +43,9 @@ const Register = ({ register, isAuthenticated }) => {
       register({ email, password, passwordConfirm });
     }
   };
-
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
-
   return (
     <Flex
       align="center"

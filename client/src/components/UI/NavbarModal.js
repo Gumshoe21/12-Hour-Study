@@ -14,13 +14,19 @@ import {
   IconButton,
   FormControl
 } from '@chakra-ui/react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SettingsIcon } from '@chakra-ui/icons';
 import { updateTimer, loadUserTimer } from '../../store/actions/timer';
 import store from './../../store/index';
 import NavbarModalInput from './NavbarModalInput';
+
+import timerSlice from '../../store/slices/timer';
+
 const NavbarModal = ({ timer, auth }) => {
+  const dispatch = useDispatch();
+  const { setLoading } = timerSlice.actions;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   let sessionRef = useRef(null);
@@ -34,7 +40,7 @@ const NavbarModal = ({ timer, auth }) => {
     const shortBreak = shortBreakRef.current.value;
     const longBreak = longBreakRef.current.value;
     const longBreakInterval = longBreakIntRef.current.value;
-
+    await dispatch(setLoading(true));
     try {
       await store.dispatch(
         updateTimer({
@@ -47,7 +53,7 @@ const NavbarModal = ({ timer, auth }) => {
       );
     } catch (err) {
     } finally {
-      store.dispatch(loadUserTimer(auth.user));
+      await store.dispatch(loadUserTimer(auth.user));
     }
   };
   return (

@@ -7,6 +7,7 @@ const timerSlice = createSlice({
     longBreakInterval: 4,
     round: 0,
     ticking: false,
+    loading: true,
     modes: {
       session: {
         name: 'Session',
@@ -31,6 +32,7 @@ const timerSlice = createSlice({
       state.modes.shortBreak.length = action.payload.shortBreakRef;
       state.modes.longBreak.length = action.payload.longBreakRef;
       state.longBreakInterval = action.payload.LongBreakInterval;
+      state.loading = false;
     },
     loadTimer(state, action) {
       state.modes.session.length = action.payload.modes.session.length;
@@ -61,6 +63,9 @@ const timerSlice = createSlice({
     },
     clearProgress(state, action) {
       state.modes[state.activeMode].progress = 0;
+    },
+    setLoading(state, action) {
+      state.loading = action.payload;
     }
   }
 });
