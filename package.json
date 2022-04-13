@@ -12,6 +12,7 @@
   "author": "Matthew Smilansky",
   "license": "MIT",
   "dependencies": {
+    "async": "^3.2.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
