@@ -15,7 +15,7 @@ import TimerBox from './TimerBox';
 import ProgressBar from './ProgressBar';
 import Round from './Round';
 import Countdown from './Countdown';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, Box } from '@chakra-ui/react';
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
 
@@ -30,9 +30,14 @@ const Timer = ({ timer, auth }) => {
 
   const tickingIntervalRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(
-    //    timer.modes[timer.active_mode].length * 60
-    2
+    timer.modes[timer.activeMode].length * 60
+    //2
   );
+
+  const updateActiveModeLength = useEffect(() => {
+    setTimeLeft((timeLeft) => timer.modes[timer.activeMode].length * 60);
+    dispatch(setTicking(false));
+  }, [timer.modes[timer.activeMode].length]);
 
   const clearTimer = () => {
     clearInterval(tickingIntervalRef.current);
@@ -129,9 +134,17 @@ const Timer = ({ timer, auth }) => {
   const timerDuration = timer.modes[timer.activeMode].length * 60;
 
   return (
-    <TimerBox py={5}>
+    <TimerBox>
       <SwitchTimer onClick={switchTimerMode} />
-      <Countdown timeLeft={timeLeft} />
+      <Box>
+        {isNaN(timer.modes[timer.activeMode].length) && (
+          <Countdown timeLeft={'hi'} visibility="hidden" />
+        )}
+
+        {!isNaN(timer.modes[timer.activeMode].length) && (
+          <Countdown timeLeft={timeLeft} />
+        )}
+      </Box>
       <ProgressBar max={timerDuration} value={progress} />
       <Round round={timer.round} interval={timer.longBreakInterval} />
       <TimerToggleButton

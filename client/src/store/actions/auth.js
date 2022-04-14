@@ -1,17 +1,15 @@
 import axios from 'axios';
 import authSlice from '../slices/auth';
-import setAuthToken from './../../utils/setAuthToken';
 export const APIVersion = 'v1';
 // Load User
 export const loadUser = () => async (dispatch) => {
   // if the auth token is in the user's localStorage, set the auth token to that
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
   try {
     const res = await axios.get(`/api/${APIVersion}/users/me`);
     dispatch(authSlice.actions.userLoaded(res.data));
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const login =

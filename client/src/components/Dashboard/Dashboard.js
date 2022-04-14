@@ -10,7 +10,6 @@ import store from './../../store/index';
 
 const Dashboard = ({ auth, timer }) => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
   const loadUserHandler = useEffect(() => {
     if (auth.user) {
       store.dispatch(loadUserTimer(auth.user));
@@ -19,10 +18,14 @@ const Dashboard = ({ auth, timer }) => {
 
   return (
     <Fragment>
-      {!auth.loading && !auth.isAuthenticated && <Navigate to="/signup" />}
+      {!auth.isAuthenticated && <Navigate to="/signup" />}
       <Container maxW="container.xl">
         <Flex align="center" overflow="hidden" justify="center">
-          <Timer />
+          {Object.values(timer).every((el) => el !== undefined) ? (
+            <Timer />
+          ) : (
+            <Spinner />
+          )}
         </Flex>
       </Container>
     </Fragment>

@@ -1,15 +1,31 @@
 import React, { useState } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Spinner } from '@chakra-ui/react';
+import { Spinner, Text, useColorModeValue } from '@chakra-ui/react';
 
 const Round = ({ timer, props }) => {
+  const roundIndicatorColor = useColorModeValue(
+    'whiteAlpha.900',
+    'whiteAlpha.900'
+  );
   return (
-    <Box mb={8} fontSize={24}>
-      <Box py={10}>
+    <Flex direction="column" mb={8}>
+      <Box>
+        <Text fontSize={18} color={roundIndicatorColor} fontWeight="700">
+          Rounds Until Long Break:
+        </Text>
+      </Box>
+      <Box
+        color={roundIndicatorColor}
+        letterSpacing=".1rem"
+        fontWeight="600"
+        fontFamily="Arial"
+        overflow="hidden"
+        width="100%"
+      >
         {Object.values(timer).every((el) => el !== undefined) ? (
-          `${props.round} / ${props.interval}`
+          <Text fontSize={48}>{`${props.round} / ${props.interval}`}</Text>
         ) : (
           <Spinner />
         )}
@@ -19,7 +35,7 @@ const Round = ({ timer, props }) => {
       {props.round} / {props.interval}
 
       */}
-    </Box>
+    </Flex>
   );
 };
 

@@ -9,7 +9,6 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  NumberDecrementStepper,
   useDisclosure,
   IconButton,
   FormControl
@@ -17,11 +16,11 @@ import {
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SettingsIcon } from '@chakra-ui/icons';
-import { updateTimer, loadUserTimer } from '../../store/actions/timer';
-import store from './../../store/index';
+import { updateTimer, loadUserTimer } from '../../../store/actions/timer';
+import store from '../../../store/index';
 import NavbarModalInput from './NavbarModalInput';
 
-import timerSlice from '../../store/slices/timer';
+import timerSlice from '../../../store/slices/timer';
 
 const NavbarModal = ({ timer, auth }) => {
   const dispatch = useDispatch();
@@ -64,10 +63,10 @@ const NavbarModal = ({ timer, auth }) => {
         onClick={onOpen}
       />
 
-      <form onSubmit={(e) => onSubmit(e)}>
+      <form visibility="hidden" onSubmit={(e) => onSubmit(e)}>
         <FormControl>
           <Modal
-            size="xl"
+            size="3xl"
             isOpen={isOpen}
             onClose={() => {
               onClose();
@@ -83,6 +82,7 @@ const NavbarModal = ({ timer, auth }) => {
                     justifyContent="center"
                     alignItems="center"
                     flexDirection="column"
+                    rowGap={4}
                   >
                     <NavbarModalInput
                       ref={sessionRef}

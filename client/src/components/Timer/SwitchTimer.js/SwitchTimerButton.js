@@ -12,12 +12,23 @@ import {
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const SwitchTimerButton = (props, { timer }) => {
+const SwitchTimerButton = ({ props, timer }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
+  console.log(timer);
   return (
     <>
-      <Button value={props.mode} onClick={onOpen} fontSize={14}>
+      <Button
+        value={props.mode}
+        onClick={
+          timer.ticking
+            ? onOpen
+            : (e) => {
+                props.onClick(e);
+              }
+        }
+        fontSize={14}
+      >
         {props.text}
       </Button>
       <AlertDialog
@@ -48,7 +59,7 @@ const SwitchTimerButton = (props, { timer }) => {
                 }}
                 ml={3}
               >
-                Delete
+                Confirm
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -60,11 +71,12 @@ const SwitchTimerButton = (props, { timer }) => {
 
 SwitchTimerButton.propTypes = {
   timer: PropTypes.object.isRequired,
-  props: PropTypes.object
+  props: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  timer: state.timer
+const mapStateToProps = (state, ownProps) => ({
+  timer: state.timer,
+  props: ownProps
 });
 
 export default connect(mapStateToProps)(SwitchTimerButton);

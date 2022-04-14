@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/react';
-export const OwlLogo = (props) => (
+export const OwlIcon = (props) => (
   <Icon viewBox="0 0 512 512" {...props}>
     <g>
       <g>

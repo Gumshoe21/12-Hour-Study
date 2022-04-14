@@ -9,7 +9,7 @@ const PrivateRoute = ({
   auth: { isAuthenticated, loading }
 }) => {
   if (loading) return <LoadingScreen />;
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!isAuthenticated) return <Navigate replace to="/login" />;
   if (isAuthenticated) return <Component />;
 
   return <Navigate to="/login" />;

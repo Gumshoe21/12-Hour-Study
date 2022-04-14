@@ -10,8 +10,7 @@ export const loadUserTimer =
       const res = await axios.get(
         `/api/${APIVersion}/timers/getCurrentUserTimer`
       );
-      await dispatch(timerSlice.actions.loadTimer(res.data));
-      dispatch(timerSlice.actions.setLoading(false));
+      dispatch(timerSlice.actions.loadTimer(res.data));
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -38,8 +37,7 @@ export const updateTimer =
           length: longBreak
         }
       },
-      longBreakInterval: longBreakInterval,
-      loading: true
+      longBreakInterval: longBreakInterval
     });
     try {
       const res = await axios.patch(
@@ -48,8 +46,6 @@ export const updateTimer =
         config
       );
       dispatch(timerSlice.actions.updateTimer(res.data));
-
-      dispatch(timerSlice.actions.setLoading(false));
       console.log(res);
     } catch (err) {
       console.log(err);
