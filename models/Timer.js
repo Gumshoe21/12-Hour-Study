@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 const TimerSchema = new mongoose.Schema({
   modes: {
     session: {
+      id: {
+        type: String,
+        default: 'session'
+      },
       name: {
         type: String,
         default: 'Session'
@@ -14,6 +18,10 @@ const TimerSchema = new mongoose.Schema({
       }
     },
     shortBreak: {
+      id: {
+        type: String,
+        default: 'shortBreak'
+      },
       name: {
         type: String,
         default: 'Short Break'
@@ -23,7 +31,12 @@ const TimerSchema = new mongoose.Schema({
         default: 5
       }
     },
+
     longBreak: {
+      id: {
+        type: String,
+        default: 'longBreak'
+      },
       name: {
         type: String,
         default: 'Long Break'
@@ -35,6 +48,7 @@ const TimerSchema = new mongoose.Schema({
     }
   },
   longBreakInterval: {
+    id: 'longBreakInterval',
     type: Number,
     default: 4
   },

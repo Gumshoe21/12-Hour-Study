@@ -7,6 +7,7 @@ import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loadUserTimer } from './../../store/actions/timer';
 import store from './../../store/index';
+import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 
 const Dashboard = ({ auth, timer }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const Dashboard = ({ auth, timer }) => {
           {Object.values(timer).every((el) => el !== undefined) ? (
             <Timer />
           ) : (
-            <Spinner />
+            <LoadingScreen />
           )}
         </Flex>
       </Container>

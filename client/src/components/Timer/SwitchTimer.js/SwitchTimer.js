@@ -1,25 +1,38 @@
 import SwitchTimerButton from './SwitchTimerButton';
 import { Flex } from '@chakra-ui/react';
-const TimerSwitcher = (props) => {
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+const SwitchTimer = ({ props, timer }) => {
   return (
     <Flex flexDirection="row" mb={2} gap={5} justifyContent="space-between">
       <SwitchTimerButton
         onClick={props.onClick}
         text={'Session'}
-        mode={'session'}
+        mode={timer.modes['session'].id}
       />
       <SwitchTimerButton
         onClick={props.onClick}
         text={'Short Break'}
-        mode={'shortBreak'}
+        mode={timer.modes['shortBreak'].id}
       />
       <SwitchTimerButton
         onClick={props.onClick}
         text={'Long Break'}
-        mode={'longBreak'}
+        mode={timer.modes['longBreak'].id}
       />
     </Flex>
   );
 };
 
-export default TimerSwitcher;
+SwitchTimer.propTypes = {
+  timer: PropTypes.object.isRequired,
+  props: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state, ownProps) => ({
+  timer: state.timer,
+  props: ownProps
+});
+
+export default connect(mapStateToProps)(SwitchTimer);

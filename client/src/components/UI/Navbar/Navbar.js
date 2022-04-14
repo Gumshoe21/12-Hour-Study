@@ -66,11 +66,9 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
           />
         </MenuButton>
         <MenuList fontSize="1.4rem" size="lg">
-          <MenuItem>
-            <Link as={ReactLink} to="/profile">
-              Profile
-            </Link>
-          </MenuItem>
+          <Link as={ReactLink} to="/profile">
+            <MenuItem>Profile</MenuItem>
+          </Link>
           <MenuDivider />
           <MenuItem onClick={logout}>Logout</MenuItem>
         </MenuList>

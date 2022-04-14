@@ -10,16 +10,19 @@ const timerSlice = createSlice({
     loading: true,
     modes: {
       session: {
+        id: 'session',
         name: 'Session',
         length: 30,
         progress: 0
       },
       shortBreak: {
+        id: 'shortBreak',
         name: 'Short Break',
         length: 5,
         progress: 0
       },
       longBreak: {
+        id: 'longBreak',
         name: 'Long Break',
         length: 15,
         progress: 0

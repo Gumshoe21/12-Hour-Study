@@ -15,10 +15,10 @@ import PropTypes from 'prop-types';
 const SwitchTimerButton = ({ props, timer }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-  console.log(timer);
   return (
     <>
       <Button
+        bgColor={timer.activeMode === props.mode ? 'blue' : 'red'}
         value={props.mode}
         onClick={
           timer.ticking
