@@ -7,18 +7,26 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useDisclosure
+  useDisclosure,
+  useColorModeValue
 } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const SwitchTimerButton = ({ props, timer }) => {
+  const activeModeBgColor = useColorModeValue('gray.700', 'purple.200');
+  const activeModeColor = useColorModeValue('gray.100', 'gray.900');
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   return (
     <>
       <Button
-        bgColor={timer.activeMode === props.mode ? 'blue' : 'red'}
+        bgColor={timer.activeMode === props.mode ? activeModeBgColor : null}
+        _hover={{
+          bg: timer.activeMode === props.mode ? activeModeBgColor : null
+        }}
+        color={timer.activeMode === props.mode ? activeModeColor : null}
         value={props.mode}
         onClick={
           timer.ticking

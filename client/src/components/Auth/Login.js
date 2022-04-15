@@ -3,26 +3,8 @@ import { connect } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { login } from '../../store/actions/auth';
-import {
-  Spacer,
-  Container,
-  Box,
-  Flex,
-  Stack,
-  VStack,
-  HStack,
-  Heading,
-  Button,
-  ButtonGroup,
-  Center
-} from '@chakra-ui/react';
-import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input
-} from '@chakra-ui/react';
+import { Box, Flex, VStack, Button, Text } from '@chakra-ui/react';
+import { FormControl, Input } from '@chakra-ui/react';
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -53,41 +35,53 @@ const Login = ({ login, isAuthenticated }) => {
     >
       <Flex
         borderWidth={1}
+        borderColor="gray.400"
         borderRadius={8}
-        p={10}
+        p={20}
         justifyContent="center"
         alignItems="center"
       >
         <form onSubmit={(e) => onSubmit(e)}>
           <FormControl>
-            <VStack spacing={2} display="inline-block" maxW="sm">
+            <VStack spacing={2} mb={10} display="inline-block" maxW="sm">
               <Input
+                fontSize={16}
                 type="email"
                 placeholder="Email Address"
-                _placeholder={{ color: 'red.500' }}
                 name="email"
                 value={email}
+                height={16}
                 onChange={(e) => onChange(e)}
               />
               <Input
+                fontSize={16}
                 width="100%"
                 type="password"
                 placeholder="Password"
                 name="password"
                 value={password}
+                height={16}
                 onChange={(e) => onChange(e)}
               />
-              <Button type="submit" value="Login" width="100%">
+              <Button
+                h={16}
+                fontSize={16}
+                type="submit"
+                value="Login"
+                width="100%"
+              >
                 Log In
               </Button>
             </VStack>
           </FormControl>
+          <Flex justify="center">
+            <Link to="/signup">
+              <Text underline={2} fontSize={16}>
+                Not Registered? Sign Up Here
+              </Text>
+            </Link>
+          </Flex>
         </form>
-      </Flex>
-      <Flex mt={5}>
-        <Box>
-          <Link to="/signup">Sign up here</Link>
-        </Box>
       </Flex>
     </Flex>
   );

@@ -4,33 +4,26 @@ import { Link, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { register } from '../../store/actions/auth';
 import {
-  Spacer,
-  Container,
-  Box,
   Flex,
-  Stack,
   VStack,
-  HStack,
-  Heading,
   Button,
-  ButtonGroup,
-  Center
-} from '@chakra-ui/react';
-import {
   FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input
+  Input,
+  InputGroup,
+  InputRightElement,
+  Text
 } from '@chakra-ui/react';
 
 const Register = ({ register, isAuthenticated }) => {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     passwordConfirm: ''
   });
-  const { name, email, password, passwordConfirm } = formData;
+  const { email, password, passwordConfirm } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,35 +45,63 @@ const Register = ({ register, isAuthenticated }) => {
       justifyContent="center"
       flexDirection="column"
       height="100vh"
-      width="100wv"
     >
       <Flex
         borderWidth={1}
+        borderColor="gray.400"
         borderRadius={8}
-        p="1.2rem"
+        p={20}
         justifyContent="center"
         alignItems="center"
       >
         <form onSubmit={(e) => onSubmit(e)}>
           <FormControl>
-            <VStack spacing={2} display="inline-block" maxW="sm">
+            <VStack
+              spacing={2}
+              mb={10}
+              display="inline-block"
+              maxW={{ base: 'sm', md: 'lg' }}
+            >
               <Input
+                variant="filled"
+                fontSize={16}
+                height={16}
                 type="email"
                 placeholder="Email Address"
-                _placeholder={{ color: 'red.500' }}
                 name="email"
                 value={email}
                 onChange={(e) => onChange(e)}
               />
+              <InputGroup size="md">
+                <Input
+                  variant="filled"
+                  fontSize={16}
+                  height={16}
+                  width="100%"
+                  type={show ? 'text' : 'password'}
+                  placeholder="Password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => onChange(e)}
+                />
+                <InputRightElement
+                  flex="column"
+                  justify="center"
+                  align="center"
+                  h={8}
+                  mt={4}
+                  mr={4}
+                  width="4rem"
+                >
+                  <Button h="inherit" size="lg" onClick={handleClick}>
+                    {show ? 'Hide' : 'Show'}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
               <Input
-                width="100%"
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={password}
-                onChange={(e) => onChange(e)}
-              />
-              <Input
+                variant="filled"
+                fontSize={16}
+                height={16}
                 type="password"
                 placeholder="Confirm Password"
                 name="passwordConfirm"
@@ -88,21 +109,24 @@ const Register = ({ register, isAuthenticated }) => {
                 onChange={(e) => onChange(e)}
               />
               <Button
+                h={16}
+                fontSize={16}
                 type="submit"
-                className="btn btn-primary"
-                value="Register"
+                value="Login"
                 width="100%"
               >
                 Sign Up
               </Button>
             </VStack>
           </FormControl>
+          <Flex justify="center">
+            <Link to="/login">
+              <Text underline={2} fontSize={16}>
+                Already registered? Log In Here
+              </Text>
+            </Link>
+          </Flex>
         </form>
-      </Flex>
-      <Flex mt={5}>
-        <Box>
-          <Link to="/login">Already registered?</Link>
-        </Box>
       </Flex>
     </Flex>
   );
