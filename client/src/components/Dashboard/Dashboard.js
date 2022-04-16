@@ -15,7 +15,7 @@ const Dashboard = ({ auth, timer }) => {
     if (auth.user) {
       store.dispatch(loadUserTimer(auth.user));
     }
-  }, [auth.user]);
+  }, []);
 
   return (
     <Fragment>

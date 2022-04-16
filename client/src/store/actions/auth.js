@@ -1,5 +1,7 @@
 import axios from 'axios';
 import authSlice from '../slices/auth';
+
+import timerSlice from '../slices/timer';
 export const APIVersion = 'v1';
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -48,7 +50,8 @@ export const register =
         body,
         config
       );
-      dispatch(authSlice.actions.register(res.data));
+      await dispatch(authSlice.actions.register(res.data));
+      dispatch(timerSlice.actions.loadUserTimer(res.data));
     } catch (err) {}
   };
 

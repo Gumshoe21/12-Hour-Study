@@ -15,11 +15,14 @@ const NavbarModalInput = forwardRef((props, ref) => {
       <Flex fontSize={18}>{props.label}</Flex>
 
       <NumberInput
+        allowMouseWheel="true"
         defaultValue={props.defaultValue}
         size="lg"
         bgColor={numberInputBgColor}
         borderRadius="lg"
         width="10rem"
+        min={1}
+        max={720}
       >
         <NumberInputField
           height="4rem"

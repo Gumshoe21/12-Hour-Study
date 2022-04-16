@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { login } from '../../store/actions/auth';
 import { Box, Flex, VStack, Button, Text } from '@chakra-ui/react';
 import { FormControl, Input } from '@chakra-ui/react';
-
-const Login = ({ login, isAuthenticated }) => {
+import Dashboard from './../Dashboard/Dashboard';
+import PrivateRoute from './../Routing/PrivateRoute';
+const Login = ({ login, isAuthenticated, props }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -22,7 +23,10 @@ const Login = ({ login, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
+    //    return <Navigate replace to="/dashboard" />;
+
+    //    return <Dashboard {...props.children} />;
+    return <PrivateRoute component={Dashboard} />;
   }
 
   return (
@@ -91,9 +95,10 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    props: ownProps
   };
 };
 export default connect(mapStateToProps, { login })(Login);

@@ -3,7 +3,9 @@ import duration from 'dayjs/plugin/duration';
 import { Box, Flex, useColorModeValue, Spinner } from '@chakra-ui/react';
 dayjs.extend(duration);
 const formatTime = (time) => {
-  return dayjs.duration(time, 'seconds').format('mm:ss');
+  return dayjs
+    .duration(time, 'seconds')
+    .format(time >= 3600 ? 'HH:mm:ss' : 'mm:ss');
 };
 
 const Countdown = (props) => {
@@ -26,7 +28,9 @@ const Countdown = (props) => {
         {isNaN(props.timeLeft) || !props.timeLeft ? (
           <Spinner size="xl" color={spinnerColor} thickness="4px" />
         ) : (
-          formatTime(props.timeLeft)
+          <Box fontSize={props.timeLeft >= 3600 ? 64 : 86}>
+            {formatTime(props.timeLeft)}
+          </Box>
         )}
       </Box>
     </Flex>

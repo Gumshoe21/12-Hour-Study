@@ -10,7 +10,7 @@ export const loadUserTimer =
       const res = await axios.get(
         `/api/${APIVersion}/timers/getCurrentUserTimer`
       );
-      dispatch(timerSlice.actions.loadTimer(res.data));
+      await dispatch(timerSlice.actions.loadTimer(res.data));
       console.log(res.data);
     } catch (err) {
       console.log(err);

@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, forwardRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import {
   Flex,
   Button,
@@ -35,8 +35,9 @@ const NavbarModal = ({ timer, auth }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
     const session = sessionRef.current.value;
-    const shortBreak = shortBreakRef.current.value;
+    const shortBreak = shortBreakRef.current.valuej;
     const longBreak = longBreakRef.current.value;
     const longBreakInterval = longBreakIntRef.current.value;
     await dispatch(setLoading(true));
@@ -134,8 +135,7 @@ const NavbarModal = ({ timer, auth }) => {
 };
 NavbarModal.propTypes = {
   timer: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
-  props: PropTypes.object
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
