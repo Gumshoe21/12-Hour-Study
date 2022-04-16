@@ -47,13 +47,13 @@ export const register =
     };
     const body = JSON.stringify({ email, password, passwordConfirm });
     try {
-      const res = await axios.post(
+      const req = await axios.post(
         `/api/${APIVersion}/users/signup`,
         body,
         config
       );
+      const res = await axios.get(`/api/${APIVersion}/users/me`);
       await dispatch(authSlice.actions.register(res.data));
-      dispatch(timerSlice.actions.loadUserTimer(res.data));
     } catch (err) {}
   };
 
