@@ -24,11 +24,13 @@ export const login =
     };
     const body = JSON.stringify({ email, password });
     try {
-      const res = await axios.post(
+      const req = await axios.post(
         `/api/${APIVersion}/users/login`,
         body,
         config
       );
+
+      const res = await axios.get(`/api/${APIVersion}/users/me`);
       dispatch(authSlice.actions.login(res.data));
     } catch (err) {
       console.log(err.response);
