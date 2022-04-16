@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same'
     }
   },
+  avatar: {
+    type: String
+  },
   role: {
     type: String,
     default: 'user'

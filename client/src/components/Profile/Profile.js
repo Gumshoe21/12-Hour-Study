@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   Container,
   Box,
@@ -16,7 +18,7 @@ import {
 } from 'react-icons/fa';
 import SocialLink from './SocialLink';
 
-const Profile = () => {
+const Profile = ({ auth }) => {
   const profileBgColor = useColorModeValue('gray.400', 'whiteAlpha.100');
   return (
     <Container maxW="container.xl" overflow="hidden">
@@ -35,7 +37,7 @@ const Profile = () => {
               h="128px"
               w="128px"
               name="Matthew Smilansky"
-              src="https://bit.ly/dan-abramov"
+              src={auth.user.avatar}
             />
           </WrapItem>
           <Text fontSize="16px" letterSpacing={2}>
@@ -53,4 +55,12 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+Profile.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Profile);

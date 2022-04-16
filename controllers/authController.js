@@ -1,5 +1,9 @@
 const crypto = require('crypto');
 const { promisify } = require('util'); // utility for promisify method
+
+const gravatar = require('gravatar');
+const normalize = require('normalize-url');
+
 const jwt = require('jsonwebtoken');
 const User = require('./../models/User');
 const catchAsync = require('./../utils/catchAsync');
@@ -42,12 +46,22 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   const newTimer = await Timer.create({});
 
+  const avatar = normalize(
+    gravatar.url(req.body.email, {
+      s: '200',
+      r: 'pg',
+      d: 'retro'
+    }),
+    { forceHttps: true }
+  );
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
+    avatar: avatar,
     role: req.body.role,
     timer: newTimer._id
   });
