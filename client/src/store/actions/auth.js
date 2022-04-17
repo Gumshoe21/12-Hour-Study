@@ -61,3 +61,34 @@ export const logout = () => async (dispatch) => {
   const res = await axios.get(`/api/${APIVersion}/users/logout`);
   dispatch(authSlice.actions.logout());
 };
+
+export const updateUser =
+  ({ auth, twitter, github }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const body = JSON.stringify({
+      socials: {
+        twitter: {
+          url: twitter
+        },
+        github: {
+          url: github
+        }
+      }
+    });
+    try {
+      const res = await axios.patch(
+        `api/${APIVersion}/users/${auth.user._id}`,
+        body,
+        config
+      );
+      dispatch(authSlice.actions.updateUser(res.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };

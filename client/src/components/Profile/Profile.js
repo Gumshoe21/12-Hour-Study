@@ -8,7 +8,8 @@ import {
   Avatar,
   WrapItem,
   Text,
-  useColorModeValue
+  useColorModeValue,
+  IconButton
 } from '@chakra-ui/react';
 import {
   FaGithubSquare,
@@ -17,40 +18,57 @@ import {
   FaTwitch
 } from 'react-icons/fa';
 import SocialLink from './SocialLink';
+import { EditIcon } from '@chakra-ui/icons';
+import ProfileModal from './ProfileModal';
 
 const Profile = ({ auth }) => {
   const profileBgColor = useColorModeValue('gray.400', 'whiteAlpha.100');
+  const { github, twitter } = auth.user.socials;
   return (
     <Container maxW="container.xl" overflow="hidden">
-      <Box
-        margin="0 auto"
-        maxW="480px"
-        h="full"
-        py={10}
-        px={20}
-        bg={profileBgColor}
-        borderRadius={8}
-      >
-        <Flex flexDirection="column" align="center" justify="center" gap={6}>
-          <WrapItem>
-            <Avatar
-              h="128px"
-              w="128px"
-              name="Matthew Smilansky"
-              src={auth.user.avatar}
-            />
-          </WrapItem>
-          <Text fontSize="16px" letterSpacing={2}>
-            Gumshoe21
-          </Text>
-          <Flex align="center" justify="center" border="none" gap={8}>
-            <SocialLink icon={FaGithubSquare} />
-            <SocialLink icon={FaTwitterSquare} />
-            <SocialLink icon={FaInstagram} />
-            <SocialLink icon={FaTwitch} />
+      <Flex align="center" overflow="hidden" justify="center">
+        <Box
+          margin="0 auto"
+          minW="39rem"
+          h="full"
+          pt={8}
+          pb={20}
+          px={10}
+          bg={profileBgColor}
+          borderRadius={8}
+        >
+          <Flex flexDirection="column" align="center" justify="center" gap={6}>
+            <Flex alignSelf="end">
+              <ProfileModal />
+            </Flex>
+            <WrapItem>
+              <Avatar
+                h="128px"
+                w="128px"
+                name="Matthew Smilansky"
+                src={auth.user.avatar}
+              />
+            </WrapItem>
+            <Text fontSize="16px" letterSpacing={2}>
+              Gumshoe21
+            </Text>
+            <Flex align="center" justify="center" border="none" gap={8}>
+              {github.url && github.url !== '' && (
+                <SocialLink
+                  icon={FaGithubSquare}
+                  url={`https://www.github.com/${github.url}`}
+                />
+              )}
+              {twitter.url && twitter.url !== '' && (
+                <SocialLink
+                  icon={FaTwitterSquare}
+                  url={`https://www.twitter.com/${twitter.url}`}
+                />
+              )}
+            </Flex>
           </Flex>
-        </Flex>
-      </Box>
+        </Box>
+      </Flex>
     </Container>
   );
 };

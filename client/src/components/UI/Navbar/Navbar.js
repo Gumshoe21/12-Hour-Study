@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import { logout } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
 import NavbarModal from './NavbarModal';
@@ -13,22 +14,19 @@ import {
   Flex,
   Avatar,
   HStack,
-  IconButton,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
-  Stack,
   Container,
   Spacer
 } from '@chakra-ui/react';
 
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-
-const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+const Navbar = ({ auth, logout }) => {
+  const location = useLocation();
+  console.log(window.location);
   const guestLinks = (
     <Fragment>
       <Spacer />
@@ -45,7 +43,8 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
       <Spacer />
       <Spacer />
       <NavLink to="/dashboard" text="Dashboard" />
-      <NavbarModal />
+
+      {window.location.pathname === '/dashboard' && <NavbarModal />}
 
       <ColorModeToggleButton />
 
@@ -58,12 +57,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
           cursor={'pointer'}
           minW={0}
         >
-          <Avatar
-            size={'md'}
-            src={
-              'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-            }
-          />
+          <Avatar size={'md'} src={auth.isAuthenticated && auth.user.avatar} />
         </MenuButton>
         <MenuList fontSize="1.4rem" size="lg">
           <Link as={ReactLink} to="/profile">
@@ -82,7 +76,11 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <Flex h="6rem" alignItems="center" justify="center">
           <HStack as={'nav'} spacing={{ md: 6, base: 2 }} display="flex">
             <Logo />
-            {<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}
+            {
+              <Fragment>
+                {auth.isAuthenticated ? authLinks : guestLinks}
+              </Fragment>
+            }
           </HStack>
         </Flex>
       </Box>
@@ -95,10 +93,8 @@ Navbar.propTypes = {
   auth: PropTypes.object.isRequired,
   timer: PropTypes.object.isRequired
 };
-const mapStateToProps = (state) => {
-  return {
-    auth: state.auth,
-    timer: state.timer
-  };
-};
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  timer: state.timer
+});
 export default connect(mapStateToProps, { logout })(Navbar);

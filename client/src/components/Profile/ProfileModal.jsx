@@ -15,50 +15,44 @@ import {
 } from '@chakra-ui/react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SettingsIcon } from '@chakra-ui/icons';
-import { updateTimer, loadUserTimer } from '../../../store/actions/timer';
-import store from '../../../store/index';
-import NavbarModalInput from './NavbarModalInput';
-import timerSlice from '../../../store/slices/timer';
+import { updateUser } from '../../store/actions/auth';
+import store from '../../store/index';
+import ProfileModalInput from './ProfileModalInput';
+import { EditIcon } from '@chakra-ui/icons';
 
-const NavbarModal = ({ timer, auth }) => {
-  const dispatch = useDispatch();
+import timerSlice from '../../store/slices/timer';
+const ProfileModal = ({ auth }) => {
   const { setLoading } = timerSlice.actions;
+  const dispatch = useDispatch();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  let sessionRef = useRef(null);
-  let shortBreakRef = useRef(null);
-  let longBreakRef = useRef(null);
-  let longBreakIntRef = useRef(null);
-
+  let twitterRef = useRef(null);
+  let githubRef = useRef(null);
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const session = sessionRef.current.value;
-    const shortBreak = shortBreakRef.current.value;
-    const longBreak = longBreakRef.current.value;
-    const longBreakInterval = longBreakIntRef.current.value;
+    const twitter = twitterRef.current.value;
+    const github = githubRef.current.value;
+
     await dispatch(setLoading(true));
     try {
       await store.dispatch(
-        updateTimer({
+        updateUser({
           auth,
-          session,
-          shortBreak,
-          longBreak,
-          longBreakInterval
+          twitter,
+          github
         })
       );
     } catch (err) {
     } finally {
-      await store.dispatch(loadUserTimer(auth.user));
+      //      await store.dispatch(loadUserTimer(auth.user));
     }
   };
   return (
     <Fragment>
       <IconButton
-        icon={<SettingsIcon w={6} h={6} />}
+        icon={<EditIcon w={8} h={8} />}
         variant="ghost"
         onClick={onOpen}
       />
@@ -84,29 +78,15 @@ const NavbarModal = ({ timer, auth }) => {
                     flexDirection="column"
                     rowGap={4}
                   >
-                    <NavbarModalInput
-                      ref={sessionRef}
-                      name={'session'}
-                      label={'Session'}
-                      defaultValue={timer.modes['session'].length}
+                    <ProfileModalInput
+                      defaultValue={auth.user.socials.twitter.url}
+                      name={auth.user.socials.twitter.name}
+                      ref={twitterRef}
                     />
-                    <NavbarModalInput
-                      ref={shortBreakRef}
-                      name={'shortBreak'}
-                      label={'Short Break'}
-                      defaultValue={timer.modes['shortBreak'].length}
-                    />
-                    <NavbarModalInput
-                      ref={longBreakRef}
-                      name={'longBreak'}
-                      label={'Long Break'}
-                      defaultValue={timer.modes['longBreak'].length}
-                    />
-                    <NavbarModalInput
-                      ref={longBreakIntRef}
-                      name={'longBreakInterval'}
-                      label={'Long Break Interval'}
-                      defaultValue={timer.longBreakInterval}
+                    <ProfileModalInput
+                      defaultValue={auth.user.socials.github.url}
+                      name={auth.user.socials.github.name}
+                      ref={githubRef}
                     />
                   </Flex>
                 </Flex>
@@ -132,14 +112,12 @@ const NavbarModal = ({ timer, auth }) => {
     </Fragment>
   );
 };
-NavbarModal.propTypes = {
-  timer: PropTypes.object.isRequired,
+ProfileModal.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  timer: state.timer,
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { updateTimer })(NavbarModal);
+export default connect(mapStateToProps)(ProfileModal);

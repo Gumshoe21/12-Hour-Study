@@ -31,9 +31,34 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  website: {
+    type: String
+  },
   role: {
     type: String,
     default: 'user'
+  },
+  socials: {
+    github: {
+      name: {
+        type: String,
+        default: 'github'
+      },
+      url: {
+        type: String,
+        default: ''
+      }
+    },
+    twitter: {
+      name: {
+        type: String,
+        default: 'twitter'
+      },
+      url: {
+        type: String,
+        default: ''
+      }
+    }
   },
   passwordChangedAt: Date,
   passwordResetToken: String,

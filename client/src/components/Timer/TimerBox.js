@@ -6,7 +6,7 @@ const TimerBox = (props) => {
     <Box
       py={10}
       textAlign="center"
-      maxW="480px"
+      minW="39rem"
       display="block"
       px={20}
       fontSize={10}

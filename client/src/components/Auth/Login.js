@@ -23,10 +23,7 @@ const Login = ({ login, isAuthenticated, props }) => {
   };
 
   if (isAuthenticated) {
-    //    return <Navigate replace to="/dashboard" />;
-
-    //    return <Dashboard {...props.children} />;
-    return <PrivateRoute component={Dashboard} />;
+    return <Navigate to="/dashboard" />;
   }
 
   return (
