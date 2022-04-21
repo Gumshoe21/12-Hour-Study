@@ -45,8 +45,7 @@ const ProfileModal = ({ auth }) => {
         })
       );
     } catch (err) {
-    } finally {
-      //      await store.dispatch(loadUserTimer(auth.user));
+      console.log(err);
     }
   };
   return (

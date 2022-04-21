@@ -1,18 +1,18 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/UI/Navbar/Navbar';
-import Register from './components/Auth/Register';
-import Login from './components/Auth/Login';
+import Register from './components/Auth/Register/Register';
+import Login from './components/Auth/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
-import { loadUser } from './store/actions/auth';
+import { getUser } from './store/actions/auth';
 import { connect } from 'react-redux';
 import store from './store/index';
 import PropTypes from 'prop-types';
 import PrivateRoute from './components/Routing/PrivateRoute';
 const App = ({ auth }) => {
   useEffect(() => {
-    store.dispatch(loadUser());
+    store.dispatch(getUser());
   }, []); // only run once with [] - this effectively makes it a componentDidMount() function
   return (
     <Fragment>

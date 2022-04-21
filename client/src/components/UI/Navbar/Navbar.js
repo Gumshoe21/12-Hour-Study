@@ -25,8 +25,6 @@ import {
 } from '@chakra-ui/react';
 
 const Navbar = ({ auth, logout }) => {
-  const location = useLocation();
-  console.log(window.location);
   const guestLinks = (
     <Fragment>
       <Spacer />

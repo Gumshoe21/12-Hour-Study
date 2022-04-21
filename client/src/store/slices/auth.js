@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
-
+import { createSlice, isAnyOf, addCase } from '@reduxjs/toolkit';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -8,29 +7,22 @@ const authSlice = createSlice({
     user: null
   },
   reducers: {
-    // register
     register(state, action) {
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
     },
-    registerFail(state, action) {},
-    registerSuccess(state, action) {},
-    // login
     login(state, action) {
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
     },
-    loginFail(state, action) {},
-    // logout
     logout(state) {
       state.isAuthenticated = false;
       state.loading = false;
       state.user = null;
     },
-    // user loaded
-    userLoaded(state, action) {
+    getUser(state, action) {
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;

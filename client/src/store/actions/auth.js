@@ -1,14 +1,13 @@
 import axios from 'axios';
 import authSlice from '../slices/auth';
+import { APIVERSION } from './../../constants/index';
 
-import timerSlice from '../slices/timer';
-export const APIVersion = 'v1';
 // Load User
-export const loadUser = () => async (dispatch) => {
+export const getUser = () => async (dispatch) => {
   // if the auth token is in the user's localStorage, set the auth token to that
   try {
-    const res = await axios.get(`/api/${APIVersion}/users/me`);
-    dispatch(authSlice.actions.userLoaded(res.data));
+    const res = await axios.get(`/api/${APIVERSION}/users/me`);
+    dispatch(authSlice.actions.getUser(res.data));
   } catch (err) {
     console.log(err);
   }
@@ -25,12 +24,12 @@ export const login =
     const body = JSON.stringify({ email, password });
     try {
       const req = await axios.post(
-        `/api/${APIVersion}/users/login`,
+        `/api/${APIVERSION}/users/login`,
         body,
         config
       );
 
-      const res = await axios.get(`/api/${APIVersion}/users/me`);
+      const res = await axios.get(`/api/${APIVERSION}/users/me`);
       dispatch(authSlice.actions.login(res.data));
     } catch (err) {
       console.log(err.response);
@@ -48,17 +47,17 @@ export const register =
     const body = JSON.stringify({ email, password, passwordConfirm });
     try {
       const req = await axios.post(
-        `/api/${APIVersion}/users/signup`,
+        `/api/${APIVERSION}/users/signup`,
         body,
         config
       );
-      const res = await axios.get(`/api/${APIVersion}/users/me`);
+      const res = await axios.get(`/api/${APIVERSION}/users/me`);
       await dispatch(authSlice.actions.register(res.data));
     } catch (err) {}
   };
 
 export const logout = () => async (dispatch) => {
-  const res = await axios.get(`/api/${APIVersion}/users/logout`);
+  const res = await axios.get(`/api/${APIVERSION}/users/logout`);
   dispatch(authSlice.actions.logout());
 };
 
@@ -83,7 +82,7 @@ export const updateUser =
     });
     try {
       const res = await axios.patch(
-        `api/${APIVersion}/users/${auth.user._id}`,
+        `api/${APIVERSION}/users/${auth.user._id}`,
         body,
         config
       );

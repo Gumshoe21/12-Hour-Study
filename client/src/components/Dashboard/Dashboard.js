@@ -5,15 +5,15 @@ import Timer from '../Timer/Timer';
 import { Container, Flex, Spinner } from '@chakra-ui/react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loadUserTimer } from './../../store/actions/timer';
+import { getUserTimer } from './../../store/actions/timer';
 import store from './../../store/index';
 import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 
 const Dashboard = ({ auth, timer }) => {
   const dispatch = useDispatch();
-  const loadUserHandler = useEffect(() => {
+  const getUserHandler = useEffect(() => {
     if (auth.user) {
-      store.dispatch(loadUserTimer(auth.user));
+      store.dispatch(getUserTimer(auth.user));
     }
   }, []);
 

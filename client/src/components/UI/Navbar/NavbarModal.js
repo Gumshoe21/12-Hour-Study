@@ -16,7 +16,7 @@ import {
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SettingsIcon } from '@chakra-ui/icons';
-import { updateTimer, loadUserTimer } from '../../../store/actions/timer';
+import { updateTimer, getUserTimer } from '../../../store/actions/timer';
 import store from '../../../store/index';
 import NavbarModalInput from './NavbarModalInput';
 import timerSlice from '../../../store/slices/timer';
@@ -52,7 +52,7 @@ const NavbarModal = ({ timer, auth }) => {
       );
     } catch (err) {
     } finally {
-      await store.dispatch(loadUserTimer(auth.user));
+      await store.dispatch(getUserTimer(auth.user));
     }
   };
   return (

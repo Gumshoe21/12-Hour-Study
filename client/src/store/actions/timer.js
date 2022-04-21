@@ -1,15 +1,15 @@
 import axios from 'axios';
 import timerSlice from '../slices/timer';
+import { APIVERSION } from './../../constants/index';
 
-const APIVersion = 'v1';
-export const loadUserTimer =
+export const getUserTimer =
   ({ user }) =>
   async (dispatch) => {
     try {
       const res = await axios.get(
-        `/api/${APIVersion}/timers/getCurrentUserTimer`
+        `/api/${APIVERSION}/timers/getCurrentUserTimer`
       );
-      await dispatch(timerSlice.actions.loadTimer(res.data));
+      await dispatch(timerSlice.actions.getTimer(res.data));
       console.log(res.data);
     } catch (err) {
       console.log(err);
@@ -45,7 +45,7 @@ export const updateTimer =
         config
       );
       const res = await axios.get(
-        `/api/${APIVersion}/timers/getCurrentUserTimer`
+        `/api/${APIVERSION}/timers/getCurrentUserTimer`
       );
       dispatch(timerSlice.actions.updateTimer(res.data));
     } catch (err) {
