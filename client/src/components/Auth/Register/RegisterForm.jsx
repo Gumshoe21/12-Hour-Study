@@ -10,11 +10,15 @@ import {
   InputRightElement,
   Text
 } from '@chakra-ui/react';
-
 import { register } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-const RegisterForm = ({ register, props }) => {
+
+import useValidation, {
+  requiredRule,
+  minLengthRule
+} from '../../../hooks/use-validation';
+const RegisterForm = ({ register }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -22,10 +26,20 @@ const RegisterForm = ({ register, props }) => {
   });
   const { email, password, passwordConfirm } = formData;
 
+  const { errors, isFormValid } = useValidation();
+  const errorsObject = isFormValid({
+    email: {
+      name: 'email',
+      value: email || '',
+      rules: [requiredRule('email', email), minLengthRule('email', email, 8)],
+      errMsg: new Set()
+    }
+  });
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  console.log(errorsObject);
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
@@ -55,6 +69,7 @@ const RegisterForm = ({ register, props }) => {
             value={email}
             onChange={(e) => onChange(e)}
           />
+          <p>{errorsObject.email.length !== 0 && errorsObject.email}</p>
           <InputGroup size="md">
             <Input
               variant="filled"
