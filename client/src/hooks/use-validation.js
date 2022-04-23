@@ -5,6 +5,7 @@ const useValidation = () => {
   const isFormValid = (ruleSet) => {
     for (let state of Object.values(ruleSet)) {
       for (let rule of state.rules) {
+        console.log(rule);
         if (!state['errMsg'].has(rule.errMsg) && !rule.isValid) {
           state.errMsg.add(rule.errMsg);
         } else if (rule.isValid) {
@@ -15,6 +16,7 @@ const useValidation = () => {
         [state.name]: state.errMsg
       };
     }
+
     return errors;
   };
 

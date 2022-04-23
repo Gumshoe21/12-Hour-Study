@@ -8,7 +8,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text
+  Text,
+  FormErrorMessage,
+  FormHelperText
 } from '@chakra-ui/react';
 import { register } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
@@ -50,9 +52,10 @@ const RegisterForm = ({ register }) => {
   };
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+  console.log(errorsObject);
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <FormControl>
+      <FormControl isInvalid={errorsObject.email.size > 0}>
         <VStack
           spacing={2}
           mb={10}
@@ -69,7 +72,13 @@ const RegisterForm = ({ register }) => {
             value={email}
             onChange={(e) => onChange(e)}
           />
-          <p>{errorsObject.email.length !== 0 && errorsObject.email}</p>
+          {errorsObject.email.size > 0 ? (
+            <FormErrorMessage>{errorsObject.email}</FormErrorMessage>
+          ) : (
+            <FormHelperText>
+              Enter the email you'd like to receive the newsletter on.
+            </FormHelperText>
+          )}
           <InputGroup size="md">
             <Input
               variant="filled"
