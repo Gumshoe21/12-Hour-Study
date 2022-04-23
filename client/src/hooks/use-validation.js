@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 const useValidation = () => {
   const returnErrorMesssages = () => {};
   let errors = {};
-  const isFormValid = (ruleSet) => {
-    for (let state of Object.values(ruleSet)) {
-      for (let rule of state.rules) {
-        console.log(rule);
-        if (!state['errMsg'].has(rule.errMsg) && !rule.isValid) {
-          state.errMsg.add(rule.errMsg);
+  const isFormValid = (config) => {
+    for (let setting of Object.values(config)) {
+      for (let rule of setting.validationRules) {
+        if (!setting.errMsg.has(rule.errMsg) && !rule.isValid) {
+          setting.errMsg.add(rule.errMsg);
         } else if (rule.isValid) {
-          state.errMsg.delete(rule.errMsg);
+          setting.errMsg.delete(rule.errMsg);
         }
+        errors = {
+          ...errors,
+          [setting.name]: setting.errMsg
+        };
       }
-      errors = {
-        [state.name]: state.errMsg
-      };
     }
-
     return errors;
   };
 

@@ -28,19 +28,39 @@ const RegisterForm = ({ register }) => {
   });
   const { email, password, passwordConfirm } = formData;
 
-  const { errors, isFormValid } = useValidation();
+  const { isFormValid } = useValidation();
   const errorsObject = isFormValid({
     email: {
       name: 'email',
       value: email || '',
-      rules: [requiredRule('email', email), minLengthRule('email', email, 8)],
+      validationRules: [
+        requiredRule('email', email),
+        minLengthRule('email', email, 8)
+      ],
+      errMsg: new Set()
+    },
+    password: {
+      name: 'password',
+      value: password || '',
+      validationRules: [
+        requiredRule('password', password),
+        minLengthRule('password', password, 8)
+      ],
       errMsg: new Set()
     }
   });
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const disableSubmit = () => {
+    let errors = {};
+    for (let error of Object.keys(errorsObject)) {
+      errors = { ...errors, [error]: errorsObject[`${error}`].size > 0 };
+    }
+    return errors;
+  };
 
+  console.log(disableSubmit());
   console.log(errorsObject);
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -52,16 +72,16 @@ const RegisterForm = ({ register }) => {
   };
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-  console.log(errorsObject);
+
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <FormControl isInvalid={errorsObject.email.size > 0}>
-        <VStack
-          spacing={2}
-          mb={10}
-          display="inline-block"
-          maxW={{ base: 'sm', md: 'lg' }}
-        >
+      <VStack
+        spacing={2}
+        mb={10}
+        display="inline-block"
+        maxW={{ base: 'sm', md: 'lg' }}
+      >
+        <FormControl isInvalid={errorsObject.email.size > 0}>
           <Input
             variant="filled"
             fontSize={16}
@@ -72,13 +92,12 @@ const RegisterForm = ({ register }) => {
             value={email}
             onChange={(e) => onChange(e)}
           />
-          {errorsObject.email.size > 0 ? (
-            <FormErrorMessage>{errorsObject.email}</FormErrorMessage>
-          ) : (
-            <FormHelperText>
-              Enter the email you'd like to receive the newsletter on.
-            </FormHelperText>
+          {errorsObject.email.size > 0 && (
+            <FormErrorMessage>{errorsObject?.email}</FormErrorMessage>
           )}
+        </FormControl>
+
+        <FormControl isInvalid={errorsObject.password.size > 0}>
           <InputGroup size="md">
             <Input
               variant="filled"
@@ -105,21 +124,28 @@ const RegisterForm = ({ register }) => {
               </Button>
             </InputRightElement>
           </InputGroup>
-          <Input
-            variant="filled"
-            fontSize={16}
-            height={16}
-            type="password"
-            placeholder="Confirm Password"
-            name="passwordConfirm"
-            value={passwordConfirm}
-            onChange={(e) => onChange(e)}
-          />
-          <Button h={16} fontSize={16} type="submit" value="Login" width="100%">
-            Sign Up
-          </Button>
-        </VStack>
-      </FormControl>
+          {errorsObject.password.size > 0 ? (
+            <FormErrorMessage>{errorsObject.password}</FormErrorMessage>
+          ) : (
+            <FormHelperText>
+              Enter the email you'd like to receive the newsletter on.
+            </FormHelperText>
+          )}
+        </FormControl>
+        <Input
+          variant="filled"
+          fontSize={16}
+          height={16}
+          type="password"
+          placeholder="Confirm Password"
+          name="passwordConfirm"
+          value={passwordConfirm}
+          onChange={(e) => onChange(e)}
+        />
+        <Button h={16} fontSize={16} type="submit" value="Login" width="100%">
+          Sign Up
+        </Button>
+      </VStack>
       <Flex justify="center">
         <Link to="/login">
           <Text underline={2} fontSize={16}>
