@@ -15,12 +15,15 @@ import {
 import { register } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import useValidation, {
   requiredRule,
   minLengthRule
 } from '../../../hooks/use-validation';
+
 const RegisterForm = ({ register }) => {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -28,40 +31,32 @@ const RegisterForm = ({ register }) => {
   });
   const { email, password, passwordConfirm } = formData;
 
-  const { isFormValid } = useValidation();
-  const errorsObject = isFormValid({
+  const { configureValidations, isFormValid } = useValidation();
+  const validationConfig = {
     email: {
       name: 'email',
-      value: email || '',
       validationRules: [
         requiredRule('email', email),
         minLengthRule('email', email, 8)
       ],
-      errMsg: new Set()
+      errorMessages: new Set()
     },
     password: {
       name: 'password',
-      value: password || '',
       validationRules: [
         requiredRule('password', password),
         minLengthRule('password', password, 8)
       ],
-      errMsg: new Set()
+      errorMessages: new Set()
     }
-  });
+  };
+  const errorsObject = configureValidations(validationConfig);
+  const disableSubmit = isFormValid(errorsObject);
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const disableSubmit = () => {
-    let errors = {};
-    for (let error of Object.keys(errorsObject)) {
-      errors = { ...errors, [error]: errorsObject[`${error}`].size > 0 };
-    }
-    return errors;
-  };
 
-  console.log(disableSubmit());
-  console.log(errorsObject);
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
@@ -70,8 +65,6 @@ const RegisterForm = ({ register }) => {
       register({ email, password, passwordConfirm });
     }
   };
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
@@ -142,7 +135,14 @@ const RegisterForm = ({ register }) => {
           value={passwordConfirm}
           onChange={(e) => onChange(e)}
         />
-        <Button h={16} fontSize={16} type="submit" value="Login" width="100%">
+        <Button
+          disabled={disableSubmit}
+          h={16}
+          fontSize={16}
+          type="submit"
+          value="Login"
+          width="100%"
+        >
           Sign Up
         </Button>
       </VStack>
