@@ -16,8 +16,8 @@ const Login = ({ isAuthenticated }) => {
       align="center"
       flexDirection="column"
       justifyContent="center"
-      height="100vh"
       width="100wv"
+      height="100vh"
     >
       <Flex
         borderWidth={1}

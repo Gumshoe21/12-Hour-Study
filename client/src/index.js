@@ -54,12 +54,18 @@ const theme = extendTheme({
   styles: {
     global: (props) => ({
       html: {
+        height: '100vh',
         fontSize: '62.5%'
       },
       body: {
         padding: '0',
         margin: '0',
         boxSizing: 'border-box'
+      },
+      '#root': {
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
       }
     })
   }

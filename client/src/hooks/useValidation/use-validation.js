@@ -1,17 +1,18 @@
 const useValidation = () => {
-  // This object will contain our errorMessages Sets.
+  // This object will eventually contain our errorMessages Sets.
   let errors = {};
 
   const configureValidations = (validationConfig) => {
+    // Loops; destructuring for better code readability. Note that I used still used 'rule' when referring to isValid because it's easier to read that way.
     for (let setting of Object.values(validationConfig)) {
       let { name, validationRules, errorMessages } = setting;
       for (let rule of validationRules) {
-        let { errorMessage, isValid } = rule;
+        let { errorMessage } = rule;
         // If the errorMessages Set doesn't already have the errorMessage in it AND the rule isn't valid, then add the errorMessage to the errorMessages Set.
-        if (!errorMessages.has(errorMessage) && !isValid) {
+        if (!errorMessages.has(errorMessage) && !rule.isValid) {
           errorMessages.add(errorMessage);
           // ...otherwise, if the rule IS valid, then remove the errorMessage from the errorMessages Set regardless of whether the errorMessages Set already has that errorMessage.
-        } else if (isValid) {
+        } else if (rule.isValid) {
           errorMessages.delete(errorMessage);
         }
         // Set the errors object to properties with the name of the setting from our validationConfig and values equal to the respective errorMessages Set. Using the spread operator here to keep the object up to date.
@@ -59,4 +60,11 @@ export function minLengthRule(inputName, inputValue, minChars) {
     inputValue.split('').length >= minChars
   );
 }
+
+export const passwordMatchRule = (inputName, password, passwordConfirm) => {
+  return createValidationRule(
+    `Password Confirmation must match password`,
+    password === passwordConfirm
+  );
+};
 export default useValidation;
