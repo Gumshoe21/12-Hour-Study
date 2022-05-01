@@ -82,6 +82,7 @@ const RegisterForm = ({ register }) => {
     passwordConfirm: passwordConfirmErrors
   } = errorsObject;
 
+  const arrayEmailErrors = Array.from(emailErrors);
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <VStack
@@ -101,10 +102,8 @@ const RegisterForm = ({ register }) => {
             value={email}
             onChange={(e) => onChange(e)}
           />
-
           <ErrorMessage errors={emailErrors} label="Email" />
         </FormControl>
-
         <FormControl isInvalid={hasErrors(passwordErrors)}>
           <InputGroup size="md">
             <Input
@@ -133,7 +132,7 @@ const RegisterForm = ({ register }) => {
             </InputRightElement>
           </InputGroup>
 
-          <ErrorMessage errors={passwordErrors} label="Password" />
+          <ErrorMessage errors={Array.from(passwordErrors)} label="Password" />
         </FormControl>
 
         <FormControl isInvalid={hasErrors(passwordConfirmErrors)}>

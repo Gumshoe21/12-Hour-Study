@@ -18,7 +18,7 @@ const useValidation = () => {
         // Set the errors object to properties with the name of the setting from our validationConfig and values equal to the respective errorMessages Set. Using the spread operator here to keep the object up to date.
         errors = {
           ...errors,
-          [name]: errorMessages
+          [name]: Array.from(errorMessages)
         };
       }
     }
@@ -30,7 +30,7 @@ const useValidation = () => {
   const isFormValid = (errorsObj) => {
     let formIsValid = false;
     for (let error of Object.values(errorsObj)) {
-      if (error.size > 0) {
+      if (error.length > 0) {
         formIsValid = true;
       }
     }
@@ -38,6 +38,9 @@ const useValidation = () => {
   };
 
   return { requiredRule, configureValidations, isFormValid, errors };
+};
+const capitalize = (str) => {
+  return str[0].toUpperCase() + str.slice(1);
 };
 
 function createValidationRule(errorMessage, isValid) {
@@ -49,14 +52,14 @@ function createValidationRule(errorMessage, isValid) {
 
 export function requiredRule(inputName, inputValue) {
   return createValidationRule(
-    `${inputName} cannot be blank.`,
+    `${capitalize(inputName)} cannot be blank.`,
     inputValue.split('').length !== 0
   );
 }
 
 export function minLengthRule(inputName, inputValue, minChars) {
   return createValidationRule(
-    `${inputName} must be at least ${minChars} characters long.`,
+    `${capitalize(inputName)} must be at least ${minChars} characters long.`,
     inputValue.split('').length >= minChars
   );
 }
