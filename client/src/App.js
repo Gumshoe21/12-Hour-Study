@@ -5,6 +5,7 @@ import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
+import Landing from './components/Landing/Landing';
 import { getUser } from './store/actions/auth';
 import { connect } from 'react-redux';
 import store from './store/index';
@@ -19,7 +20,7 @@ const App = ({ auth }) => {
       <Router>
         <Navbar />
         <Routes>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Landing />} />
           <Route exact path="/signup" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route
