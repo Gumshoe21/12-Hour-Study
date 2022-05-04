@@ -18,7 +18,7 @@ const App = ({ auth }) => {
   return (
     <Fragment>
       <Router>
-        <Navbar />
+        {window.location.pathname !== '/' && <Navbar />}
         <Routes>
           <Route index element={<Landing />} />
           <Route exact path="/signup" element={<Register />} />

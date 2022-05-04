@@ -24,6 +24,7 @@ import {
   Spacer
 } from '@chakra-ui/react';
 
+const bg = window.location.pathname == '/' ? 'none' : 'pink';
 const Navbar = ({ auth, logout }) => {
   const guestLinks = (
     <Fragment>
@@ -44,8 +45,7 @@ const Navbar = ({ auth, logout }) => {
 
       {window.location.pathname === '/dashboard' && <NavbarModal />}
 
-      <ColorModeToggleButton />
-
+      {window.location.pathname === '/dashboard' && <ColorModeToggleButton />}
       <Menu size="lg">
         <MenuButton
           display="inline"
@@ -69,7 +69,7 @@ const Navbar = ({ auth, logout }) => {
   );
 
   return (
-    <Container maxW="100rem">
+    <Container maxW="100vw" bg={bg}>
       <Box mb={5}>
         <Flex h="6rem" alignItems="center" justify="center">
           <HStack as={'nav'} spacing={{ md: 6, base: 2 }} display="flex">
