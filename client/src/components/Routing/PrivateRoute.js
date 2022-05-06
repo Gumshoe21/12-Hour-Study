@@ -8,11 +8,11 @@ const PrivateRoute = ({
   component: Component,
   auth: { isAuthenticated, loading }
 }) => {
-  if (!isAuthenticated) return <Navigate replace to="/login" />;
+  if (!isAuthenticated) return <Navigate replace to="/" />;
   if (loading) return <LoadingScreen />;
   if (isAuthenticated) return <Component />;
 
-  return <Navigate to="/login" />;
+  return <Navigate to="/" />;
 };
 
 PrivateRoute.propTypes = {

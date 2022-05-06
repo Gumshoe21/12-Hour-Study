@@ -33,6 +33,7 @@ export const login =
       dispatch(authSlice.actions.login(res.data));
     } catch (err) {
       console.log(err.response);
+      dispatch(authSlice.actions.loginFail());
     }
   };
 

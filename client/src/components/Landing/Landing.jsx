@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   keyframes,
   Flex,
@@ -7,16 +7,22 @@ import {
   Heading,
   Box,
   Image,
-  Button
+  Button,
+  Link
 } from '@chakra-ui/react';
 import iphoneImg from './iPhone.png';
-
-const Landing = (props) => {
+import { Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+const Landing = ({ auth }) => {
   const fadeIn = keyframes`
     0% { opacity:0; }
     66% { opacity:0; }
     100% { opacity:1; }
 `;
+  if (auth.isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
   return (
     <Box background="linear-gradient(28deg, rgba(2,0,36,1) 0%, rgba(82,0,177,1) 50%, rgba(0,212,255,1) 100%)">
       <Grid
@@ -29,7 +35,7 @@ const Landing = (props) => {
       >
         <Flex
           sx={{
-            animation: `3s ${fadeIn}`
+            animation: `3s ${fadeIn} ease-in `
           }}
           order={{ md: '1', sm: '2' }}
           justify="center"
@@ -47,16 +53,15 @@ const Landing = (props) => {
             color="whiteAlpha.900"
             textAlign="center"
             fontSize={48}
-            animationDelay="2s"
             sx={{
-              animation: `1s ${fadeIn}`
+              animation: `1s ${fadeIn} ease-in`
             }}
           >
             Spend your time wisely.
           </Heading>
           <Text
             sx={{
-              animation: `1.5s ${fadeIn}`
+              animation: `1.5s ${fadeIn} ease-in`
             }}
             fontSize={24}
             textAlign="center"
@@ -70,17 +75,20 @@ const Landing = (props) => {
             align="center"
             justify="center"
             sx={{
-              animation: `2s ${fadeIn}`
+              animation: `2s ${fadeIn} ease-in`
             }}
             gap={8}
           >
-            <Button bg="purple.500" fontSize={18} py={10} px="3rem">
-              Sign Up
-            </Button>
-
-            <Button bg="purple.500" fontSize={18} py={10} px="3rem">
-              Log In
-            </Button>
+            <Link href="/signup">
+              <Button bg="purple.500" fontSize={18} py={10} px="3rem">
+                Sign Up
+              </Button>
+            </Link>
+            <Link href="/login">
+              <Button bg="purple.500" fontSize={18} py={10} px="3rem">
+                Log In
+              </Button>
+            </Link>
           </Flex>
         </Box>
       </Grid>
@@ -88,4 +96,10 @@ const Landing = (props) => {
   );
 };
 
-export default Landing;
+Landing.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps)(Landing);

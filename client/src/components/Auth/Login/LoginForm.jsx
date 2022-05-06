@@ -9,10 +9,12 @@ import {
   Input,
   Button,
   Flex,
-  Text
+  Text,
+  FormErrorMessage,
+  FormHelperText
 } from '@chakra-ui/react';
 
-const LoginForm = ({ login, props }) => {
+const LoginForm = ({ login, auth, props }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -24,12 +26,21 @@ const LoginForm = ({ login, props }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    login({ email, password });
+    console.log(login({ email, password }));
   };
+
+  let loginFailed = auth.loginFailed === true;
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <FormControl>
+      <FormControl isInvalid={loginFailed}>
+        {!loginFailed ? (
+          <FormHelperText></FormHelperText>
+        ) : (
+          <FormErrorMessage fontSize={14} mb={4}>
+            Email and/or password is wrong.
+          </FormErrorMessage>
+        )}
         <VStack spacing={2} mb={10} display="inline-block" maxW="sm">
           <Input
             fontSize={16}
@@ -71,7 +82,8 @@ LoginForm.propTypes = {
 };
 const mapStateToProps = (state, ownProps) => {
   return {
-    props: ownProps
+    props: ownProps,
+    auth: state.auth
   };
 };
 export default connect(mapStateToProps, { login })(LoginForm);

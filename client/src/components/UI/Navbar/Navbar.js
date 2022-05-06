@@ -24,8 +24,8 @@ import {
   Spacer
 } from '@chakra-ui/react';
 
-const bg = window.location.pathname == '/' ? 'none' : 'pink';
 const Navbar = ({ auth, logout }) => {
+  const showNav = auth.isAuthenticated ? 'block' : 'none';
   const guestLinks = (
     <Fragment>
       <Spacer />
@@ -69,7 +69,12 @@ const Navbar = ({ auth, logout }) => {
   );
 
   return (
-    <Container maxW="100vw" bg={bg}>
+    <Container
+      maxW="100vw"
+      sx={{
+        display: `${showNav}`
+      }}
+    >
       <Box mb={5}>
         <Flex h="6rem" alignItems="center" justify="center">
           <HStack as={'nav'} spacing={{ md: 6, base: 2 }} display="flex">

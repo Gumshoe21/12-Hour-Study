@@ -1,8 +1,9 @@
-import { createSlice, isAnyOf, addCase } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isAuthenticated: null,
+    loginFailed: null,
     loading: true,
     user: null
   },
@@ -13,9 +14,13 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     login(state, action) {
+      state.loginFailed = false;
       state.isAuthenticated = true;
       state.loading = false;
       state.user = action.payload;
+    },
+    loginFail(state, action) {
+      state.loginFailed = true;
     },
     logout(state) {
       state.isAuthenticated = false;
