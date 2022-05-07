@@ -1,9 +1,11 @@
 const crypto = require('crypto');
 const { promisify } = require('util'); // utility for promisify method
-
 const gravatar = require('gravatar');
 const normalize = require('normalize-url');
-
+require('@babel/register');
+require('@babel/core').transformSync('code', {
+  presets: ['@babel/preset-react']
+});
 const jwt = require('jsonwebtoken');
 const User = require('./../models/User');
 const catchAsync = require('./../utils/catchAsync');
@@ -11,6 +13,11 @@ const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
 const Timer = require('./../models/Timer');
 const { APIVersion } = './../app';
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const {
+  ForgotPassword
+} = require('./../components/Templates/Email/ForgotPassword.jsx');
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
