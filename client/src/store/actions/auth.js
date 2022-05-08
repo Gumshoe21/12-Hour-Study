@@ -108,8 +108,36 @@ export const forgotPassword =
         body,
         config
       );
-
-      const res = await axios.get(`/api/${APIVERSION}/users/me`);
-      await dispatch(authSlice.actions.register(res.data));
     } catch (err) {}
+  };
+
+export const resetPassword =
+  ({ password, passwordConfirm, token }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    let body = JSON.stringify({ password, passwordConfirm });
+    try {
+      const req = await axios.patch(
+        `/api/${APIVERSION}/users/resetPassword/${token}`,
+        body,
+        config
+      );
+      console.log('hi', req.data.user.email);
+      const email = await req.data.user.email;
+      body = await JSON.stringify({ password, email });
+      const login = await axios.post(
+        `/api/${APIVERSION}/users/login`,
+        body,
+        config
+      );
+      const res = await axios.get(`/api/${APIVERSION}/users/me`);
+      await dispatch(authSlice.actions.login(res.data));
+    } catch (err) {
+      console.log(err);
+      console.log('hi');
+    }
   };

@@ -103,7 +103,6 @@ exports.logout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
   //1) Getting token and check if it's there
 
-  console.log(req.cookies['jwt']);
   let token;
   if (
     req.headers.authorization &&
@@ -176,12 +175,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   try {
     const resetURL = `${req.protocol}://${req.get(
       'host'
-    )}/api/${APIVersion}/users/resetPassword/${resetToken}`;
+    )}/resetPassword/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
     res.status(200).json({
       status: 'success',
       message: 'Token sent to email.'
     });
+    console.log(user);
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
@@ -195,17 +195,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
-  //1) get user based on the token
-  const hashedToken = crypto
-    .createHash('sha256')
-    .update(req.params.token)
-    .digest('hex'); // req.params.token === :token
-
   const user = await User.findOne({
-    passwordResetToken: hashedToken,
+    passwordResetToken: req.params.token,
     passwordResetExpires: { $gt: Date.now() }
   });
-
+  console.log(user);
   //2) if token has not expired and there is a user, set the new password
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));

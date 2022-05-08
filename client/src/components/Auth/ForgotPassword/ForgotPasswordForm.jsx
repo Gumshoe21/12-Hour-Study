@@ -37,7 +37,7 @@ const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
             type="email"
             placeholder="Email Address"
             name="email"
-            value={props.email}
+            value={email}
             height={16}
             onChange={(e) => onChange(e)}
           />

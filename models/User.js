@@ -122,7 +122,7 @@ userSchema.methods.createPasswordResetToken = function () {
   // console.log({ resetToken }, this.passwordResetToken);
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-  return resetToken;
+  return this.passwordResetToken;
 };
 const User = mongoose.model('User', userSchema);
 
