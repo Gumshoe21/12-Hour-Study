@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
-
-// new Email(user, url).sendWelcome();
+const pug = require('pug');
+const { htmlToText } = require('html-to-text');
 
 module.exports = class Email {
   constructor(user, url) {
@@ -8,7 +8,7 @@ module.exports = class Email {
     this.url = url;
     this.from = `Matthew Smilansky <${process.env.EMAIL_FROM}>`;
   }
-  createTransport() {
+  newTransport() {
     if (process.env.NODE_ENV === 'production') {
       return 1;
     }
@@ -22,32 +22,36 @@ module.exports = class Email {
       }
     });
   }
-  send(template, subject) {
+  async send(template, subject) {
     // Send the actual email - Render HTML based on a template
-    res.render('o');
+    const html = pug.renderFile(
+      `${__dirname}/../views/emails/${template}.pug`,
+      {
+        to: this.to,
+        url: this.url,
+        subject
+      }
+    );
     // 2) Define email options
     const mailOptions = {
-      from: 'Matthew Smilansky <msmilansky@gmail.com>',
-      to: options.email,
-      subject: options.subject,
-      text: options.message
+      from: this.from,
+      to: this.to,
+      subject,
+      html,
+      text: htmlToText(html)
       // 3) create transport and send email
     };
+    await this.newTransport().sendMail(mailOptions);
   }
-  sendWelcome() {
-    this.send('welcome', 'Welcome to 12 Hour Study!');
-  }
-};
 
-const sendEmail = async (options) => {
-  // 2) Define the email options
-  const mailOptions = {
-    from: 'Matthew Smilansky <msmilansky@gmail.com>',
-    to: `${user.email}`,
-    subject: options.subject,
-    text: options.message
-    // html:
-  };
-  // 3) Actually send the email
-  await transporter.sendMail(mailOptions);
+  // email actions
+  async sendWelcome() {
+    await this.send('welcome', 'Welcome to 12 Hour Study!');
+  }
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'Reset Your Password - 12 Hour Study (valid for only 10 minutes)'
+    );
+  }
 };

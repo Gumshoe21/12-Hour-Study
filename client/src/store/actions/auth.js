@@ -92,3 +92,24 @@ export const updateUser =
       console.log(err);
     }
   };
+
+export const forgotPassword =
+  ({ email }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const body = JSON.stringify({ email });
+    try {
+      const req = await axios.post(
+        `/api/${APIVERSION}/users/forgotPassword`,
+        body,
+        config
+      );
+
+      const res = await axios.get(`/api/${APIVERSION}/users/me`);
+      await dispatch(authSlice.actions.register(res.data));
+    } catch (err) {}
+  };

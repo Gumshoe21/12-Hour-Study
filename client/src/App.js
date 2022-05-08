@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/UI/Navbar/Navbar';
 import Register from './components/Auth/Register/Register';
 import Login from './components/Auth/Login/Login';
+import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
 import Landing from './components/Landing/Landing';
@@ -23,6 +24,8 @@ const App = ({ auth }) => {
           <Route index element={<Landing />} />
           <Route exact path="/signup" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/forgotpassword" element={<ForgotPassword />} />
+
           <Route
             exact
             path="/profile"
