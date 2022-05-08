@@ -29,7 +29,7 @@
     "morgan": "^1.10.0",
     "nodemailer": ">=6.6.1",
     "normalize-url": "^4.5.1",
-    "pug": "^3.0.2",
+    "pug": "^3.0.1",
     "pug-cli": "^1.0.0-alpha6",
     "slugify": "^1.6.5",
     "validator": "^13.7.0",

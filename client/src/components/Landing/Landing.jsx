@@ -68,8 +68,19 @@ const Landing = ({ auth }) => {
             mb={12}
           >
             Whether you're doing homework, studying for a test, or learning just
-            for the heck of it, <em>12 Hour Study</em> gives you the time of
-            day.
+            for the heck of it,{' '}
+            <Text
+              display="inline"
+              color="transparent"
+              fontWeight="bold"
+              bg="linear-gradient(to right, rgb(72, 187, 120), rgb(246, 224, 94))"
+              sx={{
+                '-webkit-background-clip': 'text'
+              }}
+            >
+              <em>12 Hour Study</em>
+            </Text>{' '}
+            gives you the time of day.
           </Text>
           <Flex
             align="center"
