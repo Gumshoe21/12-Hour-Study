@@ -4,6 +4,7 @@ const authSlice = createSlice({
   initialState: {
     isAuthenticated: false,
     loginFailed: null,
+    emailNotFound: null,
     loading: true,
     user: null
   },
@@ -21,6 +22,9 @@ const authSlice = createSlice({
     },
     loginFail(state, action) {
       state.loginFailed = true;
+    },
+    emailNotFound(state, action) {
+      state.emailNotFound = action.payload;
     },
     logout(state) {
       state.isAuthenticated = false;

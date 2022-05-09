@@ -26,7 +26,7 @@ const LoginForm = ({ login, auth, props }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(login({ email, password }));
+    login({ email, password });
   };
 
   let loginFailed = auth.loginFailed === true;
@@ -41,7 +41,7 @@ const LoginForm = ({ login, auth, props }) => {
             Email and/or password is wrong.
           </FormErrorMessage>
         )}
-        <VStack spacing={2} mb={10} display="inline-block" maxW="sm">
+        <VStack spacing={2} mb={4} display="inline-block" maxW="sm">
           <Input
             fontSize={16}
             type="email"
@@ -66,11 +66,18 @@ const LoginForm = ({ login, auth, props }) => {
           </Button>
         </VStack>
       </FormControl>
-      <Flex justify="center">
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        textDecoration="underline"
+        gap={4}
+      >
         <Link to="/signup">
-          <Text underline={2} fontSize={16}>
-            Not Registered? Sign Up Here
-          </Text>
+          <Text fontSize={16}>Not Registered? Sign Up Here</Text>
+        </Link>
+        <Link to="/forgotpassword">
+          <Text fontSize={16}>Forgot Your Password?</Text>
         </Link>
       </Flex>
     </form>

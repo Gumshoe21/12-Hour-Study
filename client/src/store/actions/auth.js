@@ -108,7 +108,10 @@ export const forgotPassword =
         body,
         config
       );
-    } catch (err) {}
+      await dispatch(authSlice.actions.emailNotFound(false));
+    } catch (err) {
+      await dispatch(authSlice.actions.emailNotFound(true));
+    }
   };
 
 export const resetPassword =
@@ -126,7 +129,6 @@ export const resetPassword =
         body,
         config
       );
-      console.log('hi', req.data.user.email);
       const email = await req.data.user.email;
       body = await JSON.stringify({ password, email });
       const login = await axios.post(

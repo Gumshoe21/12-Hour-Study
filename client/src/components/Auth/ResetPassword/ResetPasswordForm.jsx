@@ -25,7 +25,7 @@ const ResetPasswordForm = ({ resetPassword, auth, props }) => {
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <FormControl>
-        <VStack spacing={2} mb={10} display="inline-block" maxW="sm">
+        <VStack spacing={2} mb={4} display="inline-block" maxW="sm">
           <Input
             fontSize={16}
             type="password"

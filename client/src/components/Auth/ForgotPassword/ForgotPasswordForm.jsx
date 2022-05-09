@@ -28,10 +28,19 @@ const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
     forgotPassword({ email });
   };
 
+  let emailNotFound = auth.emailNotFound === true;
+
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <FormControl>
-        <VStack spacing={2} mb={10} display="inline-block" maxW="sm">
+      <FormControl isInvalid={emailNotFound}>
+        {!emailNotFound ? (
+          <FormHelperText></FormHelperText>
+        ) : (
+          <FormErrorMessage fontSize={14} mb={4}>
+            Email not found.
+          </FormErrorMessage>
+        )}
+        <VStack spacing={8} mb={4} display="inline-block" maxW="sm">
           <Input
             fontSize={16}
             type="email"
@@ -46,19 +55,18 @@ const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
           </Button>
         </VStack>
       </FormControl>
-      <Flex justify="center">
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        gap={4}
+        textDecoration="underline"
+      >
         <Link to="/login">
-          <Text underline={2} fontSize={16}>
-            Back to Log In
-          </Text>
+          <Text fontSize={16}>Back to Log In</Text>
         </Link>
-      </Flex>
-
-      <Flex justify="center">
         <Link to="/signup">
-          <Text underline={2} fontSize={16}>
-            Not Registered? Sign Up Here
-          </Text>
+          <Text fontSize={16}>Not Registered? Sign Up Here</Text>
         </Link>
       </Flex>
     </form>

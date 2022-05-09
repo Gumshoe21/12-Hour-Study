@@ -162,11 +162,15 @@ const RegisterForm = ({ register }) => {
           Sign Up
         </Button>
       </VStack>
-      <Flex justify="center">
+      <Flex
+        direction="column"
+        justify="center"
+        align="center"
+        gap={4}
+        textDecoration="underline"
+      >
         <Link to="/login">
-          <Text underline={2} fontSize={16}>
-            Already registered? Log In Here
-          </Text>
+          <Text fontSize={16}>Already Registered? Log In Here</Text>
         </Link>
       </Flex>
     </form>
