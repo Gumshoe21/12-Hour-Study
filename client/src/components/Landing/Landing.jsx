@@ -26,56 +26,59 @@ const Landing = ({ auth }) => {
   return (
     <Box background="linear-gradient(28deg, rgba(2,0,36,1) 0%, rgba(82,0,177,1) 50%, rgba(0,212,255,1) 100%)">
       <Grid
-        padding="0 6.4rem"
+        padding={{ md: '3.2rem 6.4rem', base: '0 0 ' }}
         templateColumns={{ md: '1fr 1fr', sm: '1fr' }}
         alignItems="center"
         margin="0 auto"
         maxW="130rem"
         h="100vh"
+        gap={{ base: '4rem', md: '0' }}
       >
-        <Flex
-          sx={{
-            animation: `3s ${fadeIn} ease-in `
-          }}
-          order={{ md: '1', sm: '2' }}
-          justify="center"
-          align="center"
-        >
-          <Image w="50%" src={iphoneImg} />
-        </Flex>
+        <Image
+          w={{ md: '50%', base: '25%' }}
+          justifySelf="center"
+          alignSelf={{ md: 'center', base: 'flex-end' }}
+          src={iphoneImg}
+        />
         <Box
           alignSelf={{ md: 'center', sm: 'flex-end' }}
           color="#fff"
           order={{ md: '2', sm: '1' }}
+          alignSelf={{ md: 'center', sm: 'flex-start' }}
         >
           <Heading
-            mb={4}
+            mb="3.2rem"
             color="whiteAlpha.900"
             textAlign="center"
-            fontSize={48}
+            letterSpacing=".3rem"
+            fontFamily="Raleway, open-sans"
+            fontSize={{ md: '7.2rem', base: '4.8rem' }}
+            lineHeight="6rem"
             sx={{
               animation: `1s ${fadeIn} ease-in`
             }}
           >
-            Spend your time wisely.
+            Time is of the essence.
           </Heading>
           <Text
             sx={{
               animation: `1.5s ${fadeIn} ease-in`
             }}
-            fontSize={24}
+            fontSize={{ md: 24, base: 16 }}
             textAlign="center"
-            mb={12}
+            mb="3.2rem"
+            fontFamily="Inter, open-sans"
+            lineHeight="3.5rem"
+            sx={{
+              'word-spacing': '.5rem'
+            }}
           >
-            Whether you're doing homework, studying for a test, or learning just
-            for the heck of it,{' '}
+            Whether you're working, studying, or learning just for the heck of
+            it,{' '}
             <Text
               display="inline"
-              color="transparent"
-              fontWeight="bold"
-              bg="linear-gradient(to right, rgb(72, 187, 120), rgb(246, 224, 94))"
               sx={{
-                '-webkit-background-clip': 'text'
+                'word-spacing': '.1rem'
               }}
             >
               <em>12 Hour Study</em>

@@ -4,6 +4,9 @@ import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import store from './store/index';
+import '@fontsource/inter/700.css';
+import '@fontsource/source-sans-pro/400.css';
+import '@fontsource/raleway/600.css';
 
 // COLORS
 const buttonBgDark = 'purple.700';
