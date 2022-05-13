@@ -94,12 +94,24 @@ const Landing = ({ auth }) => {
             gap={8}
           >
             <Link href="/signup">
-              <Button bg="purple.500" fontSize={18} py={10} px="3rem">
+              <Button
+                bg="purple.500"
+                borderRadius="25px"
+                fontSize={18}
+                py={10}
+                px="5rem"
+              >
                 Sign Up
               </Button>
             </Link>
             <Link href="/login">
-              <Button bg="purple.500" fontSize={18} py={10} px="3rem">
+              <Button
+                bg="purple.500"
+                borderRadius="25px"
+                fontSize={18}
+                py={10}
+                px="5rem"
+              >
                 Log In
               </Button>
             </Link>
