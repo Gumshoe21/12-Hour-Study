@@ -15,7 +15,7 @@ import Countdown from './Countdown';
 import { Box } from '@chakra-ui/react';
 
 import sound from './../../utils/audioPlayer.js';
-const tickingSound = sound('./../../../audio/tick.mp3', undefined, true);
+const tickingSound = sound('./../../../audio/tick.m4a', undefined, true);
 
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
