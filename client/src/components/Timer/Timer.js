@@ -1,21 +1,26 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-  Fragment
-} from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+
 import { connect, useDispatch } from 'react-redux';
+
 import PropTypes from 'prop-types';
 
 import timerSlice from '../../store/slices/timer';
+
 import SwitchTimer from './SwitchTimer.js/SwitchTimer';
 import TimerToggleButton from './TimerToggleButton';
 import TimerBox from './TimerBox';
 import ProgressBar from './ProgressBar';
 import Round from './Round';
 import Countdown from './Countdown';
-import { Spinner, Box } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+
+import sound from './../../utils/audioPlayer.js';
+const tickingSound = sound(
+  './../../../audio/clock_ticking_60bpm.mp3',
+  undefined,
+  true
+);
+
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
 
@@ -95,6 +100,12 @@ const Timer = ({ timer, auth }) => {
 
   const setTickingHandler = () => {
     dispatch(setTicking(timer.ticking === true ? false : true));
+    if (timer.ticking) {
+      tickingSound.pause();
+      tickingSound.currentTime = 0;
+    } else if (!timer.ticking) {
+      tickingSound.play();
+    }
   };
 
   const tick = useCallback(() => {

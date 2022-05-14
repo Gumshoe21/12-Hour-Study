@@ -1,14 +1,9 @@
 import { Box, Progress } from '@chakra-ui/react';
 
-const ProgressBar = (props) => {
+const ProgressBar = ({ max, value }) => {
   return (
     <Box mb={8}>
-      <Progress
-        size="xs"
-        colorScheme="purple"
-        max={props.max}
-        value={props.value}
-      />
+      <Progress size="xs" colorScheme="purple" max={max} value={value} />
     </Box>
   );
 };
