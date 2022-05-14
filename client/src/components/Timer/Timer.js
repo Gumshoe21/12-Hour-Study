@@ -101,12 +101,14 @@ const Timer = ({ timer, auth }) => {
   const setTickingHandler = async () => {
     dispatch(setTicking(timer.ticking === true ? false : true));
 
+    buttonSound.play();
     if (timer.ticking) {
       tickingSound.stop();
     } else if (!timer.ticking) {
-      setTimeout(buttonSound.play(), 1000);
-      tickingSound.stop();
-      tickingSound.play();
+      await new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
+        tickingSound.stop();
+        tickingSound.play();
+      });
     }
   };
 
