@@ -5,16 +5,22 @@ const sound = (src, volume = 1, loop) => {
 
   if (audio.ended) {
     if (audio.loop) {
+      audio.currentTime = 0;
       audio.play();
     }
   }
 
   const play = () => {
-    audio.play();
+    if (audio.paused) {
+      audio.play();
+    }
   };
 
-  const pause = () => {
-    audio.pause();
+  const stop = () => {
+    if (audio.loop) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
   };
 
   const setVolume = (val) => {
@@ -31,7 +37,7 @@ const sound = (src, volume = 1, loop) => {
 
   return {
     play,
-    pause,
+    stop,
     setVolume,
     setSource,
     mute

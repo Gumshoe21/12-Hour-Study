@@ -43,9 +43,9 @@ const Navbar = ({ auth, logout }) => {
       <Spacer />
       <NavLink to="/dashboard" text="Dashboard" />
 
-      {window.location.pathname === '/dashboard' && <NavbarModal />}
+      <NavbarModal />
 
-      {window.location.pathname === '/dashboard' && <ColorModeToggleButton />}
+      <ColorModeToggleButton />
       <Menu size="lg">
         <MenuButton
           display="inline"

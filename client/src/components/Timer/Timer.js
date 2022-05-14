@@ -16,7 +16,11 @@ import { Box } from '@chakra-ui/react';
 
 import sound from './../../utils/audioPlayer.js';
 const tickingSound = sound('./../../../audio/tick.m4a', undefined, true);
-
+const buttonSound = sound(
+  './../../../audio/button_click.mp3',
+  undefined,
+  false
+);
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
 
@@ -94,12 +98,14 @@ const Timer = ({ timer, auth }) => {
     timer.round
   ]);
 
-  const setTickingHandler = () => {
+  const setTickingHandler = async () => {
     dispatch(setTicking(timer.ticking === true ? false : true));
+
     if (timer.ticking) {
-      tickingSound.pause();
-      tickingSound.currentTime = 0;
+      tickingSound.stop();
     } else if (!timer.ticking) {
+      setTimeout(buttonSound.play(), 1000);
+      tickingSound.stop();
       tickingSound.play();
     }
   };
