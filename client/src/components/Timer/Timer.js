@@ -34,29 +34,33 @@ const Timer = ({ timer, auth }) => {
   } = timerSlice.actions;
 
   const tickingIntervalRef = useRef(null);
+
   const [timeLeft, setTimeLeft] = useState(
     timer.modes[timer.activeMode].length * 60
-    //2
   );
 
+  // gotta udpate the reports before this fires
   const updateActiveModeLength = useEffect(() => {
     setTimeLeft((timeLeft) => timer.modes[timer.activeMode].length * 60);
-    dispatch(setTicking(false));
   }, [timer.modes[timer.activeMode].length]);
 
+  // update reports before this fires
   const clearTimer = () => {
     clearInterval(tickingIntervalRef.current);
     tickingIntervalRef.current = null;
   };
 
   const switchTimerMode = (e) => {
+    if (!tickingSound.paused) tickingSound.stop();
     dispatch(setTicking(false));
+    /* 
+    
+    here's the ticket
+
+    */
     dispatch(clearProgress());
     dispatch(setActiveMode(e.target.value));
-    console.log(e.target.value);
-    // setTimeLeft(timer.modes[e.target.value].length * 60);
-    setTimeLeft(2);
-    console.log(timeLeft);
+    setTimeLeft(timer.modes[e.target.value].length * 60);
   };
 
   const onNoTimeLeft = (mode, reset = null) => {
@@ -67,7 +71,8 @@ const Timer = ({ timer, auth }) => {
 
   const timerComplete = useEffect(() => {
     if (timeLeft === 0) {
-      clearProgress();
+      // update reports
+      dispatch(clearProgress());
       if (
         timer.activeMode === 'session' &&
         timer.round === timer.longBreakInterval
@@ -135,6 +140,7 @@ const Timer = ({ timer, auth }) => {
   const setProgressHandler = useEffect(() => {
     if (timer.ticking) {
       dispatch(incrementProgress());
+      console.log(timer.modes[timer.activeMode].progress);
     }
   }, [tick, dispatch, incrementProgress, timer.ticking]);
 

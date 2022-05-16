@@ -4,7 +4,7 @@ import { OwlIcon } from './OwlIcon';
 
 const Logo = () => {
   return (
-    <Link href="/">
+    <Link href="/dashboard">
       <Flex align="center" justify="center" columnGap={2}>
         <OwlIcon w={10} h={10} fill="purple.800" />
         <Text fontSize={14} fontWeight="700">

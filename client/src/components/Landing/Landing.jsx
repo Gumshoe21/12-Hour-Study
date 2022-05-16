@@ -39,6 +39,9 @@ const Landing = ({ auth }) => {
           justifySelf="center"
           alignSelf={{ md: 'center', base: 'flex-end' }}
           src={iphoneImg}
+          sx={{
+            animation: `3s ${fadeIn} ease-in`
+          }}
         />
         <Box
           alignSelf={{ md: 'center', sm: 'flex-end' }}
@@ -70,6 +73,7 @@ const Landing = ({ auth }) => {
             fontFamily="Inter, open-sans"
             lineHeight="3.5rem"
             sx={{
+              animation: `2s ${fadeIn} ease-in`,
               'word-spacing': '.5rem'
             }}
           >
