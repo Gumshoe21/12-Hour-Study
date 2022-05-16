@@ -45,6 +45,8 @@ const Profile = ({ auth }) => {
               <Avatar
                 h="128px"
                 w="128px"
+                borderRadius="none"
+                objectFit="contain"
                 name="Matthew Smilansky"
                 src={auth.user.avatar}
               />

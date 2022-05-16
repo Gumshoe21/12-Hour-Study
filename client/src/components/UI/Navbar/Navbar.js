@@ -55,7 +55,11 @@ const Navbar = ({ auth, logout }) => {
           cursor={'pointer'}
           minW={0}
         >
-          <Avatar size={'md'} src={auth.isAuthenticated && auth.user.avatar} />
+          <Avatar
+            size={'md'}
+            borderRadius="none"
+            src={auth.isAuthenticated && auth.user.avatar}
+          />
         </MenuButton>
         <MenuList fontSize="1.4rem" size="lg">
           <Link as={ReactLink} to="/profile">
