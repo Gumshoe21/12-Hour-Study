@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
 // HANDLING UNCAUGHT EXCEPTIONS
-// we put this at the top so that it can catch any errors that come only after its declaration 
+// we put this at the top so that it can catch any errors that come only after its declaration
 process.on('uncaughtException', (err) => {
   console.log(err);
   console.log('UNHANDLED EXCEPTION; SHUTTING DOWN...');
@@ -22,7 +22,7 @@ mongoose
   .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false,
+    useFindAndModify: false
   })
   // if we don't add a catch() here we will get an Unhandled Promise Rejection if there's an error
   .then((con) => console.log('DB connection succesful!'));
@@ -48,7 +48,7 @@ testTour.save().then(doc => {
 // variables set by node
 // console.log(process.env);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
