@@ -12,12 +12,10 @@ process.on('uncaughtException', (err) => {
 dotenv.config({ path: 'config.env' });
 
 // this is the link that mongoDB supplies us with so we can connect to the database
-/*
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 );
-*/
 
 mongoose
   // LOCAL DB: .connect(process.env.DATABASE_LOCAL, {
