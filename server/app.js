@@ -65,7 +65,9 @@ app.get('/', function (req, res, next) {
 */
 app.use(`/api/${APIVersion}/users`, userRouter);
 app.use(`/api/${APIVersion}/timers/`, timerRouter);
-app.get('/', (req, res) => { res.send('Hello from Express!')
+app.get('/', (req, res) => {
+  res.send('Hello from Express!');
+});
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find URL ${req.originalUrl} on this server`, 404));
 });
