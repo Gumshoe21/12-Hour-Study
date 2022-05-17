@@ -8,7 +8,8 @@
     "start": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb starter/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && npm run build",
+    "build": "node server.js"
   },
   "author": "Matthew Smilansky",
   "license": "MIT",
