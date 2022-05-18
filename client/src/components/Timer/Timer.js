@@ -39,10 +39,11 @@ const Timer = ({ timer, auth }) => {
     timer.modes[timer.activeMode].length * 60
   );
 
+  const timerActiveModeLength = [timer.modes[timer.activeMode].length];
   // gotta udpate the reports before this fires
   const updateActiveModeLength = useEffect(() => {
     setTimeLeft((timeLeft) => timer.modes[timer.activeMode].length * 60);
-  }, [timer.modes[timer.activeMode].length]);
+  }, [timerActiveModeLength, timer.activeMode, timer.modes]);
 
   // update reports before this fires
   const clearTimer = () => {
@@ -142,7 +143,14 @@ const Timer = ({ timer, auth }) => {
       dispatch(incrementProgress());
       console.log(timer.modes[timer.activeMode].progress);
     }
-  }, [tick, dispatch, incrementProgress, timer.ticking]);
+  }, [
+    tick,
+    dispatch,
+    incrementProgress,
+    timer.ticking,
+    timer.activeMode,
+    timer.modes
+  ]);
 
   /*
   console.log(`time left: ${timeLeft}`);

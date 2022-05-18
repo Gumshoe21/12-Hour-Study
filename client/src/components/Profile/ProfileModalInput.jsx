@@ -1,16 +1,7 @@
 import React, { forwardRef } from 'react';
-import {
-  Flex,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
-  useColorModeValue
-} from '@chakra-ui/react';
+import { Flex, Input, InputGroup, InputLeftAddon } from '@chakra-ui/react';
 
 const NavbarModalInput = forwardRef((props, ref) => {
-  const numberInputBgColor = useColorModeValue('gray.200', 'gray.600');
-
   return (
     <Flex
       justifyContent="space-between"

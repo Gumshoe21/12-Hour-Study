@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { Flex, IconButton, Heading, Link, Icon } from '@chakra-ui/react';
+import React from 'react';
+import { Link, Icon } from '@chakra-ui/react';
 
 const SocialLink = (props) => {
   return (

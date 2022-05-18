@@ -1,4 +1,4 @@
-import { Box, Flex, FormErrorMessage, FormHelperText } from '@chakra-ui/react';
+import { Flex, FormErrorMessage, FormHelperText } from '@chakra-ui/react';
 
 export const hasErrors = (errors) => {
   return errors.length !== 0;
@@ -12,7 +12,6 @@ const ErrorMessage = (props) => {
         <Flex direction="column" fontSize={12}>
           {Array.from(errors).map((err) => {
             return <FormErrorMessage fontSize={14}>{err}</FormErrorMessage>;
-            <br></br>;
           })}
         </Flex>
       ) : (

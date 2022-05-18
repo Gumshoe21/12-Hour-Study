@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -8,17 +8,10 @@ import {
   Avatar,
   WrapItem,
   Text,
-  useColorModeValue,
-  IconButton
+  useColorModeValue
 } from '@chakra-ui/react';
-import {
-  FaGithubSquare,
-  FaTwitterSquare,
-  FaInstagram,
-  FaTwitch
-} from 'react-icons/fa';
+import { FaGithubSquare, FaTwitterSquare } from 'react-icons/fa';
 import SocialLink from './SocialLink';
-import { EditIcon } from '@chakra-ui/icons';
 import ProfileModal from './ProfileModal';
 
 const Profile = ({ auth }) => {

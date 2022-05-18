@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   keyframes,
   Flex,
@@ -47,7 +47,6 @@ const Landing = ({ auth }) => {
           alignSelf={{ md: 'center', sm: 'flex-end' }}
           color="#fff"
           order={{ md: '2', sm: '1' }}
-          alignSelf={{ md: 'center', sm: 'flex-start' }}
         >
           <Heading
             mb="3.2rem"
@@ -65,17 +64,15 @@ const Landing = ({ auth }) => {
           </Heading>
           <Text
             sx={{
-              animation: `1.5s ${fadeIn} ease-in`
+              animation: `1.5s ${fadeIn} ease-in`,
+
+              'word-spacing': '.5rem'
             }}
             fontSize={{ md: 24, base: 16 }}
             textAlign="center"
             mb="3.2rem"
             fontFamily="Inter, open-sans"
             lineHeight="3.5rem"
-            sx={{
-              animation: `2s ${fadeIn} ease-in`,
-              'word-spacing': '.5rem'
-            }}
           >
             Whether you're working, studying, or learning just for the heck of
             it,{' '}

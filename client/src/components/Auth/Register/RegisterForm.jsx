@@ -8,9 +8,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text,
-  FormErrorMessage,
-  FormHelperText
+  Text
 } from '@chakra-ui/react';
 import { register } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
@@ -82,7 +80,6 @@ const RegisterForm = ({ register }) => {
     passwordConfirm: passwordConfirmErrors
   } = errorsObject;
 
-  const arrayEmailErrors = Array.from(emailErrors);
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <VStack
