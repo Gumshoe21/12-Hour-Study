@@ -1,1 +1,1 @@
-/api/_ https://twelvehourstudy.herokuapp.com/:splat 200 /_ /index.html 200
+/api/\* https://twelvehourstudy.herokuapp.com/:splat 200
