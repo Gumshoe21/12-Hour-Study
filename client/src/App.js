@@ -25,7 +25,7 @@ const App = ({ auth }) => {
         <Routes>
           <Route index element={<Landing />} />
           <Route exact path="/signup" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
           <Route
             exact
