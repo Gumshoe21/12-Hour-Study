@@ -13,6 +13,8 @@ const globalErrorHandler = require('./controllers/errorController');
 const timerRouter = require('./routes/timerRoutes');
 const userRouter = require('./routes/userRoutes');
 
+const { DATABASE } = process.env;
+
 const app = express();
 app.use(cors({ origin: 'https://12hourstudy.netlify.app' }));
 app.set('view engine', 'pug');
@@ -27,8 +29,6 @@ app.use(helmet());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-
-const { DATABASE } = process.env;
 
 const limiter = rateLimit({
   max: 100,
