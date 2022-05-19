@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const { DATABASE } = lprocess.env;
+const { DATABASE } = process.env;
 
 const limiter = rateLimit({
   max: 100,
