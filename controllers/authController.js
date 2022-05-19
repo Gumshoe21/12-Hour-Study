@@ -70,7 +70,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   newTimer.save();
 
   const url = 0;
-  await new Email(newUser, url).sendWelcome();
+  // await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
 });
