@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Flex } from '@chakra-ui/react';
 import LoginForm from './LoginForm';
 
+import { login } from '../../../store/actions/auth';
 const Login = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Navigate to="/dashboard" />;
@@ -42,4 +43,4 @@ const mapStateToProps = (state, ownProps) => {
     props: ownProps
   };
 };
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, { login })(Login);

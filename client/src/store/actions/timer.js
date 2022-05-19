@@ -7,7 +7,7 @@ export const getUserTimer =
   async (dispatch) => {
     try {
       const res = await axios.get(
-        `/api/${APIVERSION}/timers/getCurrentUserTimer`
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`
       );
       await dispatch(timerSlice.actions.getTimer(res.data));
       console.log(res.data);
@@ -40,12 +40,12 @@ export const updateTimer =
     });
     try {
       const req = await axios.patch(
-        `/api/v1/timers/${auth.user.timer._id}`,
+        `${process.env.REACT_APP_API_URL}/api/v1/timers/${auth.user.timer._id}`,
         body,
         config
       );
       const res = await axios.get(
-        `/api/${APIVERSION}/timers/getCurrentUserTimer`
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`
       );
       dispatch(timerSlice.actions.updateTimer(res.data));
     } catch (err) {
