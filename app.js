@@ -7,14 +7,14 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const hpp = require('hpp');
-const cors = require('cors')
+const cors = require('cors');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const timerRouter = require('./routes/timerRoutes');
 const userRouter = require('./routes/userRoutes');
 
 const app = express();
-app.use(cors({origin: 'https://12hourstudy.netlify.app'}))
+app.use(cors({ origin: 'https://12hourstudy.netlify.app' }));
 app.set('view engine', 'pug');
 // setting dir for pug views
 app.set('views', path.join(__dirname, 'views'));
