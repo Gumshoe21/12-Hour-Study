@@ -30,7 +30,7 @@ export const login =
         body,
         config
       );
-
+      // testing
       const req = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
       );
