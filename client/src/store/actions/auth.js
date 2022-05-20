@@ -30,10 +30,11 @@ export const login =
         body,
         config
       );
-
+      /*
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
       );
+      */
       dispatch(authSlice.actions.login(res.data));
     } catch (err) {
       console.log(err.response);
