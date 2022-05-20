@@ -35,7 +35,7 @@ export const login =
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
       );
       */
-      dispatch(authSlice.actions.login(res.data));
+      dispatch(authSlice.actions.login(req.data));
     } catch (err) {
       console.log(err.response);
       dispatch(authSlice.actions.loginFail());
