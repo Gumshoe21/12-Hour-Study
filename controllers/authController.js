@@ -14,7 +14,7 @@ const Email = require('./../utils/email');
 
 const signToken = (id) => {
   return jwt.sign({ id }, `${process.env.JWT_SECRET}`, {
-    expiresIn: new Date(`${process.env.JWT_COOKIE_EXPIRES_IN}`)
+    expiresIn: 60 * 60
   });
 };
 
@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
   const cookieOptions = {
-    expires: `${process.env.JWT_COOKIE_EXPIRES_IN}`,
+    expires: 60 * 60,
     httpOnly: true // so cookie cna't be modified or accessed by browser at all
   };
 
@@ -66,6 +66,9 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   newTimer.user = newUser._id;
   newTimer.save();
+
+  const url = 0;
+  // await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
 });
