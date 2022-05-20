@@ -13,8 +13,8 @@ const { APIVersion } = './../app';
 const Email = require('./../utils/email');
 
 const signToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '90d'
+  return jwt.sign({ id }, `${process.env.JWT_SECRET}`, {
+    expiresIn: 60 * 60
   });
 };
 
