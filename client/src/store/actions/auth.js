@@ -25,16 +25,16 @@ export const login =
     };
     const body = JSON.stringify({ email, password });
     try {
-      await axios.post(
+      const req = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/login`,
         body,
         config
       );
-      // testing
-      const req = await axios.get(
+
+      const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
       );
-      dispatch(authSlice.actions.login(req.data));
+      dispatch(authSlice.actions.login(res.data));
     } catch (err) {
       console.log(err.response);
       dispatch(authSlice.actions.loginFail());
