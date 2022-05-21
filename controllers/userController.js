@@ -94,7 +94,7 @@ exports.getUser = catchAsync(async (req, res, next) => {
 
     // res.json(user);
 
-    createSendToken(newUser, 201, req, res);
+    createSendToken(user, 201, req, res);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
