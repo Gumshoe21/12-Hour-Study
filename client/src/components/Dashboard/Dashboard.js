@@ -6,6 +6,7 @@ import { Container, Flex } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUserTimer } from './../../store/actions/timer';
+import { getUser } from './../store/actions/user';
 import store from './../../store/index';
 import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 
