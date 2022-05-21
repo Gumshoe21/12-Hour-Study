@@ -7,7 +7,12 @@ export const getUserTimer =
   async (dispatch) => {
     try {
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
       );
       await dispatch(timerSlice.actions.getTimer(res.data));
       console.log(res.data);
