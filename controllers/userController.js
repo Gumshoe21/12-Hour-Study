@@ -68,6 +68,19 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 exports.getUser = catchAsync(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).populate('timer', '_id');
+let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies['jwt']) {
+    token = req.cookies['jwt'];
+  }
+
+
+    res.cookie('jwt', token, { httpOnly: true})
+    
     res.json(user);
   } catch (err) {
     console.error(err.message);
