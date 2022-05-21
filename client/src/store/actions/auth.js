@@ -35,7 +35,8 @@ export const login =
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
         {
           headers: {
-            Authorization: `Bearer ${req.data.token}`
+            Authorization: `Bearer ${req.data.token}`,
+            'Access-Control-Allow-Credentials': true
           },
           withCredentials: true
         }
