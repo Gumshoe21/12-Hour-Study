@@ -25,6 +25,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 */
 
 exports.getMe = (req, res, next) => {
+  console.log(req);
   req.params.id = req.user.id;
   next();
 };
