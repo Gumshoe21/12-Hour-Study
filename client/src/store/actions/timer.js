@@ -5,6 +5,7 @@ import { APIVERSION } from './../../constants/index';
 export const getUserTimer =
   ({ user }) =>
   async (dispatch) => {
+    console.log(user);
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
