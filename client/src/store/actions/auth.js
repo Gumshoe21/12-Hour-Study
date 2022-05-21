@@ -30,10 +30,14 @@ export const login =
         body,
         config
       );
-      console.log(req);
+      console.log(req.data.token);
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
-        { withCredentials: false }
+        {
+          headers: {
+            Authrization: `Bearer ${req.data.token}`
+          }
+        }
       );
 
       dispatch(authSlice.actions.login(req.data));
