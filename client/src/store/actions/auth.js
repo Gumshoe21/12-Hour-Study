@@ -40,7 +40,7 @@ export const login =
         }
       );
 
-      dispatch(authSlice.actions.login(req.data));
+      dispatch(authSlice.actions.login(res.data));
     } catch (err) {
       console.log(err);
       dispatch(authSlice.actions.loginFail());
