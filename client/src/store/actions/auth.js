@@ -31,6 +31,7 @@ export const login =
         body,
         config
       );
+      /*
       console.log(req.data.token);
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
@@ -40,6 +41,7 @@ export const login =
           }
         }
       );
+      */
       dispatch(authSlice.actions.login(req.data.user));
     } catch (err) {
       console.log(err);
