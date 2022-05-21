@@ -15,9 +15,11 @@ import PropTypes from 'prop-types';
 import PrivateRoute from './components/Routing/PrivateRoute';
 
 const App = ({ auth }) => {
+  /*
   useEffect(() => {
     store.dispatch(getUser());
   }, []); // only run once with [] - this effectively makes it a componentDidMount() function
+  */
   return (
     <Fragment>
       <Router>
