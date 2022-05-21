@@ -41,6 +41,8 @@ export const login =
         }
       );
 */
+      console.log(req);
+      await cookies.set('jwt', req.data.token, { httpOnly: secure });
       dispatch(authSlice.actions.login(req.data.user));
     } catch (err) {
       console.log(err);
