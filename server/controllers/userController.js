@@ -2,7 +2,30 @@ const User = require('./../models/User');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
+const signToken = (id) => {
+  return jwt.sign({ id }, `${process.env.JWT_SECRET}`, {
+    expiresIn: 60 * 60
+  });
+};
 
+const createSendToken = (user, statusCode, req, res) => {
+  const token = signToken(user.id);
+
+  const cookieOptions = {
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    httpOnly: true
+  };
+
+  res.cookie('jwt', token, cookieOptions);
+  // remove password from output
+  user.password = undefined;
+
+  res.status(statusCode).json({
+    status: 'success',
+    token,
+    user
+  });
+};
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -68,24 +91,13 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 exports.getUser = catchAsync(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).populate('timer', '_id');
-let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies['jwt']) {
-    token = req.cookies['jwt'];
-  }
 
-
-    res.cookie('jwt', token, { httpOnly: true})
-    
-    res.json(user);
+    // res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+  createSendToken(newUser, 201, req, res);
 });
 
 exports.createUser = (req, res) => {
