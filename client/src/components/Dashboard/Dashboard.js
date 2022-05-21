@@ -10,13 +10,12 @@ import store from './../../store/index';
 import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 
 const Dashboard = ({ auth, timer }) => {
-  /*
   useEffect(() => {
     if (auth.user) {
       store.dispatch(getUserTimer(auth.user));
     }
   }, [auth.user]);
-*/
+
   return (
     <Fragment>
       {!auth.isAuthenticated && <Navigate to="/" />}
