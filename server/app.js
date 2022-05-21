@@ -18,7 +18,13 @@ const { DATABASE } = process.env;
 const app = express();
 app.use(cookieParser());
 app.enable('trust proxy');
-app.use(cors({ origin: 'https://12hourstudy.netlify.app' }));
+app.use(
+  cors({
+    origin: 'https://12hourstudy.netlify.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+  })
+);
 app.options('*', cors());
 app.set('view engine', 'pug');
 // setting dir for pug views
