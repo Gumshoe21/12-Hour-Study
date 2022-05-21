@@ -19,9 +19,7 @@ export const login =
   ({ email, password }) =>
   async (dispatch) => {
     const config = {
-      withCredentials: true,
       headers: {
-        'Access-Control-Allow-Credentials': true,
         'Content-Type': 'application/json'
       }
     };
@@ -34,7 +32,8 @@ export const login =
       );
       console.log(req);
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
+        { withCredentials: true }
       );
 
       dispatch(authSlice.actions.login(req.data));
