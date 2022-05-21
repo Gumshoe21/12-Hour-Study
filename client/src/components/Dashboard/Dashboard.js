@@ -10,11 +10,16 @@ import store from './../../store/index';
 import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 
 const Dashboard = ({ auth, timer }) => {
+  /* 
   useEffect(() => {
     if (auth.user) {
       store.dispatch(getUserTimer(auth.user));
     }
   }, [auth.user]);
+*/
+  useEffect(() => {
+    store.dispatch(getUser());
+  }, []);
 
   return (
     <Fragment>
