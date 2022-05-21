@@ -36,7 +36,8 @@ export const login =
         {
           headers: {
             Authorization: `Bearer ${req.data.token}`
-          }
+          },
+          withCredentials: true
         }
       );
 
