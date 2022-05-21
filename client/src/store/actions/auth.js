@@ -41,7 +41,7 @@ export const login =
         }
       );
 */
-      dispatch(authSlice.actions.login(res.data));
+      dispatch(authSlice.actions.login(req.data.user));
     } catch (err) {
       console.log(err);
       dispatch(authSlice.actions.loginFail());
