@@ -33,7 +33,7 @@ export const login =
       console.log(req);
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
-        { withCredentials: true }
+        { withCredentials: false }
       );
 
       dispatch(authSlice.actions.login(req.data));
