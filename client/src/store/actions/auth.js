@@ -20,8 +20,7 @@ export const login =
   async (dispatch) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${req.data.token}`
+        'Content-Type': 'application/json'
       }
     };
     const body = JSON.stringify({ email, password });
