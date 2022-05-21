@@ -21,7 +21,8 @@ export const login =
     const config = {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true
     };
     const body = JSON.stringify({ email, password });
     try {
@@ -41,8 +42,6 @@ export const login =
         }
       );
 */
-      console.log(req);
-      await cookies.set('jwt', req.data.token, { httpOnly: secure });
       dispatch(authSlice.actions.login(req.data.user));
     } catch (err) {
       console.log(err);
