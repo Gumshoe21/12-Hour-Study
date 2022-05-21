@@ -16,6 +16,7 @@ const userRouter = require('./routes/userRoutes');
 const { DATABASE } = process.env;
 
 const app = express();
+app.use(cookieParser());
 app.enable('trust proxy');
 app.use(cors({ origin: 'https://12hourstudy.netlify.app' }));
 app.options('*', cors());
