@@ -21,7 +21,7 @@ app.enable('trust proxy');
 app.use(
   cors({
     origin: 'https://12hourstudy.netlify.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true
   })
 );
