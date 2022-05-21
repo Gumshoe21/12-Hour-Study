@@ -93,11 +93,12 @@ exports.getUser = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id).populate('timer', '_id');
 
     // res.json(user);
+
+    createSendToken(newUser, 201, req, res);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
-  createSendToken(newUser, 201, req, res);
 });
 
 exports.createUser = (req, res) => {
