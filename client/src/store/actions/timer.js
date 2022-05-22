@@ -42,7 +42,7 @@ export const updateTimer =
           length: longBreak
         }
       },
-      longBreakInterval: longBreakInterval
+      longBreakInterval
     });
     try {
       const req = await axios.patch(
