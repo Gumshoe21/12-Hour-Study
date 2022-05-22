@@ -20,7 +20,7 @@ const app = express();
 app.enable('trust proxy');
 app.use(
   cors({
-    origin: 'https://12hourstudy.netlify.app',
+    origin: ['https://12hourstudy.netlify.app', 'http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true
   })
