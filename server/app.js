@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const hpp = require('hpp');
 const cors = require('cors');
+
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const timerRouter = require('./routes/timerRoutes');
@@ -16,7 +17,6 @@ const userRouter = require('./routes/userRoutes');
 const { DATABASE } = process.env;
 
 const app = express();
-app.use(cookieParser());
 app.enable('trust proxy');
 app.use(
   cors({
@@ -29,8 +29,6 @@ app.options('*', cors());
 app.set('view engine', 'pug');
 // setting dir for pug views
 app.set('views', path.join(__dirname, 'views'));
-
-app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
@@ -47,9 +45,11 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 app.use(express.json({ limit: '10kb' }));
+
+app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(xss());
-
+/*
 app.use(
   hpp({
     whitelist: [
@@ -62,7 +62,7 @@ app.use(
     ]
   })
 );
-
+*/
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
