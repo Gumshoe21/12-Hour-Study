@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import PrivateRoute from './components/Routing/PrivateRoute';
 
 const App = ({ auth }) => {
+  console.log('ENV VARIABLE', process.env.NODE_ENV);
   useEffect(() => {
     store.dispatch(getUser());
   }, []); // only run once with [] - this effectively makes it a componentDidMount() function
