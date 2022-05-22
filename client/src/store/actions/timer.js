@@ -28,7 +28,9 @@ export const updateTimer =
     const config = {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true,
+      credentials: 'include'
     };
     const body = JSON.stringify({
       modes: {
