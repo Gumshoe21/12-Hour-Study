@@ -24,7 +24,7 @@ export const login =
         'Content-Type': 'application/json'
       },
       withCredentials: true,
-      credentials: include
+      credentials: 'include'
     };
     const body = JSON.stringify({ email, password });
     try {
