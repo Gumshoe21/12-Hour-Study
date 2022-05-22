@@ -10,15 +10,11 @@ export const getUserTimer =
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`
-          },
           withCredentials: true,
           credentials: 'include'
         }
       );
-      await dispatch(timerSlice.actions.getTimer(res.data));
-      console.log(res.data);
+      dispatch(timerSlice.actions.getTimer(res.data));
     } catch (err) {
       console.log(err);
     }
