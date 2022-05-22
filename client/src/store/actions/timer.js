@@ -51,7 +51,8 @@ export const updateTimer =
         config
       );
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
+        { withCredentials: true, credentials: 'include' }
       );
       dispatch(timerSlice.actions.updateTimer(res.data));
     } catch (err) {
