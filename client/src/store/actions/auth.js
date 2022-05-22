@@ -7,7 +7,8 @@ export const getUser = () => async (dispatch) => {
   // if the auth token is in the user's localStorage, set the auth token to that
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
+      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
+      { withCredentials: true, credentials: 'include' }
     );
     dispatch(authSlice.actions.getUser(res.data));
   } catch (err) {
@@ -22,7 +23,8 @@ export const login =
       headers: {
         'Content-Type': 'application/json'
       },
-      withCredentials: true
+      withCredentials: true,
+      credentials: include
     };
     const body = JSON.stringify({ email, password });
     try {
