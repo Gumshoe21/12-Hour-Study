@@ -12,7 +12,9 @@ export const getUserTimer =
         {
           headers: {
             Authorization: `Bearer ${user.token}`
-          }
+          },
+          withCredentials: true,
+          credentials: 'include'
         }
       );
       await dispatch(timerSlice.actions.getTimer(res.data));
