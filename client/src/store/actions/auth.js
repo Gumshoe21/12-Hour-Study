@@ -11,9 +11,7 @@ export const getUser = () => async (dispatch) => {
       { withCredentials: true, credentials: 'include' }
     );
     dispatch(authSlice.actions.getUser(res.data));
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const login =
@@ -33,20 +31,8 @@ export const login =
         body,
         config
       );
-      /*
-      console.log(req.data.token);
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
-        {
-          headers: {
-            Authorization: `Bearer ${req.data.token}`
-          }
-        }
-      );
-      */
       dispatch(authSlice.actions.login(req.data.user));
     } catch (err) {
-      console.log(err);
       dispatch(authSlice.actions.loginFail());
     }
   };
@@ -106,9 +92,7 @@ export const updateUser =
         config
       );
       dispatch(authSlice.actions.updateUser(res.data));
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
 export const forgotPassword =
@@ -156,8 +140,5 @@ export const resetPassword =
       );
       const res = await axios.get(`/api/${APIVERSION}/users/me`);
       await dispatch(authSlice.actions.login(res.data));
-    } catch (err) {
-      console.log(err);
-      console.log('hi');
-    }
+    } catch (err) {}
   };

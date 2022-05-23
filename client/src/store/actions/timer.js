@@ -5,7 +5,6 @@ import { APIVERSION } from './../../constants/index';
 export const getUserTimer =
   ({ user }) =>
   async (dispatch) => {
-    console.log(user);
     try {
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
@@ -15,9 +14,7 @@ export const getUserTimer =
         }
       );
       dispatch(timerSlice.actions.getTimer(res.data));
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
 export const updateTimer =
@@ -55,7 +52,5 @@ export const updateTimer =
         { withCredentials: true, credentials: 'include' }
       );
       dispatch(timerSlice.actions.updateTimer(res.data));
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };

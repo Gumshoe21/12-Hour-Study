@@ -124,7 +124,6 @@ const Timer = ({ timer, auth }) => {
     if (timeLeft === 0) {
       dispatch(setTicking(false));
       clearTimer();
-      console.log(timer.activeMode);
     }
   }, [timeLeft, dispatch, setTicking, timer.activeMode]);
 
@@ -140,16 +139,8 @@ const Timer = ({ timer, auth }) => {
   const setProgressHandler = useEffect(() => {
     if (timer.ticking) {
       dispatch(incrementProgress());
-      console.log(timer.modes[timer.activeMode].progress);
     }
   }, [tick, dispatch, incrementProgress, timer.ticking]);
-
-  /*
-  console.log(`time left: ${timeLeft}`);
-  console.log(`ticking = ${timer.ticking}`);
-  console.log(`progress: ${timer.modes[timer.activeMode].progress}`);
-  console.log(`active mode: ${timer.activeMode}`);
-  */
 
   const { progress } = timer.modes[timer.activeMode];
   const timerDuration = timer.modes[timer.activeMode].length * 60;

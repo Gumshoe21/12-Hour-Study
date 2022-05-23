@@ -24,7 +24,13 @@ const Landing = ({ auth }) => {
     return <Navigate to="/dashboard" />;
   }
   return (
-    <Box background="linear-gradient(28deg, rgba(2,0,36,1) 0%, rgba(82,0,177,1) 50%, rgba(0,212,255,1) 100%)">
+    <Box
+      sx={{
+        background: 'primary.500', // fallback
+        bgGradient: '-webkit-linear(to right, primary.200, primary.500)',
+        bgGradient: 'linear(to right, primary.200, primary.500)'
+      }}
+    >
       <Grid
         padding={{ md: '3.2rem 6.4rem', base: '0 0 ' }}
         templateColumns={{ md: '1fr 1fr', sm: '1fr' }}
@@ -66,7 +72,7 @@ const Landing = ({ auth }) => {
             sx={{
               animation: `1.5s ${fadeIn} ease-in`,
 
-              'word-spacing': '.5rem'
+              wordSpacing: '.5rem'
             }}
             fontSize={{ md: 24, base: 16 }}
             textAlign="center"
@@ -96,7 +102,8 @@ const Landing = ({ auth }) => {
           >
             <Link href="/signup">
               <Button
-                bg="purple.500"
+                bg="#AA9739"
+                _hover={{ bg: '#806D15' }}
                 borderRadius="25px"
                 fontSize={18}
                 py={10}
@@ -107,7 +114,8 @@ const Landing = ({ auth }) => {
             </Link>
             <Link href="/login">
               <Button
-                bg="purple.500"
+                bg="#AA9739"
+                _hover={{ bg: '#806D15' }}
                 borderRadius="25px"
                 fontSize={18}
                 py={10}

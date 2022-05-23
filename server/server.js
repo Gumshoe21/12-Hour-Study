@@ -4,8 +4,6 @@ const app = require('./app');
 // HANDLING UNCAUGHT EXCEPTIONS
 // we put this at the top so that it can catch any errors that come only after its declaration
 process.on('uncaughtException', (err) => {
-  console.log(err);
-  console.log('UNHANDLED EXCEPTION; SHUTTING DOWN...');
   process.exit(1); // code 0 = success; code 1 = uncaught exception
 });
 // we MUST first read our env var's from the config file and then run the code in the app file
@@ -37,7 +35,6 @@ const testTour = new Tour({
 });
 
 testTour.save().then(doc => {
-  console.log(doc);
 }).catch(err => {
   console.log('ERROR:', err);
 });
@@ -50,14 +47,14 @@ testTour.save().then(doc => {
 
 const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
+  // console.log(`App running on port ${port}...`);
 });
 
 // handling unhandled rejections
 //
 process.on('unhandledRejection', (err) => {
-  console.log(err.name, err.message);
-  console.log('UNHANDLED REJECTION; SHUTTING DOWN...');
+  // console.log(err.name, err.message);
+  // console.log('UNHANDLED REJECTION; SHUTTING DOWN...');
   server.close(() => {
     // close server THEN shut down process
     process.exit(1); // code 0 = success; code 1 = uncaught exception
@@ -65,8 +62,8 @@ process.on('unhandledRejection', (err) => {
 });
 
 process.on('SIGTERM', () => {
-  console.log('SIGTERM RECEIVED. Shutting down gracefully.');
+  // console.log('SIGTERM RECEIVED. Shutting down gracefully.');
   server.close(() => {
-    console.log('Process terminated.');
+    // console.log('Process terminated.');
   });
 });

@@ -44,9 +44,7 @@ const ProfileModal = ({ auth }) => {
           github
         })
       );
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   return (
     <Fragment>
