@@ -8,7 +8,6 @@ const handleCastErrorDB = (err) => {
 const handleDuplicateFieldsDB = (err) => {
   //const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
   const value = err.keyValue.name;
-  console.log(value);
   const message = `Duplicate field value: ${value}. Please use another value!`;
   return new AppError(message, 400);
 };
@@ -40,7 +39,6 @@ const sendErrorProd = (err, res) => {
     // Programming or other unknown error: don't leak error details
   } else {
     // 1) Log error
-    console.log('ERROR:', err);
     // 2) Send generic message
     res.status(500).json({
       status: 'error',
@@ -50,7 +48,6 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
-  console.log(err.stack); // stacktrace - each err gets one - shows where the err is
   err.statusCode = err.statusCode || 500; // defining default status code. the code = the statusCode or error 500 or internal server error
   err.status = err.status || 'error'; // status we have when we get a status code of 500
 

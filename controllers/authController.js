@@ -100,7 +100,6 @@ exports.logout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   //1) Getting token and check if it's there
-  console.log(req.headers.authorization);
   let token;
   if (
     req.headers.authorization &&
@@ -179,7 +178,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       status: 'success',
       message: 'Token sent to email.'
     });
-    console.log(user);
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
@@ -197,7 +195,6 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     passwordResetToken: req.params.token,
     passwordResetExpires: { $gt: Date.now() }
   });
-  console.log(user);
   //2) if token has not expired and there is a user, set the new password
   if (!user) {
     return next(new AppError('Token is invalid or has expired', 400));
