@@ -69,7 +69,6 @@ exports.getUser = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.user.id).populate('timer', '_id');
     res.json(user);
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
