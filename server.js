@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
+// comment from ndb
 // HANDLING UNCAUGHT EXCEPTIONS
 // we put this at the top so that it can catch any errors that come only after its declaration
 process.on('uncaughtException', (err) => {
