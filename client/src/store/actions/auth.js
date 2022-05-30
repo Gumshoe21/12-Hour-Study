@@ -5,11 +5,18 @@ import { APIVERSION } from './../../constants/index';
 // Load User
 export const getUser = () => async (dispatch) => {
   // if the auth token is in the user's localStorage, set the auth token to that
-
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+      //
+    },
+    withCredentials: true,
+    credentials: 'include'
+  };
   try {
     const req = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
-      { withCredentials: true, credentials: 'include' }
+      config
     );
     dispatch(authSlice.actions.getUser(req.data));
   } catch (err) {}
