@@ -5,12 +5,13 @@ import { APIVERSION } from './../../constants/index';
 // Load User
 export const getUser = () => async (dispatch) => {
   // if the auth token is in the user's localStorage, set the auth token to that
+
   try {
-    const res = await axios.get(
+    const req = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
       { withCredentials: true, credentials: 'include' }
     );
-    dispatch(authSlice.actions.getUser(res.data));
+    dispatch(authSlice.actions.getUser(req.data));
   } catch (err) {}
 };
 
@@ -37,6 +38,24 @@ export const login =
     }
   };
 
+export const logout = () => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    credentials: 'include'
+  };
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/logout`,
+
+      config
+    );
+    dispatch(authSlice.actions.logout());
+  } catch (err) {}
+};
+
 export const register =
   ({ email, password, passwordConfirm }) =>
   async (dispatch) => {
@@ -58,13 +77,6 @@ export const register =
       await dispatch(authSlice.actions.register(res.data));
     } catch (err) {}
   };
-
-export const logout = () => async (dispatch) => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/logout`
-  );
-  dispatch(authSlice.actions.logout());
-};
 
 export const updateUser =
   ({ auth, twitter, github }) =>

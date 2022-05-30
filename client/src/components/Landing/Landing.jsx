@@ -16,11 +16,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 const Landing = ({ auth }) => {
   const fadeIn = keyframes`
-    0% { opacity:0; }
-    66% { opacity:0; }
-    100% { opacity:1; }
+		0% { opacity:0; }
+		66% { opacity:0; }
+		100% { opacity:1; }
 `;
-  if (auth.isAuthenticated) {
+  if (auth.user) {
     return <Navigate to="/dashboard" />;
   }
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { login } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
@@ -14,7 +14,12 @@ import {
   FormHelperText
 } from '@chakra-ui/react';
 
+import { getUser } from './../../../store/actions/auth';
+import store from './../../../store/index';
 const LoginForm = ({ login, auth, props }) => {
+  useEffect(() => {
+    store.dispatch(getUser());
+  }, []); // only run once with [] - this effectively makes it a componentDidMount() function
   const [formData, setFormData] = useState({
     email: '',
     password: ''

@@ -12,12 +12,13 @@ import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 
 const Dashboard = ({ auth, timer }) => {
   useEffect(() => {
+    store.dispatch(getUser());
+  }, []);
+
+  useEffect(() => {
     if (auth.user) {
       store.dispatch(getUserTimer(auth.user));
     }
-  }, [auth.user]);
-  useEffect(() => {
-    store.dispatch(getUser());
   }, []);
 
   return (
