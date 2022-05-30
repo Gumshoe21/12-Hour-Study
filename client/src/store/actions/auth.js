@@ -42,6 +42,7 @@ export const logout = () => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
+      //
     },
     withCredentials: true,
     credentials: 'include'
