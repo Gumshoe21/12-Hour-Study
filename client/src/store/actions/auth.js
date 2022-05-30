@@ -49,7 +49,6 @@ export const logout = () => async (dispatch) => {
   try {
     const res = await axios.get(
       `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/logout`,
-
       config
     );
     dispatch(authSlice.actions.logout());
