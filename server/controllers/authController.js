@@ -98,7 +98,7 @@ exports.logout = catchAsync(async (req, res) => {
     secure: true
   };
 
-  res.cookie('jwt', 'hi', cookieOptions);
+  res.cookie('jwt', 'loggedOut', cookieOptions);
 
   /*
   res.cookie('jwt', 'loggedOut', {
