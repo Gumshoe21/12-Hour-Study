@@ -18,11 +18,11 @@ const signToken = (id) => {
   });
 };
 
-const createSendToken = (user, statusCode, req, res) => {
+const createSendToken = (user, statusCode, res) => {
   const token = signToken(user.id);
 
   const cookieOptions = {
-    // expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     httpOnly: true,
     sameSite: 'none',
     secure: true
@@ -70,7 +70,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const url = 0;
   // await new Email(newUser, url).sendWelcome();
 
-  createSendToken(newUser, 201, req, res);
+  createSendToken(newUser, 201, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -87,18 +87,32 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Ioncrrect email or password', 401)); // 401 = unauthorized
   }
   // 3) if everything okay, send token to client
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });
 
-exports.logout = (req, res) => {
-  res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+exports.logout = catchAsync(async (req, res) => {
+  const cookieOptions = {
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true
+  };
+
+  res.cookie('jwt', 'hi', cookieOptions);
+
+  /*
+  res.cookie('jwt', 'loggedOut', {
+    maxAge: 90000000,
+    httpOnly: false,
+    secure: true
   });
-  res.status(200).json({ status: 'success' });
-};
+  console.log(res);
+  */
+  res.status(202).json({ status: 'success' });
+});
 
 exports.protect = catchAsync(async (req, res, next) => {
+  console.log(req);
   //1) Getting token and check if it's there
   let token;
   if (
@@ -208,7 +222,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   //4) Log user in; send JWT to client
   // const token = signToken(user._id);
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -225,5 +239,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   //User.findByIdAndUpdate will NOT work as intended!
 
   // 4) Log user in; send JWT to user
-  createSendToken(user, 200, req, res);
+  createSendToken(user, 200, res);
 });
