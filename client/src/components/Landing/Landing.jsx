@@ -102,8 +102,9 @@ const Landing = ({ auth }) => {
           >
             <Link href="/signup">
               <Button
-                bg="#AA9739"
-                _hover={{ bg: '#806D15' }}
+                bg="tint.100"
+                _hover={{ bg: 'tint.200' }}
+                color="primary.500"
                 borderRadius="25px"
                 fontSize={18}
                 py={10}
@@ -114,8 +115,9 @@ const Landing = ({ auth }) => {
             </Link>
             <Link href="/login">
               <Button
-                bg="#AA9739"
-                _hover={{ bg: '#806D15' }}
+                bg="tint.100"
+                _hover={{ bg: 'tint.200' }}
+                color="primary.500"
                 borderRadius="25px"
                 fontSize={18}
                 py={10}
