@@ -44,7 +44,7 @@ export const login =
       dispatch(authSlice.actions.loginFail());
     }
   };
-
+//
 export const logout = () => async (dispatch) => {
   const config = {
     headers: {
