@@ -16,7 +16,6 @@ const buttonBgLight = 'gray.500';
 const theme = extendTheme({
   // DEFAULT COLOR MODE SETTINGS
   initialColorMode: 'dark',
-  useSystemColorMode: true,
 
   colors: {
     primary: {
