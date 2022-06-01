@@ -29,6 +29,7 @@ const createSendToken = (user, statusCode, res) => {
   };
 
   res.cookie('jwt', token, cookieOptions);
+
   // remove password from output
   user.password = undefined;
 
@@ -40,8 +41,6 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  // use this instead of User.create(req.body) because that allows anyone to assign role to admin
-
   const newTimer = await Timer.create({});
 
   const avatar = normalize(
@@ -53,6 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     { forceHttps: true }
   );
 
+  // use this instead of User.create(req.body) because that allows anyone to assign role to admin
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -92,7 +92,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.logout = catchAsync(async (req, res) => {
   const cookieOptions = {
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
     sameSite: 'none',
     secure: true
