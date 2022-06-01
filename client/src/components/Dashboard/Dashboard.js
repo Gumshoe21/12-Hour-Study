@@ -21,9 +21,11 @@ const Dashboard = ({ auth, timer }) => {
     }
   }, []);
 
+  if (!auth.isAuthenticated) {
+    return <Navigate to="/" />;
+  }
   return (
     <Fragment>
-      {!auth.isAuthenticated && <Navigate to="/" />}
       <Container maxW="container.xl">
         <Flex align="center" overflow="hidden" justify="center">
           {Object.values(timer).every((el) => el !== undefined) ? (

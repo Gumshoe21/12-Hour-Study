@@ -91,7 +91,9 @@ export const updateUser =
     const config = {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true,
+      credentials: 'include'
     };
 
     const body = JSON.stringify({
@@ -106,7 +108,7 @@ export const updateUser =
     });
     try {
       const res = await axios.patch(
-        `api/${APIVERSION}/users/${auth.user._id}`,
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/${auth.user._id}`,
         body,
         config
       );
