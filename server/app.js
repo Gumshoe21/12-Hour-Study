@@ -27,7 +27,7 @@ app.use(
 );
 app.options('*', cors());
 app.set('view engine', 'pug');
-// setting dir for pug views
+// set dir for pug views
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -79,6 +79,7 @@ app.use(`/api/${APIVersion}/timers/`, timerRouter);
 app.get('/', (req, res) => {
   res.send('Hello from Express!');
 });
+
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find URL ${req.originalUrl} on this server`, 404));
 });
