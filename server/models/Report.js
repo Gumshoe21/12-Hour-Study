@@ -32,6 +32,11 @@ const ReportSchema = new Schema({
       }
     }
   ],
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: [true, 'A report must belong to a user.']
+  },
   timestamps: true
 });
 

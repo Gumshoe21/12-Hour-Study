@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: [
       validator.isAlphanumeric,
-      'Username must contain only letters and numbers (a-z, A-Z, 0-9'
+      'Username must contain only letters and numbers (a-z, A-Z, 0-9)'
     ]
   },
   password: {
