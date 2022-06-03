@@ -54,7 +54,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   // use this instead of User.create(req.body) because that allows anyone to assign role to admin
   const newUser = await User.create({
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
