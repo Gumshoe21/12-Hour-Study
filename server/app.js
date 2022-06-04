@@ -13,6 +13,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const timerRouter = require('./routes/timerRoutes');
 const userRouter = require('./routes/userRoutes');
+const reportRouter = require('./routes/reportRoutes');
 
 const { DATABASE } = process.env;
 
@@ -69,13 +70,11 @@ app.use((req, res, next) => {
 });
 
 const APIVersion = 'v1';
-/*
-app.get('/', function (req, res, next) {
-  res.redirect('/dashboard');
-});
-*/
+
 app.use(`/api/${APIVersion}/users`, userRouter);
 app.use(`/api/${APIVersion}/timers/`, timerRouter);
+app.use(`/api/${APIVersion}/reports/`, reportRouter);
+
 app.get('/', (req, res) => {
   res.send('Hello from Express!');
 });

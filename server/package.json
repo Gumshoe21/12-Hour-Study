@@ -8,7 +8,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "ndb starter/server.js"
+    "debug": "ndb server.js"
   },
   "author": "Matthew Smilansky",
   "license": "MIT",
