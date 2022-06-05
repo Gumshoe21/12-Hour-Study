@@ -15,12 +15,23 @@ import Countdown from './Countdown';
 import { Box } from '@chakra-ui/react';
 
 import sound from './../../utils/audioPlayer.js';
+
+// when the timer is switched, prompt "are you sure? Reports won't count rest of time left." if sure then add the remaining time left to today's report before clearProgress()
+// if you try to exit window or switch pages, ask if sure then add remaining time b4 clearProgress()
+// once a timer progress = 0, increment modes completed and add the time to reports. you only icnrement modes completed if itmer progress is 0, not on switching timer or exit page. if exit page or switch timer then timer is NOT complete, doesn't count as full timer completion.
+// bug where switching to profile doesn't prompt to finish timer. timer still runs and ticking sound still sounds.
+//
+
+/* 
+  Sounds
+*/
 const tickingSound = sound('./../../../audio/tick.m4a', undefined, true);
 const buttonSound = sound(
   './../../../audio/button_click.mp3',
   undefined,
   false
 );
+
 const Timer = ({ timer, auth }) => {
   const dispatch = useDispatch();
 
@@ -33,16 +44,16 @@ const Timer = ({ timer, auth }) => {
     incrementProgress
   } = timerSlice.actions;
 
+  let activeMode = timer.modes[timer.activeMode];
+
   const tickingIntervalRef = useRef(null);
 
-  const [timeLeft, setTimeLeft] = useState(
-    timer.modes[timer.activeMode].length * 60
-  );
+  const [timeLeft, setTimeLeft] = useState(activeMode.length * 60);
 
   // gotta udpate the reports before this fires
   const updateActiveModeLength = useEffect(() => {
-    setTimeLeft((timeLeft) => timer.modes[timer.activeMode].length * 60);
-  }, [timer.modes[timer.activeMode].length]);
+    setTimeLeft((timeLeft) => activeMode.length * 60);
+  }, [activeMode.length]);
 
   // update reports before this fires
   const clearTimer = () => {
@@ -105,7 +116,6 @@ const Timer = ({ timer, auth }) => {
 
   const setTickingHandler = async () => {
     dispatch(setTicking(timer.ticking === true ? false : true));
-
     buttonSound.play();
     if (timer.ticking) {
       tickingSound.stop();
@@ -142,8 +152,8 @@ const Timer = ({ timer, auth }) => {
     }
   }, [tick, dispatch, incrementProgress, timer.ticking]);
 
-  const { progress } = timer.modes[timer.activeMode];
-  const timerDuration = timer.modes[timer.activeMode].length * 60;
+  const { progress } = activeMode;
+  const timerDuration = activeMode.length * 60;
 
   return (
     <TimerBox>

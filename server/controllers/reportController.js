@@ -26,10 +26,17 @@ exports.createReport = catchAsync(async (req, res, next) => {
     });
   }
 });
-
 /*
-exports.getReview = factory.getOne(Review);
-exports.updateReview = factory.updateOne(Review);
-exports.deleteReview = factory.deleteOne(Review);
-exports.getAllReview = factory.getAll(Review);
+const updateReport = catchAsync(async (req, res, next) => {
+  let review = review.findByIdAndUpdate(req.review.id, req.body, {
+    new: true,
+    runValidators: true
+  });
+
+  res.status(200);
+});
 */
+exports.getReport = factory.getOne(Report);
+exports.updateReport = factory.updateOne(Report);
+exports.getAllReports = factory.getAll(Report);
+// exports.deleteReport = factory.deleteOne(Report);

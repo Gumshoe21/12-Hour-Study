@@ -14,6 +14,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const SwitchTimerButton = ({ props, timer }) => {
+  const progressGreaterThanZero = () => {
+    return props.progress > 0;
+  };
   const activeModeBgColor = useColorModeValue('gray.700', 'purple.200');
   const activeModeColor = useColorModeValue('gray.100', 'gray.900');
 

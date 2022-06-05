@@ -19,7 +19,7 @@ exports.deleteOne = (Model) =>
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
-      // this way the new updated document will be the one returned.
+      //  setting new to 'true' will will return the document after the update is complete
       new: true,
       runValidators: true
     });
