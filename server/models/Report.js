@@ -5,22 +5,20 @@ const ReportSchema = new mongoose.Schema(
       type: Number,
       default: 0
     },
-    modeCompletions: [
-      {
-        sessions: {
-          type: Number,
-          default: 0
-        },
-        shortBreak: {
-          type: Number,
-          default: 0
-        },
-        longBreak: {
-          type: Number,
-          default: 0
-        }
+    modeCompletions: {
+      sessions: {
+        type: Number,
+        default: 0
+      },
+      shortBreak: {
+        type: Number,
+        default: 0
+      },
+      longBreak: {
+        type: Number,
+        default: 0
       }
-    ],
+    },
     sessionInstances: [
       {
         createdAt: {

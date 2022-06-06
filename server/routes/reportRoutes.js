@@ -10,10 +10,12 @@ const router = express.Router();
 router
   .route('/createReport')
   .post(authController.protect, reportController.createReport);
-/*
+
+router.route('/:id').get(reportController.getReport);
+
 router
-  .route('/:id')
-  .get(reportController.getReport)
+  .route('/')
+  .get(reportController.getAllReports)
   .patch(reportController.updateReport);
-*/
+
 module.exports = router;

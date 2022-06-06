@@ -13,8 +13,8 @@ import ProgressBar from './ProgressBar';
 import Round from './Round';
 import Countdown from './Countdown';
 import { Box } from '@chakra-ui/react';
-
 import sound from './../../utils/audioPlayer.js';
+import { updateReport } from './../../store/actions/report';
 
 // when the timer is switched, prompt "are you sure? Reports won't count rest of time left." if sure then add the remaining time left to today's report before clearProgress()
 // if you try to exit window or switch pages, ask if sure then add remaining time b4 clearProgress()
@@ -45,14 +45,14 @@ const Timer = ({ timer, auth }) => {
   } = timerSlice.actions;
 
   let activeMode = timer.modes[timer.activeMode];
+  const { id, name, length, progress } = activeMode;
 
   const tickingIntervalRef = useRef(null);
 
   const [timeLeft, setTimeLeft] = useState(activeMode.length * 60);
-
   // gotta udpate the reports before this fires
   const updateActiveModeLength = useEffect(() => {
-    setTimeLeft((timeLeft) => activeMode.length * 60);
+    setTimeLeft((timeLeft) => 2);
   }, [activeMode.length]);
 
   // update reports before this fires
@@ -60,8 +60,8 @@ const Timer = ({ timer, auth }) => {
     clearInterval(tickingIntervalRef.current);
     tickingIntervalRef.current = null;
   };
-
-  const switchTimerMode = (e) => {
+  /////////////////////////////////////////////////
+  const switchTimerMode = async (e) => {
     if (!tickingSound.paused) tickingSound.stop();
     dispatch(setTicking(false));
     /* 
@@ -74,7 +74,7 @@ const Timer = ({ timer, auth }) => {
     setTimeLeft(timer.modes[e.target.value].length * 60);
   };
 
-  const onNoTimeLeft = (mode, reset = null) => {
+  const onNoTimeLeft = async (mode, reset = null) => {
     dispatch(setActiveMode(`${mode}`));
     setTimeLeft(timer.modes[`${mode}`].length * 60);
     reset ? dispatch(resetRound()) : dispatch(incrementRound());
@@ -82,7 +82,8 @@ const Timer = ({ timer, auth }) => {
 
   const timerComplete = useEffect(() => {
     if (timeLeft === 0) {
-      // update reports
+      // 'progress' is given as an argument so that we may update 'totalSessionTime' in today's report; 'timer.activeMode' is given to update the 'modeCompletions' array for that specific mode given. We will also need 'timer.activeMode' so we can update the 'sessionInstances' array if the mode given is 'session'.
+      dispatch(updateReport({ auth, id, name, length, progress }));
       dispatch(clearProgress());
       if (
         timer.activeMode === 'session' &&
@@ -152,7 +153,6 @@ const Timer = ({ timer, auth }) => {
     }
   }, [tick, dispatch, incrementProgress, timer.ticking]);
 
-  const { progress } = activeMode;
   const timerDuration = activeMode.length * 60;
 
   return (
