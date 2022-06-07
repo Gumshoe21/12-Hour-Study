@@ -3,19 +3,15 @@ const authController = require('../controllers/authController');
 const reportController = require('../controllers/reportController');
 const router = express.Router();
 
-// router.route('/').get(reportController.getReports);
-
-// router.use(authController.protect);
-
 router
   .route('/createReport')
   .post(authController.protect, reportController.createReport);
 
 router.route('/:id').get(reportController.getReport);
 
-router
-  .route('/')
-  .get(reportController.getAllReports)
-  .patch(reportController.updateReport);
+router.route('/').get(reportController.getAllReports);
 
+router.use(authController.protect);
+
+router.route('/updateReport').patch(reportController.updateReport);
 module.exports = router;

@@ -22,8 +22,15 @@ export const updateReport =
       name,
       length,
       progress,
-      auth
+      user_id: auth.user._id
     });
+    try {
+      const newReport = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/v1/reports/createReport`,
+        body,
+        config
+      );
+    } catch (err) {}
     try {
       const req = await axios.patch(
         `${process.env.REACT_APP_API_URL}/api/v1/reports/updateReport`,
