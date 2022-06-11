@@ -36,22 +36,49 @@ exports.createReport = catchAsync(async (req, res, next) => {
 });
 
 exports.updateReport = catchAsync(async (req, res, next) => {
-  const sessionTime = req.body.id === 'session' ? req.body.progress : 0;
   let start = new Date();
   start.setUTCHours(0, 0, 0, 0);
 
   let end = new Date();
   end.setUTCHours(23, 59, 59, 999);
+  const arlen = 2;
   let updatedReport = await Report.findOneAndUpdate(
     {
-      user: mongoose.Types.ObjectId(req.body.user_id.toString()),
+      user: req.body.user_id,
       createdAt: { $gte: start.toUTCString() }
     },
     {
-      $inc: { 'modeCompletions.sessions': 1 }
-      // $inc: { 'sessionInstances.timeAccumulated': sessionTime }
+      $inc: {
+        [`stats.${req.body.id}.totalTimeAccumulated`]: req.body.progress
+      },
+      $push: {
+        [`stats.${req.body.id}.completions`]: new Date()
+      },
+      $group: {
+        [`stats.${req.body.id}.completions`]: {
+          $push: {
+            $cond: [
+              { $gte: [`stats.${req.body.progress}`, 0] },
+              new Date(),
+              '$$REMOVE'
+            ]
+          }
+        }
+      }
     },
+    /*
     {
+      $inc: { 'modeCompletions.sessions': 1 },
+      $inc: { totalSessionTime: sessionTime },
+      $push: {
+        sessionInstances: {
+          timeAccumulated: 2
+        }
+      }
+    },
+    */
+    {
+      upsert: true,
       new: true,
       runValidators: true
     }

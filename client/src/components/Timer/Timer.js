@@ -33,6 +33,7 @@ const buttonSound = sound(
 );
 
 const Timer = ({ timer, auth }) => {
+  const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
 
   const {
@@ -45,11 +46,11 @@ const Timer = ({ timer, auth }) => {
   } = timerSlice.actions;
 
   let activeMode = timer.modes[timer.activeMode];
-  const { id, name, length, progress } = activeMode;
+  const { id, name, length } = activeMode;
 
   const tickingIntervalRef = useRef(null);
 
-  const [timeLeft, setTimeLeft] = useState(activeMode.length * 60);
+  const [timeLeft, setTimeLeft] = useState(2);
   // gotta udpate the reports before this fires
   const updateActiveModeLength = useEffect(() => {
     setTimeLeft((timeLeft) => 2);
@@ -69,13 +70,14 @@ const Timer = ({ timer, auth }) => {
     here's the ticket
 
     */
-    dispatch(clearProgress());
+    await setProgress(0);
     dispatch(setActiveMode(e.target.value));
     setTimeLeft(timer.modes[e.target.value].length * 60);
   };
 
   const onNoTimeLeft = async (mode, reset = null) => {
-    dispatch(setActiveMode(`${mode}`));
+    await setProgress(0);
+    await dispatch(setActiveMode(`${mode}`));
     setTimeLeft(timer.modes[`${mode}`].length * 60);
     reset ? dispatch(resetRound()) : dispatch(incrementRound());
   };
@@ -83,7 +85,9 @@ const Timer = ({ timer, auth }) => {
   const timerComplete = useEffect(() => {
     if (timeLeft === 0) {
       // 'progress' is given as an argument so that we may update 'totalSessionTime' in today's report; 'timer.activeMode' is given to update the 'modeCompletions' array for that specific mode given. We will also need 'timer.activeMode' so we can update the 'sessionInstances' array if the mode given is 'session'.
+
       dispatch(updateReport({ auth, id, name, length, progress }));
+
       dispatch(clearProgress());
       if (
         timer.activeMode === 'session' &&
@@ -127,17 +131,29 @@ const Timer = ({ timer, auth }) => {
       });
     }
   };
-
   const tick = useCallback(() => {
     if (timeLeft > 0) {
       setTimeLeft(timeLeft - 1);
+      setProgress((count) => count + 1);
+      //      console.log(progress);
+      //      console.log(progress2);
+
+      dispatch(incrementProgress());
     }
-    if (timeLeft === 0) {
+    if (timeLeft < 1) {
       dispatch(setTicking(false));
+
       clearTimer();
     }
-  }, [timeLeft, dispatch, setTicking, timer.activeMode]);
+  }, [timeLeft, dispatch, setTicking, timer.modes[timer.activeMode].length]);
+  /*
+  const updateProgress = useEffect(() => {
+    if (timer.ticking && timeLeft > 0) {
 
+      console.log(timer.progress);
+    } else if (timeLeft === 0) dispatch(clearProgress());
+  }, [timer.progress]);
+*/
   const setTickingInterval = useEffect(() => {
     if (timer.ticking) {
       tickingIntervalRef.current = setInterval(tick, 1000);
@@ -146,12 +162,6 @@ const Timer = ({ timer, auth }) => {
     }
     return clearTimer;
   }, [tick, timer.ticking]);
-
-  const setProgressHandler = useEffect(() => {
-    if (timer.ticking) {
-      dispatch(incrementProgress());
-    }
-  }, [tick, dispatch, incrementProgress, timer.ticking]);
 
   const timerDuration = activeMode.length * 60;
 

@@ -8,6 +8,7 @@ const timerSlice = createSlice({
     round: 0,
     ticking: false,
     loading: true,
+    progress: 0,
     modes: {
       session: {
         id: 'session',
@@ -62,10 +63,10 @@ const timerSlice = createSlice({
       state.round = 0;
     },
     incrementProgress(state, action) {
-      state.modes[state.activeMode].progress += 1;
+      state.progress += 1;
     },
     clearProgress(state, action) {
-      state.modes[state.activeMode].progress = 0;
+      state.progress = 0;
     },
     setLoading(state, action) {
       state.loading = action.payload;

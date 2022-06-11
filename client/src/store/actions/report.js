@@ -14,16 +14,13 @@ export const updateReport =
     };
 
     const body = JSON.stringify({
-      totalSessionTime: name === 'session' ? progress : 0,
-      sessionInstances: {
-        timeAccumulated: name === 'session' ? progress : 0
-      },
       id,
       name,
       length,
       progress,
       user_id: auth.user._id
     });
+
     try {
       const newReport = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/v1/reports/createReport`,

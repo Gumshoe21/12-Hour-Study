@@ -1,6 +1,78 @@
 const mongoose = require('mongoose');
 const ReportSchema = new mongoose.Schema(
   {
+    stats: {
+      session: {
+        totalTimeAccumulated: {
+          type: Number,
+          default: 0
+        },
+        instances: [
+          {
+            createdAt: {
+              type: Date,
+              default: new Date()
+            },
+            timeAccumulated: {
+              type: Number,
+              default: 0
+            },
+            stoppedAt: {
+              type: Date,
+              default: new Date()
+            }
+          }
+        ],
+        completions: [Date]
+      },
+      shortBreak: {
+        totalTimeAccumulated: {
+          type: Number,
+          default: 0
+        },
+        instances: [
+          {
+            createdAt: {
+              type: Date,
+              default: new Date()
+            },
+            timeAccumulated: {
+              type: Number,
+              default: 0
+            },
+            stoppedAt: {
+              type: Date,
+              default: new Date()
+            }
+          }
+        ],
+        completions: [Date]
+      },
+      longBreak: {
+        totalTimeAccumulated: {
+          type: Number,
+          default: 0
+        },
+        instances: [
+          {
+            createdAt: {
+              type: Date,
+              default: new Date()
+            },
+            timeAccumulated: {
+              type: Number,
+              default: 0
+            },
+            stoppedAt: {
+              type: Date,
+              default: new Date()
+            }
+          }
+        ],
+        completions: [Date]
+      }
+    },
+    /*
     totalSessionTime: {
       type: Number,
       default: 0
@@ -31,6 +103,7 @@ const ReportSchema = new mongoose.Schema(
         }
       }
     ],
+    */
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
