@@ -53,7 +53,8 @@ exports.updateReport = catchAsync(async (req, res, next) => {
       },
       $push: {
         [`stats.${req.body.id}.completions`]: new Date()
-      },
+      }
+      /*
       $group: {
         [`stats.${req.body.id}.completions`]: {
           $push: {
@@ -65,7 +66,9 @@ exports.updateReport = catchAsync(async (req, res, next) => {
           }
         }
       }
+      */
     },
+
     /*
     {
       $inc: { 'modeCompletions.sessions': 1 },

@@ -20,7 +20,7 @@ export const updateReport =
       progress,
       user_id: auth.user._id
     });
-
+    /*
     try {
       const newReport = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/v1/reports/createReport`,
@@ -29,10 +29,13 @@ export const updateReport =
       );
     } catch (err) {}
     try {
-      const req = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/api/v1/reports/updateReport`,
-        body,
-        config
-      );
+      */
+    const req = await axios.patch(
+      `${process.env.REACT_APP_API_URL}/api/v1/reports/updateReport`,
+      body,
+      config
+    );
+    /*
     } catch (err) {}
+    */
   };

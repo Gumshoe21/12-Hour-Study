@@ -76,10 +76,12 @@ const Timer = ({ timer, auth }) => {
   };
 
   const onNoTimeLeft = async (mode, reset = null) => {
-    await setProgress(0);
+    await dispatch(clearProgress());
     await dispatch(setActiveMode(`${mode}`));
     setTimeLeft(timer.modes[`${mode}`].length * 60);
-    reset ? dispatch(resetRound()) : dispatch(incrementRound());
+    reset
+      ? dispatch(resetRound())
+      : dispatch(mode !== 'session' && incrementRound());
   };
 
   const timerComplete = useEffect(() => {
@@ -93,7 +95,7 @@ const Timer = ({ timer, auth }) => {
         timer.activeMode === 'session' &&
         timer.round === timer.longBreakInterval
       ) {
-        onNoTimeLeft('shortBreak', true);
+        onNoTimeLeft('longBreak', true);
       } else if (
         timer.activeMode === 'session' &&
         timer.round < timer.longBreakInterval &&
@@ -106,7 +108,7 @@ const Timer = ({ timer, auth }) => {
       ) {
         onNoTimeLeft('longBreak', false);
       } else if (timer.activeMode === 'shortBreak') {
-        onNoTimeLeft('session');
+        onNoTimeLeft('session', null);
       } else if (timer.activeMode === 'longBreak') {
         onNoTimeLeft('session', true);
       }
