@@ -16,6 +16,10 @@ const sound = (src, volume = 1, loop) => {
     }
   };
 
+  const toggle = () => {
+    audio.paused ? audio.play() : audio.pause();
+  };
+
   const stop = () => {
     if (audio.loop) {
       audio.pause();
@@ -37,6 +41,7 @@ const sound = (src, volume = 1, loop) => {
 
   return {
     play,
+    toggle,
     stop,
     setVolume,
     setSource,

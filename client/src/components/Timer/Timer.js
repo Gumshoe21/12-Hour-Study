@@ -22,18 +22,14 @@ import { updateReport } from './../../store/actions/report';
 // bug where switching to profile doesn't prompt to finish timer. timer still runs and ticking sound still sounds.
 //
 
-/* 
-  Sounds
-*/
-const tickingSound = sound('./../../../audio/tick.m4a', undefined, true);
+const tickingSound = sound('./../../../audio/ticking.wav', undefined, true);
 const buttonSound = sound(
   './../../../audio/button_click.mp3',
   undefined,
   false
 );
-
+console.log(tickingSound.currentTime);
 const Timer = ({ timer, auth }) => {
-  const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
 
   const {
@@ -47,13 +43,14 @@ const Timer = ({ timer, auth }) => {
 
   let activeMode = timer.modes[timer.activeMode];
   const { id, name, length } = activeMode;
-
   const tickingIntervalRef = useRef(null);
+  const [timeLeft, setTimeLeft] = useState(length * 60);
+  const [instanceTime, setInstanceTime] = useState(0);
+  const { progress } = timer;
 
-  const [timeLeft, setTimeLeft] = useState(2);
   // gotta udpate the reports before this fires
   const updateActiveModeLength = useEffect(() => {
-    setTimeLeft((timeLeft) => 2);
+    setTimeLeft((timeLeft) => length * 60);
   }, [activeMode.length]);
 
   // update reports before this fires
@@ -61,86 +58,68 @@ const Timer = ({ timer, auth }) => {
     clearInterval(tickingIntervalRef.current);
     tickingIntervalRef.current = null;
   };
-  /////////////////////////////////////////////////
   const switchTimerMode = async (e) => {
     if (!tickingSound.paused) tickingSound.stop();
     dispatch(setTicking(false));
-    /* 
-    
-    here's the ticket
-
-    */
-    await setProgress(0);
+    // updateInstances()
+    // setInstanceTime(0);
+    dispatch(clearProgress());
     dispatch(setActiveMode(e.target.value));
     setTimeLeft(timer.modes[e.target.value].length * 60);
   };
 
-  const onNoTimeLeft = async (mode, reset = null) => {
-    await dispatch(clearProgress());
-    await dispatch(setActiveMode(`${mode}`));
-    setTimeLeft(timer.modes[`${mode}`].length * 60);
-    reset
-      ? dispatch(resetRound())
-      : dispatch(mode !== 'session' && incrementRound());
-  };
-
-  const timerComplete = useEffect(() => {
+  const onTimerComplete = useEffect(() => {
     if (timeLeft === 0) {
-      // 'progress' is given as an argument so that we may update 'totalSessionTime' in today's report; 'timer.activeMode' is given to update the 'modeCompletions' array for that specific mode given. We will also need 'timer.activeMode' so we can update the 'sessionInstances' array if the mode given is 'session'.
-
+      // updateInstances()
+      // setInstanceTime(0);
       dispatch(updateReport({ auth, id, name, length, progress }));
-
       dispatch(clearProgress());
       if (
         timer.activeMode === 'session' &&
         timer.round === timer.longBreakInterval
       ) {
-        onNoTimeLeft('longBreak', true);
+        dispatch(setActiveMode(`longBreak`));
+        setTimeLeft(timer.modes[`longBreak`].length * 60);
+        dispatch(incrementRound());
       } else if (
         timer.activeMode === 'session' &&
         timer.round < timer.longBreakInterval &&
         timer.round !== timer.longBreakInterval - 1
       ) {
-        onNoTimeLeft('shortBreak', false);
+        dispatch(setActiveMode(`shortBreak`));
+        setTimeLeft(timer.modes[`shortBreak`].length * 60);
+
+        dispatch(incrementRound());
       } else if (
         timer.activeMode === 'session' &&
         timer.round === timer.longBreakInterval - 1
       ) {
-        onNoTimeLeft('longBreak', false);
+        dispatch(setActiveMode(`longBreak`));
+        setTimeLeft(timer.modes[`longBreak`].length * 60);
+
+        dispatch(incrementRound());
       } else if (timer.activeMode === 'shortBreak') {
-        onNoTimeLeft('session', null);
+        dispatch(setActiveMode(`session`));
+        setTimeLeft(timer.modes[`session`].length * 60);
       } else if (timer.activeMode === 'longBreak') {
-        onNoTimeLeft('session', true);
+        dispatch(setActiveMode(`session`));
+        dispatch(resetRound());
       }
     }
-  }, [
-    timeLeft,
-    clearProgress,
-    timer.activeMode,
-    timer.longBreakInterval,
-    timer.round
-  ]);
+  }, [timeLeft]);
 
   const setTickingHandler = async () => {
+    tickingSound.toggle();
     dispatch(setTicking(timer.ticking === true ? false : true));
     buttonSound.play();
-    if (timer.ticking) {
-      tickingSound.stop();
-    } else if (!timer.ticking) {
-      await new Promise((resolve) => setTimeout(resolve, 1000)).then(() => {
-        tickingSound.stop();
-        tickingSound.play();
-      });
-    }
   };
+
+  const setSound = () => {};
   const tick = useCallback(() => {
     if (timeLeft > 0) {
       setTimeLeft(timeLeft - 1);
-      setProgress((count) => count + 1);
-      //      console.log(progress);
-      //      console.log(progress2);
-
       dispatch(incrementProgress());
+      // setInstanceTime(instanceTime + 1);
     }
     if (timeLeft < 1) {
       dispatch(setTicking(false));
@@ -148,14 +127,7 @@ const Timer = ({ timer, auth }) => {
       clearTimer();
     }
   }, [timeLeft, dispatch, setTicking, timer.modes[timer.activeMode].length]);
-  /*
-  const updateProgress = useEffect(() => {
-    if (timer.ticking && timeLeft > 0) {
 
-      console.log(timer.progress);
-    } else if (timeLeft === 0) dispatch(clearProgress());
-  }, [timer.progress]);
-*/
   const setTickingInterval = useEffect(() => {
     if (timer.ticking) {
       tickingIntervalRef.current = setInterval(tick, 1000);

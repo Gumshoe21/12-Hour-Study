@@ -7,18 +7,14 @@ const mongoose = require('mongoose');
 
 exports.createReport = catchAsync(async (req, res, next) => {
   // Check if a report for today already exists
-  let start = new Date();
-  start.setUTCHours(0, 0, 0, 0);
+  let startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
 
-  let end = new Date();
-  end.setUTCHours(23, 59, 59, 999);
-  /*
-  let reportForToday = await Report.find({
-    createdAt: { $gte: new Date(new Date()) }
-  });
-  */
+  let endOfToday = new Date();
+  endOfToday.setUTCHours(23, 59, 59, 999);
+
   let reportForToday = await Report.findOne().where({
-    createdAt: { $gte: start.toUTCString() },
+    createdAt: { $gte: startOfToday.toUTCString() },
     user: req.user.id
   });
 
@@ -36,16 +32,16 @@ exports.createReport = catchAsync(async (req, res, next) => {
 });
 
 exports.updateReport = catchAsync(async (req, res, next) => {
-  let start = new Date();
-  start.setUTCHours(0, 0, 0, 0);
+  let startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
 
-  let end = new Date();
-  end.setUTCHours(23, 59, 59, 999);
+  let endOfToday = new Date();
+  endOfToday.setUTCHours(23, 59, 59, 999);
   const arlen = 2;
   let updatedReport = await Report.findOneAndUpdate(
     {
       user: req.body.user_id,
-      createdAt: { $gte: start.toUTCString() }
+      createdAt: { $gte: startOfToday.toUTCString() }
     },
     {
       $inc: {
@@ -54,32 +50,7 @@ exports.updateReport = catchAsync(async (req, res, next) => {
       $push: {
         [`stats.${req.body.id}.completions`]: new Date()
       }
-      /*
-      $group: {
-        [`stats.${req.body.id}.completions`]: {
-          $push: {
-            $cond: [
-              { $gte: [`stats.${req.body.progress}`, 0] },
-              new Date(),
-              '$$REMOVE'
-            ]
-          }
-        }
-      }
-      */
     },
-
-    /*
-    {
-      $inc: { 'modeCompletions.sessions': 1 },
-      $inc: { totalSessionTime: sessionTime },
-      $push: {
-        sessionInstances: {
-          timeAccumulated: 2
-        }
-      }
-    },
-    */
     {
       upsert: true,
       new: true,
