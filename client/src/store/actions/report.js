@@ -27,8 +27,8 @@ export const updateReport =
     );
   };
 
-export const updateTimerInstances =
-  ({ instanceTime }) =>
+export const updateInstances =
+  ({ instanceTime, id }) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -39,14 +39,14 @@ export const updateTimerInstances =
     };
 
     const body = JSON.stringify({
-      createdAt: new Date(Date.now - instanceTime * 1000),
-      timeAccumulated: instanceTime,
-      stoppedAt: new Date(Date.now)
+      id,
+
+      timeAccumulated: instanceTime
     });
 
     try {
       const req = await axios.patch(
-        `${process.env.REACT_APP_API_URL}/api/v1/reports/updateInstances`,
+        `${process.env.REACT_APP_API_URL}/api/v1/reports/updateReportInstances`,
         body,
         config
       );

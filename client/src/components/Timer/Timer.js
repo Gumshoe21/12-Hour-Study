@@ -15,6 +15,7 @@ import Countdown from './Countdown';
 import { Box } from '@chakra-ui/react';
 import sound from './../../utils/audioPlayer.js';
 import { updateReport } from './../../store/actions/report';
+import { updateInstances } from './../../store/actions/report';
 
 // when the timer is switched, prompt "are you sure? Reports won't count rest of time left." if sure then add the remaining time left to today's report before clearProgress()
 // if you try to exit window or switch pages, ask if sure then add remaining time b4 clearProgress()
@@ -53,7 +54,6 @@ const Timer = ({ timer, auth }) => {
     setTimeLeft((timeLeft) => length * 60);
   }, [activeMode.length]);
 
-  // update reports before this fires
   const clearTimer = () => {
     clearInterval(tickingIntervalRef.current);
     tickingIntervalRef.current = null;
@@ -61,8 +61,11 @@ const Timer = ({ timer, auth }) => {
   const switchTimerMode = async (e) => {
     if (!tickingSound.paused) tickingSound.stop();
     dispatch(setTicking(false));
-    // updateInstances()
-    // setInstanceTime(0);
+    //////////////////////////////////////////////////////
+    if (instanceTime > 0) {
+      dispatch(updateInstances({ id, instanceTime }));
+      setInstanceTime(0);
+    }
     dispatch(clearProgress());
     dispatch(setActiveMode(e.target.value));
     setTimeLeft(timer.modes[e.target.value].length * 60);
@@ -70,8 +73,10 @@ const Timer = ({ timer, auth }) => {
 
   const onTimerComplete = useEffect(() => {
     if (timeLeft === 0) {
-      // updateInstances()
-      // setInstanceTime(0);
+      //////////////////////////////////////////////////////
+
+      dispatch(updateInstances({ id, instanceTime }));
+      setInstanceTime(0);
       dispatch(updateReport({ auth, id, name, length, progress }));
       dispatch(clearProgress());
       if (
@@ -112,14 +117,21 @@ const Timer = ({ timer, auth }) => {
     tickingSound.toggle();
     dispatch(setTicking(timer.ticking === true ? false : true));
     buttonSound.play();
+
+    //////////////////////////////////////////////////////
+    if (instanceTime > 0) {
+      dispatch(updateInstances({ id, instanceTime }));
+      setInstanceTime(0);
+    }
   };
 
-  const setSound = () => {};
   const tick = useCallback(() => {
     if (timeLeft > 0) {
       setTimeLeft(timeLeft - 1);
       dispatch(incrementProgress());
-      // setInstanceTime(instanceTime + 1);
+
+      //////////////////////////////////////////////////////
+      setInstanceTime(instanceTime + 1);
     }
     if (timeLeft < 1) {
       dispatch(setTicking(false));

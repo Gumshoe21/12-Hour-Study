@@ -14,4 +14,8 @@ router.route('/').get(reportController.getAllReports);
 router.use(authController.protect);
 
 router.route('/updateReport').patch(reportController.updateReport);
+
+router
+  .route('/updateReportInstances')
+  .patch(reportController.updateReportInstances);
 module.exports = router;

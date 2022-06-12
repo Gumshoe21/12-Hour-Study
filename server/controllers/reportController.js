@@ -37,7 +37,6 @@ exports.updateReport = catchAsync(async (req, res, next) => {
 
   let endOfToday = new Date();
   endOfToday.setUTCHours(23, 59, 59, 999);
-  const arlen = 2;
   let updatedReport = await Report.findOneAndUpdate(
     {
       user: req.body.user_id,
@@ -66,6 +65,40 @@ exports.updateReport = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updateReportInstances = catchAsync(async (req, res, next) => {
+  let startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+
+  let endOfToday = new Date();
+  endOfToday.setUTCHours(23, 59, 59, 999);
+  let updatedReport = await Report.findOneAndUpdate(
+    {
+      user: req.body.user_id,
+      createdAt: { $gte: startOfToday.toUTCString() }
+    },
+    {
+      $push: {
+        [`stats.${req.body.id}.instances`]: {
+          createdAt: new Date(new Date() - req.body.timeAccumulated * 1000),
+          timeAccumulated: req.body.timeAccumulated,
+          stoppedAt: new Date(new Date())
+        }
+      }
+    },
+    {
+      upsert: true,
+      new: true,
+      runValidators: true
+    }
+  );
+
+  res.status(200).json({
+    message: 'success',
+    data: {
+      data: updatedReport
+    }
+  });
+});
 exports.getReport = factory.getOne(Report);
 exports.getAllReports = factory.getAll(Report);
 
