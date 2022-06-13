@@ -1,7 +1,25 @@
 import axios from 'axios';
-import reportSlice from '../slices/auth';
+import reportSlice from '../slices/report';
 import { APIVERSION } from './../../constants/index';
 
+export const getReports = () => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true,
+    credentials: 'include'
+  };
+  try {
+    const req = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/reports/getCurrentUserReports`,
+      config
+    );
+    dispatch(reportSlice.actions.getReports(req.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const updateReport =
   ({ auth, id, name, length, progress }) =>
   async (dispatch) => {
@@ -28,7 +46,7 @@ export const updateReport =
   };
 
 export const updateInstances =
-  ({ instanceTime, id }) =>
+  ({ instanceTime, id, auth }) =>
   async (dispatch) => {
     const config = {
       headers: {
@@ -40,7 +58,7 @@ export const updateInstances =
 
     const body = JSON.stringify({
       id,
-
+      user_id: auth.user._id,
       timeAccumulated: instanceTime
     });
 

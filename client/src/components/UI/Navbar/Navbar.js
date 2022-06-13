@@ -65,6 +65,10 @@ const Navbar = ({ auth, logout }) => {
           <Link as={ReactLink} to="/profile">
             <MenuItem>Profile</MenuItem>
           </Link>
+          <Link as={ReactLink} to="/reports">
+            <MenuItem>Reports</MenuItem>
+          </Link>
+
           <MenuDivider />
           <MenuItem onClick={logout}>Logout</MenuItem>
         </MenuList>

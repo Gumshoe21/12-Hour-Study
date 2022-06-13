@@ -5,6 +5,11 @@ const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 const mongoose = require('mongoose');
 
+exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
+  const reports = await Report.find({ user: req.user.id });
+  res.status(200).json(reports);
+});
+
 exports.createReport = catchAsync(async (req, res, next) => {
   // Check if a report for today already exists
   let startOfToday = new Date();
@@ -100,7 +105,6 @@ exports.updateReportInstances = catchAsync(async (req, res, next) => {
   });
 });
 exports.getReport = factory.getOne(Report);
-exports.getAllReports = factory.getAll(Report);
 
 // exports.deleteAllReports = factory.deleteAll(Report);
 // exports.updateReport = factory.updateOne(Report);

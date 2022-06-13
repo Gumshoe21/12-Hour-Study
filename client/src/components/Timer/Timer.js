@@ -63,7 +63,7 @@ const Timer = ({ timer, auth }) => {
     dispatch(setTicking(false));
     //////////////////////////////////////////////////////
     if (instanceTime > 0) {
-      dispatch(updateInstances({ id, instanceTime }));
+      dispatch(updateInstances({ id, instanceTime, auth }));
       setInstanceTime(0);
     }
     dispatch(clearProgress());
@@ -75,7 +75,7 @@ const Timer = ({ timer, auth }) => {
     if (timeLeft === 0) {
       //////////////////////////////////////////////////////
 
-      dispatch(updateInstances({ id, instanceTime }));
+      dispatch(updateInstances({ id, instanceTime, auth }));
       setInstanceTime(0);
       dispatch(updateReport({ auth, id, name, length, progress }));
       dispatch(clearProgress());
@@ -113,15 +113,16 @@ const Timer = ({ timer, auth }) => {
     }
   }, [timeLeft]);
 
-  const setTickingHandler = async () => {
+  const setTickingHandler = () => {
     tickingSound.toggle();
     dispatch(setTicking(timer.ticking === true ? false : true));
     buttonSound.play();
 
+    setInstanceTime(0);
+    console.log(instanceTime);
     //////////////////////////////////////////////////////
     if (instanceTime > 0) {
-      dispatch(updateInstances({ id, instanceTime }));
-      setInstanceTime(0);
+      dispatch(updateInstances({ id, instanceTime, auth }));
     }
   };
 
@@ -138,7 +139,16 @@ const Timer = ({ timer, auth }) => {
 
       clearTimer();
     }
-  }, [timeLeft, dispatch, setTicking, timer.modes[timer.activeMode].length]);
+    if (timer.ticking === false) {
+      setInstanceTime(0);
+    }
+  }, [
+    timer.ticking,
+    timeLeft,
+    dispatch,
+    setTicking,
+    timer.modes[timer.activeMode].length
+  ]);
 
   const setTickingInterval = useEffect(() => {
     if (timer.ticking) {

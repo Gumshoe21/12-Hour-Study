@@ -7,6 +7,8 @@ import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
 import ResetPassword from './components/Auth/ResetPassword/ResetPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
+
+import Report from './components/Reports/Reports';
 import Landing from './components/Landing/Landing';
 import { getUser } from './store/actions/auth';
 import { connect } from 'react-redux';
@@ -37,6 +39,11 @@ const App = ({ auth }) => {
             exact
             path="/profile"
             element={<PrivateRoute component={Profile} />}
+          />
+          <Route
+            exact
+            path="/reports"
+            element={<PrivateRoute component={Report} />}
           />
           <Route
             path="/dashboard"
