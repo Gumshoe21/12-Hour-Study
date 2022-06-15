@@ -14,7 +14,6 @@ router.use(authController.protect);
 router
   .route('/getCurrentUserReports')
   .get(userController.getMe, reportController.getCurrentUserReports);
-
 router
   .route('/updateReportInstances')
   .patch(reportController.updateReportInstances);

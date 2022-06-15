@@ -6,8 +6,27 @@ const factory = require('./handlerFactory');
 const mongoose = require('mongoose');
 
 exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
-  const reports = await Report.find({ user: req.user.id });
-  res.status(200).json(reports);
+  let reports = await Report.find({ user: req.user.id }).select(
+    '-_id -user -__v'
+  );
+  let body = [];
+  for (report of Array.from(reports)) {
+    let { session, shortBreak, longBreak } = report.stats;
+    body.push({
+      sessionTotalTime: session.totalTimeAccumulated,
+      // sessionCompletions: session.completions,
+      // sessionInstances: session.instances,
+      // shortBreakCompletions: shortBreak.completions,
+      // shortBreakInstances: shortBreak.instances,
+      // longBreakCompletions: longBreak.completions
+      // longBreakInstances: longBreak.instances,
+
+      shortBreakTotalTime: shortBreak.totalTimeAccumulated,
+      longBreakTotalTime: longBreak.totalTimeAccumulated
+    });
+  }
+
+  res.status(200).json(body);
 });
 
 exports.createReport = catchAsync(async (req, res, next) => {
