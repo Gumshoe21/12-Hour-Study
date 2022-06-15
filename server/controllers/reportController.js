@@ -6,14 +6,32 @@ const factory = require('./handlerFactory');
 const mongoose = require('mongoose');
 
 exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
-  let reports = await Report.find({ user: req.user.id }).select(
-    '-_id -user -__v'
-  );
+  let reports = await Report.aggregate([
+    {
+      $unwind: '$stats.session.instances'
+    },
+    {
+      $match: { user: mongoose.Types.ObjectId(req.user.id) }
+    },
+    {
+      $group: {
+        _id: null,
+        totalz: {
+          $sum: {
+            $add: ['$stats.session.instances.timeAccumulated']
+          }
+        }
+      }
+    }
+  ]);
   let body = [];
+  /*
   for (report of Array.from(reports)) {
     let { session, shortBreak, longBreak } = report.stats;
     body.push({
+      createdAt: report.createdAt,
       sessionTotalTime: session.totalTimeAccumulated,
+      totalz,
       // sessionCompletions: session.completions,
       // sessionInstances: session.instances,
       // shortBreakCompletions: shortBreak.completions,
@@ -25,8 +43,8 @@ exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
       longBreakTotalTime: longBreak.totalTimeAccumulated
     });
   }
-
-  res.status(200).json(body);
+*/
+  res.status(200).json(reports);
 });
 
 exports.createReport = catchAsync(async (req, res, next) => {
