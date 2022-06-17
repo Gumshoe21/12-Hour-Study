@@ -11,6 +11,7 @@
     "@fontsource/inter": "^4.5.10",
     "@fontsource/raleway": "^4.5.8",
     "@fontsource/source-sans-pro": "^4.5.9",
+    "@nivo/bar": "^0.79.1",
     "@nivo/core": "^0.79.0",
     "@nivo/pie": "^0.79.1",
     "@reduxjs/toolkit": "^1.8.0",

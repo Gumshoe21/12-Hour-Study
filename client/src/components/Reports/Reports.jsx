@@ -1,21 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Flex, useColorModeValue } from '@chakra-ui/react';
 import { getReports } from './../../store/actions/report';
 import store from './../../store/index';
-
+import BarGraph from './BarGraph';
 const Reports = ({ auth, report }) => {
   useEffect(() => {
     store.dispatch(getReports());
   }, []);
   return (
-    <Container maxW="container.xl" overflow="hidden">
-      <Flex align="center" overflow="hidden" justify="center">
-        {!report.loading &&
-          report.reports[0].stats.session.totalTimeAccumulated}
-      </Flex>
-    </Container>
+    <Fragment>{!report.loading && <BarGraph data={report.reports} />}</Fragment>
   );
 };
 
