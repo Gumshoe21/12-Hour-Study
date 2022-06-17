@@ -6,6 +6,7 @@ const factory = require('./handlerFactory');
 const mongoose = require('mongoose');
 
 exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
+  /*
   let reports = await Report.aggregate([
     {
       $unwind: '$stats.session.instances'
@@ -24,27 +25,35 @@ exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
       }
     }
   ]);
+  */
+  let reports = await Report.find({ user: req.user.id });
   let body = [];
-  /*
   for (report of Array.from(reports)) {
     let { session, shortBreak, longBreak } = report.stats;
     body.push({
-      createdAt: report.createdAt,
-      sessionTotalTime: session.totalTimeAccumulated,
-      totalz,
+      id: report.createdAt.toDateString(),
+
+      session: session.totalTimeAccumulated,
+      sessionColor: 'hsl(126, 70% 50%)',
+
+      shortBreak: shortBreak.totalTimeAccumulated,
+      shortBreakColor: 'hsl(126, 70% 50%)',
+
+      longBreak: longBreak.totalTimeAccumulated,
+      longBreakColor: 'hsl(126, 70% 50%)'
+
       // sessionCompletions: session.completions,
       // sessionInstances: session.instances,
       // shortBreakCompletions: shortBreak.completions,
       // shortBreakInstances: shortBreak.instances,
-      // longBreakCompletions: longBreak.completions
+      // longBreakCompletions: longBreak.completions,
       // longBreakInstances: longBreak.instances,
 
-      shortBreakTotalTime: shortBreak.totalTimeAccumulated,
-      longBreakTotalTime: longBreak.totalTimeAccumulated
+      //      shortBreakTotalTime: shortBreak.totalTimeAccumulated,
+      //     longBreakTotalTime: longBreak.totalTimeAccumulated
     });
   }
-*/
-  res.status(200).json(reports);
+  res.status(200).json(body);
 });
 
 exports.createReport = catchAsync(async (req, res, next) => {
@@ -125,6 +134,9 @@ exports.updateReportInstances = catchAsync(async (req, res, next) => {
           timeAccumulated: req.body.timeAccumulated,
           stoppedAt: new Date(new Date())
         }
+      },
+      $inc: {
+        [`stats.${req.body.id}.totalTimeAccumulated`]: req.body.timeAccumulated
       }
     },
     {
