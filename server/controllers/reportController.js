@@ -6,42 +6,29 @@ const factory = require('./handlerFactory');
 const mongoose = require('mongoose');
 
 exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
-  /*
-  let reports = await Report.aggregate([
-    {
-      $unwind: '$stats.session.instances'
-    },
-    {
-      $match: { user: mongoose.Types.ObjectId(req.user.id) }
-    },
-    {
-      $group: {
-        _id: null,
-        totalz: {
-          $sum: {
-            $add: ['$stats.session.instances.timeAccumulated']
-          }
-        }
-      }
-    }
-  ]);
-  */
+  const reqQuery = { ...req.query };
+  reqQuery.user = req.user.id;
+  reqQuery.modes = req.query.modes.split(',');
+
   let reports = await Report.find({ user: req.user.id });
+
   let body = [];
   for (report of Array.from(reports)) {
     let { session, shortBreak, longBreak } = report.stats;
+
     body.push({
       id: report.createdAt.toDateString(),
 
-      session: session.totalTimeAccumulated,
-      sessionColor: 'hsl(126, 70% 50%)',
+      ...(Array.from(reqQuery.modes).includes('session') && {
+        session: session.totalTimeAccumulated,
+        sessionColor: 'hsl(126, 70% 50%)'
+      }),
 
       shortBreak: shortBreak.totalTimeAccumulated,
       shortBreakColor: 'hsl(126, 70% 50%)',
 
       longBreak: longBreak.totalTimeAccumulated,
       longBreakColor: 'hsl(126, 70% 50%)'
-
       // sessionCompletions: session.completions,
       // sessionInstances: session.instances,
       // shortBreakCompletions: shortBreak.completions,
