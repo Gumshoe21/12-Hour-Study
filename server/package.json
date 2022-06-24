@@ -13,11 +13,13 @@
   "author": "Matthew Smilansky",
   "license": "MIT",
   "dependencies": {
+    "@nivo/calendar": "^0.79.1",
     "async": "^3.2.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "css-minimizer-webpack-plugin": "^3.4.1",
+    "dayjs": "^1.11.3",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.7",
     "express": "^4.17.2",

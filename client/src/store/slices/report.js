@@ -3,12 +3,16 @@ const reportSlice = createSlice({
   name: 'report',
   initialState: {
     loading: true,
-    reports: null
+    reports: {
+      barGraph: null,
+      timeRange: null,
+    }
   },
   reducers: {
     getReports(state, action) {
       state.loading = false;
-      state.reports = action.payload;
+      state.reports.barGraph = action.payload.barGraph;
+      state.reports.timeRange = action.payload.timeRange;
     }
   }
 });

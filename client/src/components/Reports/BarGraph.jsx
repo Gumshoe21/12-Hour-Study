@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Container, Flex, useColorModeValue, Box } from '@chakra-ui/react';
 import store from '../../store/index';
 import { ResponsiveBar } from '@nivo/bar';
 import { getReports } from '../../store/actions/report';
-
+import dayjs from 'dayjs';
 const BarGraph = ({ report, props }) => (
   <ResponsiveBar
-    data={report.reports}
+    data={report.reports.barGraph}
     keys={['session', 'shortBreak', 'longBreak']}
-    indexBy="id"
+    indexBy={(e) => {
+      return dayjs(e.id).format('MM/DD/YY');
+    }}
     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
     padding={0.3}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
     colors={{ scheme: 'nivo' }}
+    groupMode={'stacked'}
     fill={[
       {
         match: {
@@ -61,7 +64,7 @@ const BarGraph = ({ report, props }) => (
     legends={[
       {
         dataFrom: 'keys',
-        anchor: 'bottom-right',
+        anchor: 'right',
         direction: 'column',
         justify: false,
         translateX: 120,
@@ -72,6 +75,7 @@ const BarGraph = ({ report, props }) => (
         itemDirection: 'left-to-right',
         itemOpacity: 0.85,
         symbolSize: 20,
+        symbolShape: 'circle',
         effects: [
           {
             on: 'hover',
@@ -84,7 +88,7 @@ const BarGraph = ({ report, props }) => (
     ]}
     role="application"
     ariaLabel="Nivo bar chart demo"
-    barAriaLabel={function (e) {
+    barAriaLabel={function(e) {
       return e.id + ': ' + e.formattedValue + ' in id: ' + e.indexValue;
     }}
   />

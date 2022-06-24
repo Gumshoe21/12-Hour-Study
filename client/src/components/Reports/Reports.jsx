@@ -5,12 +5,22 @@ import { Container, Flex, useColorModeValue } from '@chakra-ui/react';
 import { getReports } from './../../store/actions/report';
 import store from './../../store/index';
 import BarGraph from './BarGraph';
+import TimeRange from './TimeRange'
+
 const Reports = ({ auth, report }) => {
   useEffect(() => {
     store.dispatch(getReports());
   }, []);
+
   return (
-    <Fragment>{!report.loading && <BarGraph data={report.reports} />}</Fragment>
+    <Flex align="center" justify="center" direction="column" height="100vh">
+      <Flex height='50%' width="100vw">
+        {!report.loading && <BarGraph data={report.reports} />}
+      </Flex>
+      <Flex height='50%' width="100vw">
+        {!report.loading && <TimeRange data={report.reports} />}
+      </Flex>
+    </Flex >
   );
 };
 

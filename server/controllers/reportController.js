@@ -1,46 +1,53 @@
 const Report = require('../models/Report');
-const User = require('../models/User');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
-const mongoose = require('mongoose');
+const dayjs = require('dayjs')
 
 exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
   const reqQuery = { ...req.query };
+
   reqQuery.user = req.user.id;
-  reqQuery.modes = req.query.modes.split(',');
+  reqQuery.modes = Array.from(req.query.modes.split(','));
 
-  let reports = await Report.find({ user: req.user.id });
+  let barGraphReports = await Report.find({ user: req.user.id });
 
-  let body = [];
-  for (report of Array.from(reports)) {
+  let barGraph = [];
+  for (report of Array.from(barGraphReports)) {
     let { session, shortBreak, longBreak } = report.stats;
-
-    body.push({
+    barGraph.push({
       id: report.createdAt.toDateString(),
 
-      ...(Array.from(reqQuery.modes).includes('session') && {
+      ...(reqQuery.modes.includes('session') && {
         session: session.totalTimeAccumulated,
         sessionColor: 'hsl(126, 70% 50%)'
       }),
-
-      shortBreak: shortBreak.totalTimeAccumulated,
-      shortBreakColor: 'hsl(126, 70% 50%)',
-
-      longBreak: longBreak.totalTimeAccumulated,
-      longBreakColor: 'hsl(126, 70% 50%)'
-      // sessionCompletions: session.completions,
-      // sessionInstances: session.instances,
-      // shortBreakCompletions: shortBreak.completions,
-      // shortBreakInstances: shortBreak.instances,
-      // longBreakCompletions: longBreak.completions,
-      // longBreakInstances: longBreak.instances,
-
-      //      shortBreakTotalTime: shortBreak.totalTimeAccumulated,
-      //     longBreakTotalTime: longBreak.totalTimeAccumulated
+      ...(reqQuery.modes.includes('shortBreak') && {
+        shortBreak: shortBreak.totalTimeAccumulated,
+        shortBreakColor: 'hsl(126, 70% 50%)'
+      }),
+      ...(reqQuery.modes.includes('longBreak') && {
+        longBreak: longBreak.totalTimeAccumulated,
+        longBreakColor: 'hsl(126, 70% 50%)'
+      })
     });
   }
-  res.status(200).json(body);
+
+  let timeRangeReports = await Report.find({ user: req.user.id });
+  let timeRange = [];
+
+  for (report of Array.from(timeRangeReports)) {
+    let { session } = report.stats;
+    timeRange.push({
+      day: dayjs(report.createdAt).format('YYYY-MM-DD'),
+      value: session.totalTimeAccumulated
+    })
+  }
+
+  res.status(200).json({
+    barGraph,
+    timeRange
+  });
 });
 
 exports.createReport = catchAsync(async (req, res, next) => {
