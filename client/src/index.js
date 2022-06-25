@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/index';
 import '@fontsource/inter/700.css';
@@ -57,7 +57,7 @@ const theme = extendTheme({
           textDecoration: 'none',
           outline: 'none'
         },
-        _active: {
+        active: {
           textDecoration: 'none',
           outline: 'none'
         }
@@ -102,12 +102,12 @@ const theme = extendTheme({
   }
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <Provider store={store}>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.initialColorMode} />
       <App />
     </ChakraProvider>
-  </Provider>
+  </Provider>,
+  document.getElementById('root')
 );
