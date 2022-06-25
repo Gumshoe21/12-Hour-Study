@@ -1,7 +1,7 @@
 // install (please make sure versions match peerDependencies)
 // yarn add @nivo/core @nivo/calendar
 import { ResponsiveTimeRange } from '@nivo/calendar'
-
+import { Box } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // make sure parent container have a defined height when using
@@ -12,15 +12,15 @@ import { connect } from 'react-redux';
 let currentYear = new Date().getFullYear();
 const TimeRange = ({ report }) => (
 
-  <ResponsiveTimeRange
+  <Box as={ResponsiveTimeRange}
     onClick={(d, e) => {
       console.log(d, e)
     }}
     data={report.reports.timeRange}
     from={`${currentYear}-01-01`}
     to={`${currentYear}-12-31`}
-    emptyColor="#eeeeee"
-    colors={['#61cdbb', '#97e3d5', '#e8c1a0', '#f47560']}
+    emptyColor='#eeeeee'
+    colors={['#9C7DAC', '#784E8E', '#592A71', '#3D1055']}
     margin={{ top: 40, right: 40, bottom: 100, left: 40 }}
     dayBorderWidth={2}
     dayBorderColor="#fffff"
