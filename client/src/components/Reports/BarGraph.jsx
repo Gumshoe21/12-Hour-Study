@@ -8,16 +8,17 @@ import { getReports } from '../../store/actions/report';
 import dayjs from 'dayjs';
 const BarGraph = ({ report, props }) => (
   <ResponsiveBar
+    borderWidth="2px"
     data={report.reports.barGraph}
     keys={['session', 'shortBreak', 'longBreak']}
     indexBy={(e) => {
-      return dayjs(e.id).format('MM/DD/YY');
+      return dayjs(e.id).format('M/DD');
     }}
     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
     padding={0.3}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
-    colors={{ scheme: 'nivo' }}
+    colors={['#9C7DAC', '#784E8E', '#592A71', '#3D1055']}
     groupMode={'stacked'}
     fill={[
       {
@@ -53,25 +54,22 @@ const BarGraph = ({ report, props }) => (
       tickRotation: 0,
       legend: 'food',
       legendPosition: 'middle',
-      legendOffset: -40
+      legendOffset: -50
     }}
     labelSkipWidth={12}
     labelSkipHeight={12}
-    labelTextColor={{
-      from: 'color',
-      modifiers: [['darker', 1.6]]
-    }}
+    labelTextColor="#ffffff"
     legends={[
       {
         dataFrom: 'keys',
-        anchor: 'right',
-        direction: 'column',
+        anchor: 'top',
+        direction: 'row',
         justify: false,
-        translateX: 120,
-        translateY: 0,
-        itemsSpacing: 2,
-        itemWidth: 100,
-        itemHeight: 20,
+        translateX: 100,
+        translateY: -40,
+        itemsSpacing: 8,
+        itemWidth: 120,
+        itemHeight: 40,
         itemDirection: 'left-to-right',
         itemOpacity: 0.85,
         symbolSize: 20,

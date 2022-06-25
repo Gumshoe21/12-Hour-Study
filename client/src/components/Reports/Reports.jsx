@@ -1,7 +1,7 @@
 import React, { useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Container, Flex, Text, Heading, useColorModeValue } from '@chakra-ui/react';
 import { getReports } from './../../store/actions/report';
 import store from './../../store/index';
 import BarGraph from './BarGraph';
@@ -13,14 +13,19 @@ const Reports = ({ auth, report }) => {
   }, []);
 
   return (
-    <Flex align="center" justify="center" direction="column" height="100vh">
-      <Flex height='50%' width="100vw">
-        {!report.loading && <BarGraph data={report.reports} />}
-      </Flex>
-      <Flex height='50%' width="100vw">
-        {!report.loading && <TimeRange data={report.reports} />}
-      </Flex>
-    </Flex >
+    <Container maxW='container.xl'>
+      <Flex px={9.6} pt={3.6} align="center" justify="center" direction="column" height="100vh">
+        <Flex>
+          <Heading fontSize='3.2rem'>Your Week In Review</Heading>
+        </Flex>
+        <Flex height='50%' width="100%">
+          {!report.loading && <BarGraph data={report.reports} />}
+        </Flex>
+        <Flex height='50%' width="100%">
+          {!report.loading && <TimeRange data={report.reports} />}
+        </Flex>
+      </Flex >
+    </Container>
   );
 };
 
