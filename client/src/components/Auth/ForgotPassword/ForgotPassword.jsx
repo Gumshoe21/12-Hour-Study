@@ -34,6 +34,7 @@ const ForgotPassword = ({ auth }) => {
 ForgotPassword.propTypes = {
   auth: PropTypes.object.isRequired
 };
+
 const mapStateToProps = (state, ownProps) => {
   return {
     auth: state.auth,

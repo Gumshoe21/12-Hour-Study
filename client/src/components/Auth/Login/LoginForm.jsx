@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { login } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  FormControl,
-  VStack,
-  Input,
-  Button,
   Flex,
   Text,
+  Button,
+  VStack,
+  FormControl,
   FormErrorMessage,
-  FormHelperText
+  FormHelperText,
+  Input
 } from '@chakra-ui/react';
-
-import { getUser } from './../../../store/actions/auth';
 import store from './../../../store/index';
+import { login } from '../../../store/actions/auth';
+import { getUser } from './../../../store/actions/auth';
+
 const LoginForm = ({ login, auth, props }) => {
+
   useEffect(() => {
     store.dispatch(getUser());
   }, []); // only run once with [] - this effectively makes it a componentDidMount() function
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+
   const { email, password } = formData;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ const LoginForm = ({ login, auth, props }) => {
     <form onSubmit={(e) => onSubmit(e)}>
       <FormControl isInvalid={loginFailed}>
         {!loginFailed ? (
-          <FormHelperText></FormHelperText>
+          null
         ) : (
           <FormErrorMessage fontSize={14} mb={4}>
             Email and/or password is wrong.

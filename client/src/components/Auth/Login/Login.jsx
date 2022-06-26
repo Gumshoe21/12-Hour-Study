@@ -1,15 +1,12 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Flex } from '@chakra-ui/react';
 import LoginForm from './LoginForm';
+import { Flex } from '@chakra-ui/react';
 
-import { login } from '../../../store/actions/auth';
 const Login = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
+  if (isAuthenticated) return <Navigate to="/dashboard" />
 
   return (
     <Flex
@@ -34,13 +31,12 @@ const Login = ({ isAuthenticated }) => {
 };
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
-const mapStateToProps = (state, ownProps) => {
+
+const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    props: ownProps
   };
 };
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps)(Login);

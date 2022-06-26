@@ -4,24 +4,24 @@ import { forgotPassword } from '../../../store/actions/auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  FormControl,
-  VStack,
-  Input,
-  Button,
   Flex,
   Text,
+  Button,
+  VStack,
+  FormControl,
   FormErrorMessage,
-  FormHelperText
+  FormHelperText,
+  Input
 } from '@chakra-ui/react';
 
-const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
+const ForgotPasswordForm = ({ forgotPassword, auth }) => {
   const [formData, setFormData] = useState({
     email: ''
   });
+
   const { email } = formData;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
     <form onSubmit={(e) => onSubmit(e)}>
       <FormControl isInvalid={emailNotFound}>
         {!emailNotFound ? (
-          <FormHelperText></FormHelperText>
+          null
         ) : (
           <FormErrorMessage fontSize={14} mb={4}>
             Email not found.
@@ -50,7 +50,7 @@ const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
             height={16}
             onChange={(e) => onChange(e)}
           />
-          <Button h={16} fontSize={16} type="submit" value="Login" width="100%">
+          <Button h={16} fontSize={16} type="submit" value="Forogt Password" width="100%">
             Submit
           </Button>
         </VStack>
@@ -76,9 +76,8 @@ const ForgotPasswordForm = ({ forgotPassword, auth, props }) => {
 ForgotPasswordForm.propTypes = {
   forgotPassword: PropTypes.func.isRequired
 };
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    props: ownProps,
     auth: state.auth
   };
 };

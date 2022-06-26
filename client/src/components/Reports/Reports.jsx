@@ -7,7 +7,7 @@ import store from './../../store/index';
 import BarGraph from './BarGraph';
 import TimeRange from './TimeRange'
 
-const Reports = ({ auth, report }) => {
+const Reports = ({ report }) => {
   useEffect(() => {
     store.dispatch(getReports());
   }, []);
@@ -34,7 +34,6 @@ Reports.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
   report: state.report
 });
 

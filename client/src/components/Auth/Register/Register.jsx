@@ -1,15 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { register } from '../../../store/actions/auth';
 import { Flex } from '@chakra-ui/react';
 import RegisterForm from './RegisterForm';
+import { register } from '../../../store/actions/auth';
 
-const Register = ({ register, isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" />;
-  }
+const Register = ({ isAuthenticated }) => {
+  if (isAuthenticated) return <Navigate to="/dashboard" />;
   return (
     <Flex
       align="center"
@@ -31,7 +29,6 @@ const Register = ({ register, isAuthenticated }) => {
   );
 };
 Register.propTypes = {
-  register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 const mapStateToProps = (state) => {
@@ -39,4 +36,4 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.auth.isAuthenticated
   };
 };
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps)(Register);

@@ -1,29 +1,24 @@
 import React, { Fragment, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-
-import Timer from '../Timer/Timer';
-import { Container, Flex } from '@chakra-ui/react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getUserTimer } from './../../store/actions/timer';
-import { getUser } from './../../store/actions/auth';
-import store from './../../store/index';
+import { Container, Flex } from '@chakra-ui/react';
 import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
+import Timer from '../Timer/Timer';
+import store from './../../store/index';
+import { getUser } from './../../store/actions/auth';
+import { getUserTimer } from './../../store/actions/timer';
 
 const Dashboard = ({ auth, timer }) => {
   useEffect(() => {
     store.dispatch(getUser());
-  }, []);
-
-  useEffect(() => {
     if (auth.user) {
       store.dispatch(getUserTimer(auth.user));
     }
   }, []);
 
-  if (!auth.isAuthenticated) {
-    return <Navigate to="/" />;
-  }
+  if (!auth.isAuthenticated) return <Navigate to="/" />;
+
   return (
     <Fragment>
       <Container maxW="container.xl">
