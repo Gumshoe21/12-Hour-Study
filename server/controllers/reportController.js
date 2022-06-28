@@ -10,8 +10,8 @@ exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
   reqQuery.user = req.user.id;
   reqQuery.modes = Array.from(req.query.modes.split(','));
 
-  let barGraphReports = await Report.find({ user: req.user.id });
-
+  let barGraphReports = await Report.find({ user: req.user.id })
+  // createdAt: { $gt: dayjs().subtract(7,'day') } })
   let barGraph = [];
   for (report of Array.from(barGraphReports)) {
     let { session, shortBreak, longBreak } = report.stats;
@@ -35,7 +35,6 @@ exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
 
   let timeRangeReports = await Report.find({ user: req.user.id });
   let timeRange = [];
-
   for (report of Array.from(timeRangeReports)) {
     let { session } = report.stats;
     timeRange.push({

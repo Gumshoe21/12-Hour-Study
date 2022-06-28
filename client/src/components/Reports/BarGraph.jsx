@@ -1,12 +1,34 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Container, Flex, useColorModeValue, Box } from '@chakra-ui/react';
+import { Text, Container, Flex, useColorModeValue, Box } from '@chakra-ui/react';
 import store from '../../store/index';
 import { ResponsiveBar } from '@nivo/bar';
 import { getReports } from '../../store/actions/report';
 import dayjs from 'dayjs';
+
+/*
+const Title = () => {
+
+  const style = {
+    fontWeight: 'bold', textAlign: 'right', display: 'block', margin: 'auto', textAlign: 'center'
+  }
+
+  return (
+    <text
+      font-size="2rem"
+      text-anchor='middle'
+      x="47.5%"
+      y="-4%"
+      style={style}
+    >
+      YOUR WEEK IN REVIEW
+    </text>
+  )
+}
+*/
 const BarGraph = ({ report, props }) => (
+
   <ResponsiveBar
     borderWidth="2px"
     data={report.reports.barGraph}
@@ -14,7 +36,7 @@ const BarGraph = ({ report, props }) => (
     indexBy={(e) => {
       return dayjs(e.id).format('M/DD');
     }}
-    margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+    margin={{ top: 0, right: 150, bottom: 50, left: 60 }}
     padding={0.3}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
@@ -62,10 +84,10 @@ const BarGraph = ({ report, props }) => (
     legends={[
       {
         dataFrom: 'keys',
-        anchor: 'top',
-        direction: 'row',
+        anchor: 'right',
+        direction: 'column',
         justify: false,
-        translateX: 100,
+        translateX: 150,
         translateY: -40,
         itemsSpacing: 8,
         itemWidth: 120,
@@ -89,6 +111,7 @@ const BarGraph = ({ report, props }) => (
     barAriaLabel={function(e) {
       return e.id + ': ' + e.formattedValue + ' in id: ' + e.indexValue;
     }}
+    layers={['grid', 'axes', 'bars', 'markers', 'legends', 'annontations']}
   />
 );
 BarGraph.propTypes = {};
