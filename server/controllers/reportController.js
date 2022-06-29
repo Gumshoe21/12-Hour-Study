@@ -2,7 +2,7 @@ const Report = require('../models/Report');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
 
 exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
   const reqQuery = { ...req.query };
@@ -10,8 +10,10 @@ exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
   reqQuery.user = req.user.id;
   reqQuery.modes = Array.from(req.query.modes.split(','));
 
-  let barGraphReports = await Report.find({ user: req.user.id })
-  // createdAt: { $gt: dayjs().subtract(7,'day') } })
+  let barGraphReports = await Report.find({
+    user: req.user.id,
+    createdAt: { $gt: dayjs().subtract(7, 'day') }
+  });
   let barGraph = [];
   for (report of Array.from(barGraphReports)) {
     let { session, shortBreak, longBreak } = report.stats;
@@ -40,7 +42,7 @@ exports.getCurrentUserReports = catchAsync(async (req, res, next) => {
     timeRange.push({
       day: dayjs(report.createdAt).format('YYYY-MM-DD'),
       value: session.totalTimeAccumulated
-    })
+    });
   }
 
   res.status(200).json({

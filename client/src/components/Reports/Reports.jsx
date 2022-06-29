@@ -21,18 +21,33 @@ const Reports = ({ report }) => {
   }, []);
 
   return (
-    <Box>
-      <Tabs variant="soft-rounded">
-        <TabList>
-          <Tab>Yearly Overview</Tab>
-          <Tab>Weekly Overview</Tab>
+    <Container maxW="container.xl">
+      <Tabs
+        h="calc(100vh - 7.25rem)"
+        border="1px solid gray"
+        borderRadius="2rem"
+        isFitted
+        variant="enclosed"
+        bg="tint.100"
+      >
+        <TabList
+          bg="primary.200"
+          borderRadius="2rem 2rem 0rem 0rem"
+          // border="1px solid red"
+        >
+          <Tab borderRadius="2rem 0rem 0rem" fontSize="2.0rem">
+            Weekly Report
+          </Tab>
+          <Tab borderRadius="0rem 2rem 0rem 0rem" fontSize="2.0rem">
+            Yearly Overview
+          </Tab>
         </TabList>
 
         <TabPanels>
           <TabPanel>
             <Flex
-              h="100vh"
-              position="relative"
+              py="20rem"
+              h="calc(100vh - 7.25rem)"
               top="0"
               left="0"
               gap="8rem"
@@ -40,31 +55,26 @@ const Reports = ({ report }) => {
               justify="center"
               align="center"
             >
-              {!report.loading && (
-                <ResponsiveCalendar
-                  onClick={(d, e) => {
-                    console.log(d, e);
-                  }}
-                  data={report.reports.timeRange}
-                  from={new Date(new Date().getFullYear(), 0, 1)}
-                  to={new Date(new Date().getFullYear(), 11, 31)}
-                  emptyColor="white"
-                  colors={['#9C7DAC', '#784E8E', '#592A71', '#3D1055']}
-                  dayBorderWidth={1}
-                  dayBorderColor="black"
-                  yearLegend={(year) => `${year}`}
-                  yearLegendPosition="before"
-                  yearLegendOffset={-8}
-                  align="center"
-                  margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                />
-              )}
+              {!report.loading && <BarGraph />}
             </Flex>
           </TabPanel>
-          <TabPanel>hi</TabPanel>
+          <TabPanel>
+            <Flex
+              py="20rem"
+              h="calc(100vh - 7.25rem)"
+              top="0"
+              left="0"
+              gap="8rem"
+              direction="column"
+              justify="center"
+              align="center"
+            >
+              {!report.loading && <TimeRange />}
+            </Flex>
+          </TabPanel>
         </TabPanels>
       </Tabs>
-    </Box>
+    </Container>
   );
 };
 

@@ -81,7 +81,7 @@ const theme = extendTheme({
       body: {
         padding: '0',
         margin: '0',
-        boxSizing: 'border-box',
+        boxSizing: 'border-box'
         // bg: mode("gray.800", "whiteAlpha.100")(props),
       },
       '#root': {
