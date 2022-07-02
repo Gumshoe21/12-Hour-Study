@@ -35,21 +35,19 @@ const TimeRange = ({ report }) => (
     data={report.reports.timeRange}
     from={new Date(new Date().getFullYear(), 0, 1)}
     to={new Date(new Date().getFullYear(), 11, 31)}
-    emptyColor="white"
-    colors={['#9C7DAC', '#784E8E', '#592A71', '#3D1055']}
+    emptyColor="#d3d3d3"
+    colors={['#9c7dac', '#592A71', '#3D1055']}
     dayBorderWidth={1}
-    dayBorderColor="black"
+    dayBorderColor="#d3d3de"
+    daySpacing={4}
+    monthBorderColor="white"
     monthLegend={(year, month, date) => months[month]}
     yearLegend={(year) => `${year}`}
     yearLegendPosition="before"
     yearLegendOffset={-8}
     align="center"
     margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-  />
-  /*
-  legends={
-   
-    [
+    legends={[
       {
         anchor: 'bottom-right',
         direction: 'row',
@@ -59,12 +57,12 @@ const TimeRange = ({ report }) => (
         itemHeight: 96,
         itemsSpacing: 100,
         itemDirection: 'right-to-left',
-        translateX: -60,
-        translateY: -60,
+        translateX: 0,
+        translateY: -250,
         symbolSize: 40
       }
     ]}
-  */
+  />
 );
 
 TimeRange.propTypes = {};

@@ -1,34 +1,19 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { connect } from 'react-redux';
-import { Text, Container, Flex, useColorModeValue, Box } from '@chakra-ui/react';
 import store from '../../store/index';
 import { ResponsiveBar } from '@nivo/bar';
 import { getReports } from '../../store/actions/report';
-import dayjs from 'dayjs';
 
-/*
-const Title = () => {
+dayjs.extend(duration);
+const formatTime = (time) => {
+  return dayjs
+    .duration(time, 'seconds')
+    .format(time >= 3600 ? 'HH:mm:ss' : 'mm:ss');
+};
 
-  const style = {
-    fontWeight: 'bold', textAlign: 'right', display: 'block', margin: 'auto', textAlign: 'center'
-  }
-
-  return (
-    <text
-      font-size="2rem"
-      text-anchor='middle'
-      x="47.5%"
-      y="-4%"
-      style={style}
-    >
-      YOUR WEEK IN REVIEW
-    </text>
-  )
-}
-*/
 const BarGraph = ({ report, props }) => (
-
   <ResponsiveBar
     borderWidth="2px"
     data={report.reports.barGraph}
@@ -37,7 +22,7 @@ const BarGraph = ({ report, props }) => (
       return dayjs(e.id).format('M/DD');
     }}
     margin={{ top: 0, right: 150, bottom: 50, left: 60 }}
-    padding={0.3}
+    padding={0.8}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
     colors={['#9C7DAC', '#784E8E', '#592A71', '#3D1055']}
@@ -78,6 +63,7 @@ const BarGraph = ({ report, props }) => (
       legendPosition: 'middle',
       legendOffset: -50
     }}
+    label={(d) => `${formatTime(d.value)}`}
     labelSkipWidth={12}
     labelSkipHeight={12}
     labelTextColor="#ffffff"
@@ -107,14 +93,13 @@ const BarGraph = ({ report, props }) => (
       }
     ]}
     role="application"
-    ariaLabel="Nivo bar chart demo"
-    barAriaLabel={function(e) {
+    ariaLabel="Weekly Report"
+    barAriaLabel={function (e) {
       return e.id + ': ' + e.formattedValue + ' in id: ' + e.indexValue;
     }}
     layers={['grid', 'axes', 'bars', 'markers', 'legends', 'annontations']}
   />
 );
-BarGraph.propTypes = {};
 
 const mapStateToProps = (state, ownProps) => ({
   report: state.report,
