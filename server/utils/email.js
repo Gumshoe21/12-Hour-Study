@@ -6,7 +6,7 @@ module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
     this.url = url;
-    this.from = `Matthew Smilansky <${process.env.EMAIL_FROM}>`;
+    this.from = `12 Hour Study <${process.env.EMAIL_FROM}>`;
   }
   newTransport() {
     if (process.env.NODE_ENV === 'production') {

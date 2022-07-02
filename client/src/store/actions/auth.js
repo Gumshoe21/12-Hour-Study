@@ -124,10 +124,11 @@ export const forgotPassword =
         'Content-Type': 'application/json'
       }
     };
-    const body = JSON.stringify({ email });
+    const API_URL = process.env.REACT_APP_API_URL;
+    const body = JSON.stringify({ email, API_URL });
     try {
       const req = await axios.post(
-        `/api/${APIVERSION}/users/forgotPassword`,
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/forgotPassword`,
         body,
         config
       );

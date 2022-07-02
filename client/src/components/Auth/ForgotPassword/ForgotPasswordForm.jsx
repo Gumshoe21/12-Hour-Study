@@ -21,7 +21,8 @@ const ForgotPasswordForm = ({ forgotPassword, auth }) => {
 
   const { email } = formData;
 
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -33,9 +34,7 @@ const ForgotPasswordForm = ({ forgotPassword, auth }) => {
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <FormControl isInvalid={emailNotFound}>
-        {!emailNotFound ? (
-          null
-        ) : (
+        {!emailNotFound ? null : (
           <FormErrorMessage fontSize={14} mb={4}>
             Email not found.
           </FormErrorMessage>
@@ -50,7 +49,13 @@ const ForgotPasswordForm = ({ forgotPassword, auth }) => {
             height={16}
             onChange={(e) => onChange(e)}
           />
-          <Button h={16} fontSize={16} type="submit" value="Forogt Password" width="100%">
+          <Button
+            h={16}
+            fontSize={16}
+            type="submit"
+            value="Forogt Password"
+            width="100%"
+          >
             Submit
           </Button>
         </VStack>

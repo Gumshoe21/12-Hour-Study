@@ -163,6 +163,7 @@ exports.restrictTo = (...roles) => {
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) get user based on POSTed email
   const user = await User.findOne({ email: req.body.email });
+
   if (!user) {
     return next(
       new AppError(
@@ -175,9 +176,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   try {
-    const resetURL = `${req.protocol}://${req.get(
-      'host'
-    )}/resetPassword/${resetToken}`;
+    const resetURL = `${req.headers.referer}resetPassword/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
     res.status(200).json({
       status: 'success',
