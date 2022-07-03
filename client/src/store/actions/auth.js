@@ -69,7 +69,9 @@ export const register =
     const config = {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true,
+      credentials: 'include'
     };
     const body = JSON.stringify({ email, password, passwordConfirm });
     try {
@@ -122,7 +124,9 @@ export const forgotPassword =
     const config = {
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      withCredentials: true,
+      credentials: 'include'
     };
     const API_URL = process.env.REACT_APP_API_URL;
     const body = JSON.stringify({ email, API_URL });
