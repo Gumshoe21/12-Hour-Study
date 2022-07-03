@@ -9,9 +9,11 @@ module.exports = class Email {
     this.from = `12 Hour Study <${process.env.EMAIL_FROM}>`;
   }
   newTransport() {
+    /*
     if (process.env.NODE_ENV === 'production') {
       return 1;
     }
+    */
     return nodemailer.createTransport({
       // service: 'Gmail',
       host: process.env.EMAIL_HOST,

@@ -17,9 +17,9 @@
       "name": "Heroku",
       "address": "localhost",
       "port": 9229,
-      "protocol": "inspector",
+      // "protocol": "inspector",
       "localRoot": "${workspaceFolder}",
-      "remoteRoot": "server"
+      "remoteRoot": "/app"
     }
   ]
 }
