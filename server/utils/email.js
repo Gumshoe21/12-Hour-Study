@@ -1,12 +1,12 @@
 const nodemailer = require('nodemailer');
-const pug = require('pug');
+const ejs = require('ejs');
 const { htmlToText } = require('html-to-text');
 
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
     this.url = url;
-    this.from = `12 Hour Study <${process.env.EMAIL_FROM}>`;
+    this.from = `<${process.env.EMAIL_FROM}>`;
   }
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
@@ -30,14 +30,15 @@ module.exports = class Email {
   }
   async send(template, subject) {
     // Send the actual email - Render HTML based on a template
-    const html = pug.renderFile(
-      `${__dirname}/../views/emails/${template}.pug`,
+    const html = await ejs.renderFile(
+      `${__dirname}/../views/emails/${template}.ejs`,
       {
         to: this.to,
         url: this.url,
         subject
       }
     );
+
     // 2) Define email options
     const mailOptions = {
       from: this.from,

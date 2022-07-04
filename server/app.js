@@ -27,7 +27,7 @@ app.use(
   })
 );
 app.options('*', cors());
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 // set dir for pug views
 app.set('views', path.join(__dirname, 'views'));
 

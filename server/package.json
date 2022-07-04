@@ -21,7 +21,7 @@
     "css-minimizer-webpack-plugin": "^3.4.1",
     "dayjs": "^1.11.3",
     "dotenv": "^10.0.0",
-    "ejs": "^3.1.7",
+    "ejs": "^3.1.8",
     "express": "^4.17.2",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.2.0",
