@@ -12,35 +12,50 @@ const formatTime = (time) => {
     .duration(time, 'seconds')
     .format(time >= 3600 ? 'HH:mm:ss' : 'mm:ss');
 };
-
+const theme = {
+  axis: {
+    legend: {
+      text: {
+        fill: 'white',
+        fontWeight: 'bold',
+        fontSize: '1.8rem',
+        textTransform: 'uppercase',
+        letterSpacing: '0.5rem'
+      }
+    },
+    ticks: {
+      line: {
+        stroke: 'white'
+      },
+      text: {
+        fontSize: '1.2rem',
+        fontWeight: 'bold',
+        fill: 'white'
+      }
+    }
+  },
+  grid: {
+    line: {
+      stroke: 'white',
+      strokeWidth: 2
+    }
+  }
+};
 const BarGraph = ({ report, props }) => (
   <ResponsiveBar
-    borderWidth="2px"
+    theme={theme}
     data={report.reports.barGraph}
     keys={['session', 'shortBreak', 'longBreak']}
     indexBy={(e) => {
       return dayjs(e.id).format('M/DD');
     }}
-    margin={{ top: 0, right: 150, bottom: 50, left: 60 }}
-    padding={0.8}
+    margin={{ top: 0, right: 60, bottom: 50, left: 60 }}
+    padding={0.7}
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
-    colors={['#9C7DAC', '#784E8E', '#592A71', '#3D1055']}
+    colors={['#784E8E', '#592A71', '#3D1055']}
     groupMode={'stacked'}
-    fill={[
-      {
-        match: {
-          id: 'session'
-        },
-        id: 'dots'
-      },
-      {
-        match: {
-          id: 'shortBreak'
-        },
-        id: 'lines'
-      }
-    ]}
+    borderWidth=".2rem"
     borderColor={{
       from: 'color',
       modifiers: [['darker', 1.6]]
@@ -51,15 +66,16 @@ const BarGraph = ({ report, props }) => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'id',
+      legend: 'DATE',
       legendPosition: 'middle',
-      legendOffset: 32
+      legendOffset: 43
     }}
     axisLeft={{
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'food',
+      tickColor: '#fff',
+      legend: 'Timer',
       legendPosition: 'middle',
       legendOffset: -50
     }}
@@ -67,31 +83,6 @@ const BarGraph = ({ report, props }) => (
     labelSkipWidth={12}
     labelSkipHeight={12}
     labelTextColor="#ffffff"
-    legends={[
-      {
-        dataFrom: 'keys',
-        anchor: 'right',
-        direction: 'column',
-        justify: false,
-        translateX: 150,
-        translateY: -40,
-        itemsSpacing: 8,
-        itemWidth: 120,
-        itemHeight: 40,
-        itemDirection: 'left-to-right',
-        itemOpacity: 0.85,
-        symbolSize: 20,
-        symbolShape: 'circle',
-        effects: [
-          {
-            on: 'hover',
-            style: {
-              itemOpacity: 1
-            }
-          }
-        ]
-      }
-    ]}
     role="application"
     ariaLabel="Weekly Report"
     barAriaLabel={function (e) {

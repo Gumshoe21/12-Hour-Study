@@ -12,7 +12,7 @@ export const getReports = () => async (dispatch) => {
   };
   try {
     const req = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/reports/getCurrentUserReports?modes=session,shortBreak,longBreak`,
+      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/reports/getCurrentUserReports?modes=session`,
       config
     );
     dispatch(reportSlice.actions.getReports(req.data));
