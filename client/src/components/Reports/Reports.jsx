@@ -98,7 +98,15 @@ const Reports = ({ report }) => {
               justify="center"
               align="center"
             >
-              {!report.loading && <TimeRange />}
+              {!report.loading && report.reports.timeRange.length > 0 && (
+                <TimeRange />
+              )}
+
+              {!report.loading && report.reports.timeRange.length === 0 && (
+                <Text bg="yellow">
+                  Sorry, there is no data for the given time period.
+                </Text>
+              )}
             </Flex>
           </TabPanel>
         </TabPanels>
