@@ -47,6 +47,7 @@ const TimeRange = ({ report }) => (
     yearLegendOffset={-8}
     align="center"
     margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+    /*
     legends={[
       {
         anchor: 'bottom-right',
@@ -62,6 +63,7 @@ const TimeRange = ({ report }) => (
         symbolSize: 40
       }
     ]}
+    */
   />
 );
 
