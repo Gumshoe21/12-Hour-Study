@@ -77,7 +77,14 @@ const Reports = ({ report }) => {
               justify="center"
               align="center"
             >
-              {!report.loading && <BarGraph />}
+              {!report.loading && report.reports.barGraph.length > 0 && (
+                <BarGraph />
+              )}
+              {!report.loading && report.reports.barGraph.length === 0 && (
+                <Text bg="yellow">
+                  Sorry, there is no data for the given time period.
+                </Text>
+              )}
             </Flex>
           </TabPanel>
           <TabPanel>
