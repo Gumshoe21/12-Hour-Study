@@ -20,7 +20,6 @@ import {
 const Reports = ({ report }) => {
   const selectedTabBg = useColorModeValue('gray.400', 'gray.700');
   const nonSelectedTabBg = useColorModeValue('gray.300', 'gray.600');
-  const selectedTextColor = useColorModeValue('black', 'white')
   const nonSelectedTextColor = useColorModeValue('black', 'black')
 
   useEffect(() => {
@@ -30,17 +29,11 @@ const Reports = ({ report }) => {
   const CustomTab = ({ title }) => {
     return (
       <Tab
-        color={`${nonSelectedTextColor}`}
-        bg={nonSelectedTabBg}
+        variant='enclosed'
         fontSize="1.8rem"
         fontFamily="mono"
         textTransform="uppercase"
         transition="background-color 0.3s ease-in"
-        _selected={{
-          color: `${selectedTextColor}`,
-          bg: `${selectedTabBg}`
-        }}
-
       >
         {title}
       </Tab >
@@ -52,11 +45,9 @@ const Reports = ({ report }) => {
     >
       {/* 7.25rem is subtracted from the full height of the viewport to account for the height made up of the navbar and the margin between the navbar and the graph */}
       <Tabs
-
+        variant='unstyled'
         h="calc(100vh - 7.25rem)"
         isFitted
-        variant="enclosed"
-        bg={selectedTabBg}
 
         borderRadius='8px'
       >

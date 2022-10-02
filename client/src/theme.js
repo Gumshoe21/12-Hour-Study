@@ -1,11 +1,11 @@
-import { extendTheme } from '@chakra-ui/react';
-// import { mode } from "@chakra-ui/theme-tools"
-
+import { extendTheme, useColorModeValue } from '@chakra-ui/react';
+import { getColor, mode } from '@chakra-ui/theme-tools'
 const buttonBgDark = 'purple.700';
 const buttonBgLight = 'gray.500';
+
 const theme = extendTheme({
-  // DEFAULT COLOR MODE SETTINGS
-  initialColorMode: 'white',
+
+  initialColorMode: 'light',
 
   colors: {
     primary: {
@@ -33,9 +33,8 @@ const theme = extendTheme({
     }
   },
 
-  // Variables
 
-  // COMPONENT OVERRIDES
+  // Component overrides 
   components: {
     Link: {
       baseStyle: {
@@ -55,23 +54,46 @@ const theme = extendTheme({
     },
     Button: {
       variants: {
-        solid: (props) => ({
-          bg: props.colorMode === 'dark' ? buttonBgDark : buttonBgLight,
+        solid: ({ colorMode }) => ({
+          bg: colorMode === 'dark' ? buttonBgDark : buttonBgLight,
           color:
-            props.colorMode === 'dark' ? 'whiteAlpha.900' : 'whiteAlpha.900',
+            colorMode === 'dark' ? 'whiteAlpha.900' : 'whiteAlpha.900',
           _hover: {
-            bg: props.colorMode === 'dark' ? buttonBgDark : buttonBgLight
+            bg: colorMode === 'dark' ? buttonBgDark : buttonBgLight
           },
           _active: {
-            bg: props.colorMode === 'dark' ? buttonBgDark : buttonBgLight
+            bg: colorMode === 'dark' ? buttonBgDark : buttonBgLight
           }
         })
       }
-    }
+    },
+    Tabs: {
+      parts: ['root', 'tab', 'tablist', 'tabpanel', 'tabpanels', 'indicator'],
+      baseStyle: (props) => ({
+        // This is the "Tabs" part.
+        root: {
+          bg: mode('gray.400', 'gray.700')(props)
+        },
+        tab: {
+          color: mode('gray.700', 'gray.700')(props),
+          bg: mode('gray.300', 'gray.600'),
+          _selected: {
+            color: mode('gray.900', 'gray.100')(props),
+            bg: mode('gray.400', 'gray.700')(props)
+          },
+        },
+        tablist: {
+        },
+        tabpanel: {
+
+        },
+        tabpanels: {
+        }
+      })
+    },
   },
-  /*
-  GLOBAL STYLES
-  */
+
+  // Globals
   styles: {
     global: (props) => ({
       html: {
@@ -82,7 +104,6 @@ const theme = extendTheme({
         padding: '0',
         margin: '0',
         boxSizing: 'border-box'
-        // bg: mode("gray.800", "whiteAlpha.100")(props),
       },
       '#root': {
         height: '100vh',
