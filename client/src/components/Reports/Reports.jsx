@@ -1,31 +1,28 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  Box,
-  Container,
-  Flex,
-  Text,
-  Heading,
-  useColorModeValue
-} from '@chakra-ui/react';
-import { motion, scaleCorrectors } from 'framer-motion';
 import { getReports } from './../../store/actions/report';
 import store from './../../store/index';
 import BarGraph from './BarGraph';
 import TimeRange from './TimeRange';
-import { ResponsiveCalendar } from '@nivo/calendar';
 import {
   Tabs,
   TabList,
   TabPanels,
   Tab,
   TabPanel,
-  keyframes
+  Container,
+  Flex,
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react';
+
 const Reports = ({ report }) => {
-  const selectedTabBg = useColorModeValue('gray.800', 'white');
-  const nonSelectedTabBg = useColorModeValue('gray.700', 'white');
+  const selectedTabBg = useColorModeValue('gray.400', 'gray.700');
+  const nonSelectedTabBg = useColorModeValue('gray.300', 'gray.600');
+  const selectedTextColor = useColorModeValue('black', 'white')
+  const nonSelectedTextColor = useColorModeValue('black', 'black')
+
   useEffect(() => {
     store.dispatch(getReports());
   }, []);
@@ -33,33 +30,37 @@ const Reports = ({ report }) => {
   const CustomTab = ({ title }) => {
     return (
       <Tab
+        color={`${nonSelectedTextColor}`}
         bg={nonSelectedTabBg}
-        _selected={{
-          color: 'black',
-          bg: `${selectedTabBg}`
-          // transform: 'translateY(-.2rem)'
-        }}
         fontSize="1.8rem"
         fontFamily="mono"
         textTransform="uppercase"
         transition="background-color 0.3s ease-in"
+        _selected={{
+          color: `${selectedTextColor}`,
+          bg: `${selectedTabBg}`
+        }}
+
       >
         {title}
-      </Tab>
+      </Tab >
     );
   };
   return (
-    <Container maxW="container.xl">
+    <Container maxW="container.xl"
+
+    >
       {/* 7.25rem is subtracted from the full height of the viewport to account for the height made up of the navbar and the margin between the navbar and the graph */}
       <Tabs
+
         h="calc(100vh - 7.25rem)"
         isFitted
         variant="enclosed"
         bg={selectedTabBg}
+
+        borderRadius='8px'
       >
         <TabList
-          border="0"
-          // border="1px solid red"
         >
           <CustomTab title="Last 7 Days" />
           <CustomTab title="Yearly Overview" />
@@ -111,13 +112,10 @@ const Reports = ({ report }) => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </Container>
+    </Container >
   );
 };
 
-Reports.propTypes = {
-  auth: PropTypes.object.isRequired
-};
 
 const mapStateToProps = (state) => ({
   report: state.report

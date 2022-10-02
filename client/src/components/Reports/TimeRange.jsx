@@ -1,18 +1,15 @@
 // yarn add @nivo/core @nivo/calendar
 import {
   ResponsiveCalendar,
-  Calendar,
-  ResponsiveTimeRange
 } from '@nivo/calendar';
 import { Box, useColorModeValue } from '@chakra-ui/react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-let currentYear = new Date().getFullYear();
 const months = [
   'Jan',
   'Feb',
@@ -29,11 +26,10 @@ const months = [
 ];
 
 const TimeRange = ({ report }) => {
-  const monthBorderColor = useColorModeValue('#1A202C', 'white'); //gray.800, white
+  const monthBorderColor = useColorModeValue('#1A202C', '#4A5568');
   const emptyColor = useColorModeValue('#e2e8f0', '#d3d3d3');
-  // theme values
+  const textColor = useColorModeValue('black', 'white');
 
-  const textColor = useColorModeValue('white', '#1a202c');
   const theme = {
     textColor: `${textColor}`,
     axis: {
@@ -64,6 +60,7 @@ const TimeRange = ({ report }) => {
       }
     }
   };
+
   return (
     <ResponsiveCalendar
       theme={theme}
@@ -79,39 +76,19 @@ const TimeRange = ({ report }) => {
       dayBorderColor={monthBorderColor}
       daySpacing={4}
       monthBorderColor={monthBorderColor}
-      monthLegend={(year, month, date) => months[month]}
+      monthLegend={(y, m, d) => months[m]}
       monthLegendOffset={8}
       yearLegend={(year) => `${year}`}
       yearLegendPosition="before"
       yearLegendOffset={-8}
       align="center"
       margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-      /*
-    legends={[
-      {
-        anchor: 'bottom-right',
-        direction: 'row',
-        justify: false,
-        itemCount: 4,
-        itemWidth: 42,
-        itemHeight: 96,
-        itemsSpacing: 100,
-        itemDirection: 'right-to-left',
-        translateX: 0,
-        translateY: -250,
-        symbolSize: 40
-      }
-    ]}
-    */
     />
   );
 };
 
-TimeRange.propTypes = {};
-
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   report: state.report,
-  props: ownProps
 });
 
 export default connect(mapStateToProps)(TimeRange);

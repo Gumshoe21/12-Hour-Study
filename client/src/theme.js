@@ -5,7 +5,7 @@ const buttonBgDark = 'purple.700';
 const buttonBgLight = 'gray.500';
 const theme = extendTheme({
   // DEFAULT COLOR MODE SETTINGS
-  initialColorMode: 'dark',
+  initialColorMode: 'white',
 
   colors: {
     primary: {

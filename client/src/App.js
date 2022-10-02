@@ -16,10 +16,10 @@ import store from './store/index';
 import PropTypes from 'prop-types';
 import PrivateRoute from './components/Routing/PrivateRoute';
 
-const App = ({ auth }) => {
+const App = () => {
   useEffect(() => {
     store.dispatch(getUser());
-  }, []); // only run once with [] - this effectively makes it a componentDidMount() function
+  }, []);
   return (
     <Fragment>
       <Router>
@@ -34,7 +34,6 @@ const App = ({ auth }) => {
             path="/resetPassword/:token"
             element={<ResetPassword />}
           />
-
           <Route
             exact
             path="/profile"
