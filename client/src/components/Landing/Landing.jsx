@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, React } from 'react';
 import {
   keyframes,
   Flex,
@@ -14,7 +14,15 @@ import iphoneImg from './iPhone.png';
 import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 const Landing = ({ auth }) => {
+
+  // When the component first mounts, set the body's background to a linear-gradient. 
+  // This way, we set the background only on the Landing component and not all other pages.
+  useEffect(() => {
+    document.body.style.background = 'linear-gradient(to right, #784E8E,#260238)'
+  }, [])
+
   const fadeIn = keyframes`
 		0% { opacity:0; }
 		66% { opacity:0; }
@@ -25,11 +33,6 @@ const Landing = ({ auth }) => {
   }
   return (
     <Box
-      sx={{
-        background: 'primary.500', // fallback
-        bgGradient: '-webkit-linear(to right, primary.200, primary.500)',
-        bgGradient: 'linear(to right, primary.200, primary.500)'
-      }}
     >
       <Grid
         padding={{ md: '3.2rem 6.4rem', base: '0 0 ' }}
