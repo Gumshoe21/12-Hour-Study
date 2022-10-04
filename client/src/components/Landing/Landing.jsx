@@ -28,6 +28,7 @@ const Landing = ({ auth }) => {
 		66% { opacity:0; }
 		100% { opacity:1; }
 `;
+
   if (auth.user) {
     return <Navigate to="/dashboard" />;
   }
@@ -53,7 +54,7 @@ const Landing = ({ auth }) => {
           }}
         />
         <Box
-          alignSelf={{ md: 'center', sm: 'flex-end' }}
+          alignSelf={{ md: 'center', sm: 'flex-start' }}
           color="#fff"
           order={{ md: '2', sm: '1' }}
         >
@@ -63,24 +64,25 @@ const Landing = ({ auth }) => {
             textAlign="center"
             letterSpacing=".3rem"
             fontFamily="Raleway, open-sans"
-            fontSize={{ md: '7.2rem', base: '4.8rem' }}
             lineHeight="6rem"
             sx={{
               animation: `1s ${fadeIn} ease-in`
             }}
           >
-            Time is of the essence.
+            <Text fontSize={{ md: '7.4rem', base: '6.2rem' }} display='inline' fontFamily='Playfair Display, serif'>Time&nbsp;</Text>
+            <Text fontSize={{ md: '6.2rem', base: '5.2rem' }} display='inline'>is of the essence.</Text>
           </Heading>
           <Text
             sx={{
               animation: `1.5s ${fadeIn} ease-in`,
-
               wordSpacing: '.5rem'
             }}
-            fontSize={{ md: 24, base: 16 }}
+            px={{ base: '3.2rem' }}
+            fontSize={{ md: 24, base: 20 }}
             textAlign="center"
             mb="3.2rem"
-            fontFamily="Inter, open-sans"
+            fontFamily="Raleway, open-sans"
+            fontWeight={500}
             lineHeight="3.5rem"
           >
             Whether you're working, studying, or learning just for the heck of

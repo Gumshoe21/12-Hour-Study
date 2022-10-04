@@ -7,9 +7,12 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/index';
-import '@fontsource/inter/700.css';
+import '@fontsource/inter/500.css';
 import '@fontsource/source-sans-pro/400.css';
-import '@fontsource/raleway/600.css';
+import '@fontsource/raleway/400.css';
+import '@fontsource/raleway/500.css';
+
+import '@fontsource/playfair-display/500.css'
 import theme from './theme';
 
 // THEME
