@@ -20,7 +20,8 @@ mongoose
   .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
   })
   // if we don't add a catch() here we will get an Unhandled Promise Rejection if there's an error
   .then((con) => console.log('DB connection succesful!'));
