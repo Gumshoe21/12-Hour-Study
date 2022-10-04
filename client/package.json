@@ -12,6 +12,7 @@
     "@fontsource/inter": "^4.5.10",
     "@fontsource/raleway": "^4.5.8",
     "@fontsource/source-sans-pro": "^4.5.9",
+    "@fontsource/playfair-display": "^4.5.12",
     "@nivo/bar": "^0.80.0",
     "@nivo/calendar": "^0.80.0",
     "@nivo/core": "^0.80.0",
