@@ -66,8 +66,11 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
 
 exports.getUser = catchAsync(async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.id).populate('timer', '_id');
-    res.json(user);
+    const user = await User.findById(req.user._id).populate('timer', '_id');
+    res.status(200).json({
+      status: 'success',
+      user
+    });
   } catch (err) {
     res.status(500).send('Server Error');
   }

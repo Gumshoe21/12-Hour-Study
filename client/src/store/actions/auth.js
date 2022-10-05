@@ -18,7 +18,7 @@ export const getUser = () => async (dispatch) => {
       `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
       config
     );
-    dispatch(authSlice.actions.getUser(req.data));
+    dispatch(authSlice.actions.getUser(req.data.user));
   } catch (err) { }
 };
 
@@ -80,10 +80,13 @@ export const register =
           body,
           config
         );
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
-        );
-        await dispatch(authSlice.actions.register(res.data));
+        console.log(req.data.user)
+        /*
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`
+          );
+        */
+        await dispatch(authSlice.actions.register(req.data.user));
       } catch (err) { }
     };
 
