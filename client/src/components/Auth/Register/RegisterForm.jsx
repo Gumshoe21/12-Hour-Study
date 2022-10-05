@@ -22,16 +22,25 @@ import ErrorMessage, { hasErrors } from './../ErrorMessage';
 
 const RegisterForm = ({ register }) => {
   const [formData, setFormData] = useState({
+    username: '',
     email: '',
     password: '',
     passwordConfirm: ''
   });
 
-  const { email, password, passwordConfirm } = formData;
+  const { username, email, password, passwordConfirm } = formData;
 
   const { configureValidations, isFormValid } = useValidation();
 
   const validationConfig = {
+    username: {
+      name: 'username',
+      validationRules: [
+        requiredRule('username', username),
+        minLengthRule('username', username, 3)
+      ],
+      errorMessages: new Set()
+    },
     email: {
       name: 'email',
       validationRules: [
@@ -67,7 +76,7 @@ const RegisterForm = ({ register }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    register({ email, password, passwordConfirm });
+    register({ username, email, password, passwordConfirm });
   };
 
   // Show password functionality.
@@ -75,6 +84,7 @@ const RegisterForm = ({ register }) => {
   const handleClick = () => setShow(!show);
 
   const {
+    username: usernameErrors,
     email: emailErrors,
     password: passwordErrors,
     passwordConfirm: passwordConfirmErrors
@@ -88,6 +98,20 @@ const RegisterForm = ({ register }) => {
         display="inline-block"
         maxW={{ base: 'sm', md: 'lg' }}
       >
+        <FormControl isInvalid={hasErrors(usernameErrors)}>
+          <Input
+            variant="filled"
+            fontSize={16}
+            height={16}
+            type="username"
+            placeholder="Username"
+            name="username"
+            value={username}
+            onChange={(e) => onChange(e)}
+          />
+          <ErrorMessage errors={usernameErrors} label="Username" />
+        </FormControl>
+
         <FormControl isInvalid={hasErrors(emailErrors)}>
           <Input
             variant="filled"
