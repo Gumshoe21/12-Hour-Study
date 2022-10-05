@@ -19,8 +19,12 @@ const Landing = ({ auth }) => {
 
   // When the component first mounts, set the body's background to a linear-gradient. 
   // This way, we set the background only on the Landing component and not all other pages.
+  // then, we return a cleanup function that unsets the body's background so that other pages aren't affected by it on page revisits.
   useEffect(() => {
     document.body.style.background = 'linear-gradient(to right, #784E8E,#260238)'
+    return () => {
+      document.body.style.background = '';
+    }
   }, [])
 
   const fadeIn = keyframes`
@@ -29,7 +33,7 @@ const Landing = ({ auth }) => {
 		100% { opacity:1; }
 `;
 
-  if (auth.user) {
+  if (!auth.loading && auth.isAuthenticated) {
     return <Navigate to="/dashboard" />;
   }
   return (

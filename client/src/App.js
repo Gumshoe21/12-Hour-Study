@@ -15,17 +15,18 @@ import { connect } from 'react-redux';
 import store from './store/index';
 import PropTypes from 'prop-types';
 import PrivateRoute from './components/Routing/PrivateRoute';
+import PublicRoute from './components/Routing/PublicRoute';
 
-const App = () => {
+const App = ({ auth }) => {
   useEffect(() => {
     store.dispatch(getUser());
-  }, []);
+  }, []); // only run once with [] - this effectively makes it a componentDidMount() function
   return (
     <Fragment>
       <Router>
         <Navbar />
         <Routes>
-          <Route index element={<Landing />} />
+          <Route index element={<PublicRoute component={Landing} />} />
           <Route exact path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route exact path="/forgotPassword" element={<ForgotPassword />} />
@@ -34,6 +35,7 @@ const App = () => {
             path="/resetPassword/:token"
             element={<ResetPassword />}
           />
+
           <Route
             exact
             path="/profile"
