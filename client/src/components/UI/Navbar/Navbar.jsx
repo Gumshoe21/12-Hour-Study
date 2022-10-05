@@ -78,7 +78,7 @@ const Navbar = ({ auth, logout }) => {
 
   return (
     <Container
-      maxW="100vw"
+      minW="100vw"
       sx={{
         display: `${showNav}`
       }}
