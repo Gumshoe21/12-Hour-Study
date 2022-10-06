@@ -13,8 +13,8 @@ router.patch('/resetPassword/:token', authController.resetPassword);
 
 router.use(authController.protect); // protect all routes that come after this point - b/c middleware runs in sequence - only call next m/w if user is protected
 
-router.patch('/updatePassword', authController.updatePassword);
 router.get('/me', userController.getUser);
+router.patch('/updatePassword', authController.updatePassword);
 router.patch('/updateMe', userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
@@ -28,7 +28,7 @@ router
 
 router
   .route('/:id')
-  .get(userController.getUser)
+  // .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 

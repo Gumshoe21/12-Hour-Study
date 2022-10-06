@@ -36,6 +36,11 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
     },
+    userNotFound(state, action) {
+      state.isAuthenticated = false;
+      state.loading = false;
+      state.user = null;
+    },
     updateUser(state, action) {
       state.user.socials.twitter.url =
         action.payload.data.data.socials.twitter.url;

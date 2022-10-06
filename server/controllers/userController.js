@@ -82,14 +82,14 @@ exports.createUser = (req, res) => {
     message: 'This route is not yet defined! Please use /signup instead'
   });
 };
-
+/*
 exports.deleteUser = (req, res) => {
   res.status(500).json({
     status: 'error',
     message: 'This route is not yet defined!'
   });
 };
-
+*/
 // do NOT update passwords with this!
 exports.createUser = factory.createOne(User);
 exports.updateUser = factory.updateOne(User);

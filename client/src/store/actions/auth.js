@@ -19,7 +19,9 @@ export const getUser = () => async (dispatch) => {
       config
     );
     dispatch(authSlice.actions.getUser(req.data.user));
-  } catch (err) { }
+  } catch (err) {
+    dispatch(authSlice.actions.userNotFound())
+  }
 };
 
 export const login =
