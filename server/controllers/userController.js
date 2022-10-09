@@ -10,21 +10,8 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-/*
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
 
-  res.status(200).json({
-    status: 'success',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
-*/
-
-exports.getMe = (req, res, next) => {
+exports.getMe = (req, _res, next) => {
   req.params.id = req.user.id;
   next();
 };
@@ -46,7 +33,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
     runValidators: true
-  }); // we can use AndUpdate b/c not using password
+  });
 
   res.status(200).json({
     status: 'success',
@@ -56,7 +43,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteMe = catchAsync(async (req, res, next) => {
+exports.deleteMe = catchAsync(async (req, res, _next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
   res.status(204).json({
     status: 'success',
@@ -64,7 +51,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUser = catchAsync(async (req, res, next) => {
+exports.getUser = catchAsync(async (req, res, _next) => {
   try {
     const user = await User.findById(req.user._id).populate('timer', '_id');
     res.status(200).json({
@@ -76,20 +63,14 @@ exports.getUser = catchAsync(async (req, res, next) => {
   }
 });
 
-exports.createUser = (req, res) => {
+exports.createUser = (_req, res, _next) => {
   res.status(500).json({
     status: 'error',
     message: 'This route is not yet defined! Please use /signup instead'
   });
 };
-/*
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined!'
-  });
-};
-*/
+
+
 // do NOT update passwords with this!
 exports.createUser = factory.createOne(User);
 exports.updateUser = factory.updateOne(User);
