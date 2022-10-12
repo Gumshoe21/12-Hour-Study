@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 const dayjs = require('dayjs');
+const { DateTime } = require('luxon')
 const getUserStartAndEndOfDay = require('./../helpers/getUserStartAndEndOfDay')
 
 
@@ -13,7 +14,7 @@ exports.getCurrentUserReports = catchAsync(async (req, res, _next) => {
 
   let barGraphReports = await Report.find({
     user: req.user.id,
-    createdAt: { $gt: dayjs().subtract(7, 'day') },
+    createdAt: { $gt: DateTime.now().setZone(`${req.user.timezone}`).minus({ days: 7 }) } /*dayjs().subtract(7, 'day') },*/
   });
 
   let barGraph = [];
@@ -152,6 +153,15 @@ exports.createReport = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     newReport,
+  });
+});
+
+exports.adminCreateReport = catchAsync(async (req, res, _next) => {
+  const newReport = await Report.create(req.body);
+
+  res.status(201).json({
+    status: 'success',
+    data: newReport
   });
 });
 

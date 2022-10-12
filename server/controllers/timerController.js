@@ -3,7 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('../controllers/handlerFactory');
 
-exports.getCurrentUserTimer = catchAsync(async (req, res, next) => {
+exports.getCurrentUserTimer = catchAsync(async (req, res, _next) => {
   const timer = await Timer.findOne({ user: req.user.id });
 
   res.status(200).json(timer);

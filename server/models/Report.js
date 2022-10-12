@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { DateTime } = require('luxon');
-const ReportSchema = new mongoose.Schema(
+const reportSchema = new mongoose.Schema(
   {
     stats: {
       session: {
@@ -84,5 +84,5 @@ const ReportSchema = new mongoose.Schema(
   },
 );
 
-// ReportSchema.index({ createdAt: 1 })
-module.exports = mongoose.model('Report', ReportSchema);
+// reportSchema.index({ createdAt: 1 })
+module.exports = mongoose.model('Report', reportSchema);
