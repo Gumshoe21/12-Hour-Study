@@ -26,7 +26,7 @@ const months = [
 ];
 
 const TimeRange = ({ report }) => {
-  const monthBorderColor = useColorModeValue('#1A202C', '#4A5568');
+  const monthBorderColor = useColorModeValue('#A0AEC0', '#2D3748')
   const emptyColor = useColorModeValue('#e2e8f0', '#d3d3d3');
   const textColor = useColorModeValue('black', 'white');
 

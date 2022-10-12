@@ -18,9 +18,6 @@ import {
 } from '@chakra-ui/react';
 
 const Reports = ({ report }) => {
-  const selectedTabBg = useColorModeValue('gray.400', 'gray.700');
-  const nonSelectedTabBg = useColorModeValue('gray.300', 'gray.600');
-  const nonSelectedTextColor = useColorModeValue('black', 'black')
 
   useEffect(() => {
     store.dispatch(getReports());

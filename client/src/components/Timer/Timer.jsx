@@ -1,11 +1,9 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-
 import { connect, useDispatch } from 'react-redux';
-
-import PropTypes from 'prop-types';
-
 import timerSlice from '../../store/slices/timer';
-
+import sound from './../../utils/audioPlayer.js';
+import { updateReport } from './../../store/actions/report';
+import { updateInstances } from './../../store/actions/report';
 import SwitchTimer from './SwitchTimer.js/SwitchTimer';
 import TimerToggleButton from './TimerToggleButton';
 import TimerBox from './TimerBox';
@@ -13,9 +11,6 @@ import ProgressBar from './ProgressBar';
 import Round from './Round';
 import Countdown from './Countdown';
 import { Box } from '@chakra-ui/react';
-import sound from './../../utils/audioPlayer.js';
-import { updateReport } from './../../store/actions/report';
-import { updateInstances } from './../../store/actions/report';
 
 // when the timer is switched, prompt "are you sure? Reports won't count rest of time left." if sure then add the remaining time left to today's report before clearProgress()
 // if you try to exit window or switch pages, ask if sure then add remaining time b4 clearProgress()
@@ -24,13 +19,15 @@ import { updateInstances } from './../../store/actions/report';
 //
 
 const tickingSound = sound('./../../../audio/ticking.wav', undefined, true);
-const buttonSound = sound(
-  './../../../audio/button_click.mp3',
-  undefined,
-  false
-);
-console.log(tickingSound.currentTime);
+const buttonSound = sound('./../../../audio/button_click.mp3', undefined, false);
+
 const Timer = ({ timer, auth }) => {
+
+  const setMuted = useEffect(() => {
+    tickingSound.mute(timer.tickingSoundMuted)
+    buttonSound.mute(timer.buttonSoundMuted)
+  }, [timer.tickingSoundMuted])
+
   const dispatch = useDispatch();
 
   const {
@@ -181,11 +178,6 @@ const Timer = ({ timer, auth }) => {
       />
     </TimerBox>
   );
-};
-
-Timer.propTypes = {
-  auth: PropTypes.object.isRequired,
-  timer: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

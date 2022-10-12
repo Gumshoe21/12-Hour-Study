@@ -9,6 +9,8 @@ const timerSlice = createSlice({
     ticking: false,
     loading: true,
     progress: 0,
+    tickingSoundMuted: false,
+    buttonSoundMuted: false,
     modes: {
       session: {
         id: 'session',
@@ -36,6 +38,7 @@ const timerSlice = createSlice({
       state.modes.shortBreak.length = action.payload.modes.shortBreak.length;
       state.modes.longBreak.length = action.payload.modes.longBreak.length;
       state.longBreakInterval = action.payload.longBreakInterval;
+      state.tickingSoundMuted = action.payload.tickingSoundMuted;
       state.loading = false;
     },
     getTimer(state, action) {
@@ -43,6 +46,7 @@ const timerSlice = createSlice({
       state.modes.shortBreak.length = action.payload.modes.shortBreak.length;
       state.modes.longBreak.length = action.payload.modes.longBreak.length;
       state.longBreakInterval = action.payload.longBreakInterval;
+      state.tickingSoundMuted = action.payload.tickingSoundMuted;
     },
     setActiveMode(state, action) {
       state.activeMode = action.payload;
@@ -53,24 +57,24 @@ const timerSlice = createSlice({
     setLongBreakInterval(state, action) {
       state.longBreakInterval = action.payload.longBreakInterval;
     },
-    setTimeLeft(state, action) {
+    setTimeLeft(state, _action) {
       state.timeLeft -= 1;
     },
-    incrementRound(state, action) {
+    incrementRound(state, _action) {
       state.round += 1;
     },
-    resetRound(state, action) {
+    resetRound(state, _action) {
       state.round = 0;
     },
-    incrementProgress(state, action) {
+    incrementProgress(state, _action) {
       state.progress += 1;
     },
-    clearProgress(state, action) {
+    clearProgress(state, _action) {
       state.progress = 0;
     },
     setLoading(state, action) {
       state.loading = action.payload;
-    }
+    },
   }
 });
 

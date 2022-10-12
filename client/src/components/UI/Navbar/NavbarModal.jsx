@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useState, Fragment, useRef } from 'react';
 import {
   Flex,
   Button,
@@ -11,7 +11,8 @@ import {
   ModalCloseButton,
   useDisclosure,
   IconButton,
-  FormControl
+  FormControl,
+  Switch
 } from '@chakra-ui/react';
 import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -22,6 +23,7 @@ import NavbarModalInput from './NavbarModalInput';
 import timerSlice from '../../../store/slices/timer';
 
 const NavbarModal = ({ timer, auth }) => {
+
   const dispatch = useDispatch();
   const { setLoading } = timerSlice.actions;
 
@@ -31,7 +33,9 @@ const NavbarModal = ({ timer, auth }) => {
   let shortBreakRef = useRef(null);
   let longBreakRef = useRef(null);
   let longBreakIntRef = useRef(null);
+  // let tickingSoundMutedRef = useRef(null);
 
+  const [tickingSoundMuted, setTickingSoundMuted] = useState(timer.tickingSoundMuted)
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +43,11 @@ const NavbarModal = ({ timer, auth }) => {
     const shortBreak = shortBreakRef.current.value;
     const longBreak = longBreakRef.current.value;
     const longBreakInterval = longBreakIntRef.current.value;
-    await dispatch(setLoading(true));
+    // const tickingSoundMuted = tickingSoundMutedRef.current.value;
+
+    console.log(tickingSoundMuted)
+
+    dispatch(setLoading(true));
     try {
       await store.dispatch(
         updateTimer({
@@ -47,7 +55,8 @@ const NavbarModal = ({ timer, auth }) => {
           session,
           shortBreak,
           longBreak,
-          longBreakInterval
+          longBreakInterval,
+          tickingSoundMuted
         })
       );
     } catch (err) {
@@ -74,8 +83,8 @@ const NavbarModal = ({ timer, auth }) => {
           >
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Timer Settings</ModalHeader>
-              <ModalCloseButton />
+              <ModalHeader textTransform='uppercase' fontSize='1.4rem'>Timer Settings</ModalHeader>
+              <ModalCloseButton size='lg' />
               <ModalBody>
                 <Flex flexDirection="column">
                   <Flex
@@ -108,6 +117,15 @@ const NavbarModal = ({ timer, auth }) => {
                       label={'Long Break Interval'}
                       defaultValue={timer.longBreakInterval}
                     />
+
+                    <Switch
+                      // ref={tickingSoundMutedRef}
+                      value={true}
+                      size='lg'
+                      onChange={(_e) => setTickingSoundMuted(!tickingSoundMuted)}
+                      defaultChecked={timer.tickingSoundMuted}
+                    />
+
                   </Flex>
                 </Flex>
               </ModalBody>

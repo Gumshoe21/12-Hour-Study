@@ -8,15 +8,16 @@ import {
   NumberDecrementStepper,
   useColorModeValue
 } from '@chakra-ui/react';
-const NavbarModalInput = forwardRef((props, ref) => {
+
+const NavbarModalInput = forwardRef(({ label, name, defaultValue }, ref) => {
   const numberInputBgColor = useColorModeValue('gray.200', 'gray.600');
   return (
     <Flex justifyContent="space-between" alignItems="center" width="100%">
-      <Flex fontSize={18}>{props.label}</Flex>
+      <Flex fontSize='1.4rem'>{label}</Flex>
 
       <NumberInput
         allowMouseWheel="true"
-        defaultValue={props.defaultValue}
+        defaultValue={defaultValue}
         size="lg"
         bgColor={numberInputBgColor}
         borderRadius="lg"
@@ -28,7 +29,7 @@ const NavbarModalInput = forwardRef((props, ref) => {
           height="4rem"
           fontSize="2xl"
           ref={ref}
-          name={props.name}
+          name={name}
           minW={0}
         />
         <NumberInputStepper>
