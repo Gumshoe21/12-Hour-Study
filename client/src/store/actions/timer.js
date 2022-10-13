@@ -3,21 +3,29 @@ import timerSlice from '../slices/timer';
 import { APIVERSION } from './../../constants/index';
 
 export const getUserTimer = () =>
-    async (dispatch) => {
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
-          {
-            withCredentials: true,
-            credentials: 'include'
-          }
-        );
-        dispatch(timerSlice.actions.getTimer(res.data));
-      } catch (err) { }
-    };
+  async (dispatch) => {
+    try {
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/timers/getCurrentUserTimer`,
+        {
+          withCredentials: true,
+          credentials: 'include'
+        }
+      );
+      dispatch(timerSlice.actions.getTimer(res.data));
+    } catch (err) { }
+  };
 
 export const updateTimer =
-  ({ auth, session, shortBreak, longBreak, longBreakInterval, tickingSoundMuted }) =>
+  ({
+    auth,
+    session,
+    shortBreak,
+    longBreak,
+    longBreakInterval,
+    tickingSoundMuted,
+    tickingSoundVolume
+  }) =>
     async (dispatch) => {
       const config = {
         headers: {
@@ -39,7 +47,8 @@ export const updateTimer =
           }
         },
         longBreakInterval,
-        tickingSoundMuted
+        tickingSoundMuted,
+        tickingSoundVolume
       });
       try {
         const req = await axios.patch(

@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react';
+import React, { useEffect, useState, Fragment, useRef } from 'react';
 import {
   Flex,
   Button,
@@ -12,30 +12,46 @@ import {
   useDisclosure,
   IconButton,
   FormControl,
-  Switch
+  FormLabel,
+  Switch,
+  Slider,
+  SliderTrack,
+  SliderThumb,
+  SliderFilledTrack,
+  SliderMark
 } from '@chakra-ui/react';
 import { connect, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { SettingsIcon } from '@chakra-ui/icons';
 import { updateTimer, getUserTimer } from '../../../store/actions/timer';
 import store from '../../../store/index';
-import NavbarModalInput from './NavbarModalInput';
 import timerSlice from '../../../store/slices/timer';
+import { SettingsIcon } from '@chakra-ui/icons';
+import NavbarModalInput from './NavbarModalInput';
 
 const NavbarModal = ({ timer, auth }) => {
 
   const dispatch = useDispatch();
   const { setLoading } = timerSlice.actions;
-
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   let sessionRef = useRef(null);
   let shortBreakRef = useRef(null);
   let longBreakRef = useRef(null);
   let longBreakIntRef = useRef(null);
-  // let tickingSoundMutedRef = useRef(null);
 
   const [tickingSoundMuted, setTickingSoundMuted] = useState(timer.tickingSoundMuted)
+  const [tickingSoundVolume, setTickingSoundVolume] = useState(timer.tickingSoundVolume)
+
+  const initialTickingSoundVolume = timer.tickingSoundVolume;
+
+  const handleTickingSoundVolumeSliderChange = async (val) => {
+    setTickingSoundVolume(val)
+    console.log(val)
+    dispatch(timerSlice.actions.updateTickingSoundVolume(tickingSoundVolume));
+  }
+
+  const resetTickingSoundVolume = async () => {
+    dispatch(timerSlice.actions.updateTickingSoundVolume(initialTickingSoundVolume))
+  }
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -43,11 +59,9 @@ const NavbarModal = ({ timer, auth }) => {
     const shortBreak = shortBreakRef.current.value;
     const longBreak = longBreakRef.current.value;
     const longBreakInterval = longBreakIntRef.current.value;
-    // const tickingSoundMuted = tickingSoundMutedRef.current.value;
-
-    console.log(tickingSoundMuted)
 
     dispatch(setLoading(true));
+
     try {
       await store.dispatch(
         updateTimer({
@@ -56,7 +70,8 @@ const NavbarModal = ({ timer, auth }) => {
           shortBreak,
           longBreak,
           longBreakInterval,
-          tickingSoundMuted
+          tickingSoundMuted,
+          tickingSoundVolume
         })
       );
     } catch (err) {
@@ -64,6 +79,7 @@ const NavbarModal = ({ timer, auth }) => {
       await store.dispatch(getUserTimer(auth.user));
     }
   };
+
   return (
     <Fragment>
       <IconButton
@@ -79,6 +95,7 @@ const NavbarModal = ({ timer, auth }) => {
             isOpen={isOpen}
             onClose={() => {
               onClose();
+              resetTickingSoundVolume();
             }}
           >
             <ModalOverlay />
@@ -117,31 +134,72 @@ const NavbarModal = ({ timer, auth }) => {
                       label={'Long Break Interval'}
                       defaultValue={timer.longBreakInterval}
                     />
+                    <Flex mt=".8rem" w='100%' align='center' justify='space-between' >
+                      <FormLabel fontSize='1.4rem' htmlFor='tickingSoundMuted'>Mute Ticking Sound</FormLabel>
+                      <Switch
+                        id='tickingSoundMuted'
+                        value={true}
+                        size='lg'
+                        onChange={(_e) => setTickingSoundMuted(!tickingSoundMuted)}
+                        defaultChecked={timer.tickingSoundMuted}
+                      />
+                    </Flex>
 
-                    <Switch
-                      // ref={tickingSoundMutedRef}
-                      value={true}
-                      size='lg'
-                      onChange={(_e) => setTickingSoundMuted(!tickingSoundMuted)}
-                      defaultChecked={timer.tickingSoundMuted}
-                    />
+                    <Flex mt=".8rem" w='100%' align='center' justify='space-between' >
+                      <FormLabel fontSize='1.4rem' htmlFor='tickingSoundVolume'>Ticking Sound Volume</FormLabel>
+                      <Slider
+                        w='25%'
+                        defaultValue={timer.tickingSoundVolume}
+                        step={0.01}
+                        min={0.00}
+                        max={1.00}
+                        onChange={((val) => handleTickingSoundVolumeSliderChange(val))}
+                      >
+                        <SliderMark value={0.00} >
+                          0%
+                        </SliderMark>
 
+                        <SliderMark value={1.00} >
+                          100%
+                        </SliderMark>
+
+                        <SliderMark
+                          value={tickingSoundVolume}
+                          textAlign='center'
+                          bg='primary.500'
+                          color='white'
+                          mt='-10'
+                          ml='-5'
+                          w='12'
+                        >
+                          {Math.floor(tickingSoundVolume * 100)}
+                        </SliderMark>
+                        <SliderTrack>
+                          <SliderFilledTrack />
+                        </SliderTrack>
+                        <SliderThumb />
+                      </Slider>
+                    </Flex>
                   </Flex>
                 </Flex>
               </ModalBody>
 
               <ModalFooter>
-                <Button
-                  type="submit"
-                  value="Update Timer"
-                  onClick={(e) => {
-                    onSubmit(e);
-                    onClose();
-                  }}
-                  variant="ghost"
-                >
-                  Save
-                </Button>
+                <Flex justify='center' align='center' w='100%'>
+                  <Button
+                    w='100%'
+                    type="submit"
+                    value="Update Timer"
+                    onClick={(e) => {
+                      onSubmit(e);
+                      onClose();
+                    }}
+                    fontSize='1.8rem'
+                    p="2.0rem"
+                  >
+                    Save
+                  </Button>
+                </Flex>
               </ModalFooter>
             </ModalContent>
           </Modal>
@@ -149,10 +207,6 @@ const NavbarModal = ({ timer, auth }) => {
       </form>
     </Fragment>
   );
-};
-NavbarModal.propTypes = {
-  timer: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

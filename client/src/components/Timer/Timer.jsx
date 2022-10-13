@@ -28,6 +28,10 @@ const Timer = ({ timer, auth }) => {
     buttonSound.mute(timer.buttonSoundMuted)
   }, [timer.tickingSoundMuted])
 
+  const onTickingSoundVolumeChanged = useEffect(() => {
+    tickingSound.setVolume(timer.tickingSoundVolume)
+  }, [timer.tickingSoundVolume])
+
   const dispatch = useDispatch();
 
   const {

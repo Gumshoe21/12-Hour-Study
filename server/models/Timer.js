@@ -63,6 +63,10 @@ const TimerSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  tickingSoundVolume: {
+    type: Number,
+    default: 1
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'

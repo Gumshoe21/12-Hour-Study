@@ -10,6 +10,7 @@ const timerSlice = createSlice({
     loading: true,
     progress: 0,
     tickingSoundMuted: false,
+    tickingSoundVolume: 1,
     buttonSoundMuted: false,
     modes: {
       session: {
@@ -39,6 +40,7 @@ const timerSlice = createSlice({
       state.modes.longBreak.length = action.payload.modes.longBreak.length;
       state.longBreakInterval = action.payload.longBreakInterval;
       state.tickingSoundMuted = action.payload.tickingSoundMuted;
+      state.tickingSoundVolume = action.payload.tickingSoundVolume;
       state.loading = false;
     },
     getTimer(state, action) {
@@ -47,6 +49,7 @@ const timerSlice = createSlice({
       state.modes.longBreak.length = action.payload.modes.longBreak.length;
       state.longBreakInterval = action.payload.longBreakInterval;
       state.tickingSoundMuted = action.payload.tickingSoundMuted;
+      state.tickingSoundVolume = action.payload.tickingSoundVolume;
     },
     setActiveMode(state, action) {
       state.activeMode = action.payload;
@@ -75,6 +78,9 @@ const timerSlice = createSlice({
     setLoading(state, action) {
       state.loading = action.payload;
     },
+    updateTickingSoundVolume(state, action) {
+      state.tickingSoundVolume = action.payload;
+    }
   }
 });
 
