@@ -46,7 +46,7 @@ const NavbarModal = ({ timer, auth }) => {
   const handleTickingSoundVolumeSliderChange = async (val) => {
     setTickingSoundVolume(val)
     console.log(val)
-    dispatch(timerSlice.actions.updateTickingSoundVolume(tickingSoundVolume));
+    dispatch(timerSlice.actions.updateTickingSoundVolume(val));
   }
 
   const resetTickingSoundVolume = async () => {
@@ -164,7 +164,7 @@ const NavbarModal = ({ timer, auth }) => {
                         </SliderMark>
 
                         <SliderMark
-                          value={tickingSoundVolume}
+                          value={timer.tickingSoundVolume}
                           textAlign='center'
                           bg='primary.500'
                           color='white'
@@ -172,7 +172,7 @@ const NavbarModal = ({ timer, auth }) => {
                           ml='-5'
                           w='12'
                         >
-                          {Math.floor(tickingSoundVolume * 100)}
+                          {Math.floor(timer.tickingSoundVolume * 100)}
                         </SliderMark>
                         <SliderTrack>
                           <SliderFilledTrack />
