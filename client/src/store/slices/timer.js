@@ -9,6 +9,7 @@ const timerSlice = createSlice({
     ticking: false,
     loading: true,
     progress: 0,
+    instanceTime: 0,
     tickingSoundMuted: false,
     tickingSoundVolume: 1,
     buttonSoundMuted: false,
@@ -80,6 +81,9 @@ const timerSlice = createSlice({
     },
     updateTickingSoundVolume(state, action) {
       state.tickingSoundVolume = action.payload;
+    },
+    setInstanceTime(state,action) {
+      state.instanceTime = action.payload;
     }
   }
 });

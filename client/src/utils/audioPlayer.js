@@ -1,43 +1,43 @@
 const sound = (src, volume = 1, loop) => {
-  let audio = new Audio(src);
-  audio.volume = volume;
-  audio.loop = loop;
+  let audio = new Audio(src)
+  audio.volume = volume
+  audio.loop = loop
 
   if (audio.ended) {
     if (audio.loop) {
-      audio.currentTime = 0;
-      audio.play();
+      audio.currentTime = 0
+      audio.play()
     }
   }
 
   const play = () => {
     if (audio.paused) {
-      audio.play();
+      audio.play()
     }
-  };
+  }
 
   const toggle = () => {
-    audio.paused ? audio.play() : audio.pause();
-  };
+    audio.paused ? audio.play() : audio.pause()
+  }
 
   const stop = () => {
     if (audio.loop) {
-      audio.pause();
-      audio.currentTime = 0;
+      audio.pause()
+      audio.currentTime = 0
     }
-  };
+  }
 
   const setVolume = (val) => {
-    audio.volume = val;
-  };
+    audio.volume = val
+  }
 
   const setSource = (source) => {
-    audio.src = source;
-  };
+    audio.src = source
+  }
 
   const mute = (bool = true) => {
-    audio.muted = bool;
-  };
+    audio.muted = bool
+  }
 
   return {
     play,
@@ -45,8 +45,11 @@ const sound = (src, volume = 1, loop) => {
     stop,
     setVolume,
     setSource,
-    mute
-  };
-};
+    mute,
+  }
+}
 
-export default sound;
+export const tickingSound = sound('./../../audio/ticking.wav', undefined, true)
+export const buttonSound = sound('./../../audio/button_click.mp3', undefined, false)
+
+export default sound

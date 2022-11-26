@@ -1,192 +1,168 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import timerSlice from '../../store/slices/timer';
-import sound from './../../utils/audioPlayer.js';
-import { updateReport } from './../../store/actions/report';
-import { updateInstances } from './../../store/actions/report';
-import SwitchTimer from './SwitchTimer.js/SwitchTimer';
-import TimerToggleButton from './TimerToggleButton';
-import TimerBox from './TimerBox';
-import ProgressBar from './ProgressBar';
-import Round from './Round';
-import Countdown from './Countdown';
-import { Box } from '@chakra-ui/react';
-
-// when the timer is switched, prompt "are you sure? Reports won't count rest of time left." if sure then add the remaining time left to today's report before clearProgress()
-// if you try to exit window or switch pages, ask if sure then add remaining time b4 clearProgress()
-// once a timer progress = 0, increment modes completed and add the time to reports. you only icnrement modes completed if itmer progress is 0, not on switching timer or exit page. if exit page or switch timer then timer is NOT complete, doesn't count as full timer completion.
-// bug where switching to profile doesn't prompt to finish timer. timer still runs and ticking sound still sounds.
-//
-
-const tickingSound = sound('./../../../audio/ticking.wav', undefined, true);
-const buttonSound = sound('./../../../audio/button_click.mp3', undefined, false);
+import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { connect, useDispatch } from 'react-redux'
+import timerSlice from '../../store/slices/timer'
+import { tickingSound, buttonSound } from './../../utils/audioPlayer.js'
+import { updateReport } from './../../store/actions/report'
+import { updateInstances } from './../../store/actions/report'
+import SwitchTimer from './SwitchTimer.js/SwitchTimer'
+import TimerToggleButton from './TimerToggleButton'
+import TimerBox from './TimerBox'
+import ProgressBar from './ProgressBar'
+import Round from './Round'
+import Countdown from './Countdown'
+import { Box } from '@chakra-ui/react'
 
 const Timer = ({ timer, auth }) => {
+  const { setTicking, clearProgress, setActiveMode, incrementRound, resetRound, incrementProgress, setInstanceTime } = timerSlice.actions
+  const dispatch = useDispatch()
+  let activeMode = timer.modes[timer.activeMode]
+  const { id, name, length } = activeMode
+  const tickingIntervalRef = useRef(null)
+  const [timeLeft, setTimeLeft] = useState(length * 60)
+  const { instanceTime, progress } = timer
 
-  const setMuted = useEffect(() => {
+  const instanceTimeRef = useRef(instanceTime)
+  useEffect(() => {
+    instanceTimeRef.current = instanceTime
+    console.log(instanceTimeRef.current)
+  }, [instanceTime])
+
+  // Mutes sounds based on 'tickingSoundMuted' timer state variable.
+  const muteSounds = useEffect(() => {
     tickingSound.mute(timer.tickingSoundMuted)
     buttonSound.mute(timer.buttonSoundMuted)
   }, [timer.tickingSoundMuted])
+
+  const stopAndMuteTimer = useEffect(() => {
+    if (!timer.ticking) {
+      tickingSound.stop()
+    }
+  }, [timer.ticking])
 
   const onTickingSoundVolumeChanged = useEffect(() => {
     tickingSound.setVolume(timer.tickingSoundVolume)
   }, [timer.tickingSoundVolume])
 
-  const dispatch = useDispatch();
-
-  const {
-    setTicking,
-    clearProgress,
-    setActiveMode,
-    incrementRound,
-    resetRound,
-    incrementProgress
-  } = timerSlice.actions;
-
-  let activeMode = timer.modes[timer.activeMode];
-  const { id, name, length } = activeMode;
-  const tickingIntervalRef = useRef(null);
-  const [timeLeft, setTimeLeft] = useState(length * 60);
-  const [instanceTime, setInstanceTime] = useState(0);
-  const { progress } = timer;
-
-  // gotta udpate the reports before this fires
+  // When the active mode is changed, update the timeLeft state.
   const updateActiveModeLength = useEffect(() => {
-    setTimeLeft((timeLeft) => length * 60);
-  }, [activeMode.length]);
+    setTimeLeft((timeLeft) => length * 60)
+  }, [activeMode.length])
+
+  // Updates report instances if the timer is active when the component unmounts.
+  const onLeaveDashboard = useEffect(() => {
+    return function cleanUp() {
+      if (!tickingSound.paused) tickingSound.stop()
+      dispatch(setTicking(false))
+
+      if (true) {
+        console.log(instanceTime)
+        dispatch(updateInstances({ id, instanceTime, auth }))
+      }
+    }
+  }, [])
 
   const clearTimer = () => {
-    clearInterval(tickingIntervalRef.current);
-    tickingIntervalRef.current = null;
-  };
+    clearInterval(tickingIntervalRef.current)
+    tickingIntervalRef.current = null
+  }
+
+  // Switches timer mode when a new timer mode is selected and confirmed in the modal.
   const switchTimerMode = async (e) => {
-    if (!tickingSound.paused) tickingSound.stop();
-    dispatch(setTicking(false));
-    //////////////////////////////////////////////////////
+    if (!tickingSound.paused) tickingSound.stop()
+    dispatch(setTicking(false))
+
     if (instanceTime > 0) {
-      dispatch(updateInstances({ id, instanceTime, auth }));
-      setInstanceTime(0);
+      dispatch(updateInstances({ id, instanceTime, auth }))
+      dispatch(setInstanceTime(0))
     }
-    dispatch(clearProgress());
-    dispatch(setActiveMode(e.target.value));
-    setTimeLeft(timer.modes[e.target.value].length * 60);
-  };
+
+    dispatch(clearProgress())
+    dispatch(setActiveMode(e.target.value))
+    setTimeLeft(timer.modes[e.target.value].length * 60)
+  }
 
   const onTimerComplete = useEffect(() => {
     if (timeLeft === 0) {
-      //////////////////////////////////////////////////////
+      dispatch(updateInstances({ id, instanceTime, auth }))
+      dispatch(setInstanceTime(0))
+      dispatch(updateReport({ auth, id, name, length, progress }))
+      dispatch(clearProgress())
+      if (timer.activeMode === 'session' && timer.round === timer.longBreakInterval) {
+        dispatch(setActiveMode(`longBreak`))
+        setTimeLeft(timer.modes[`longBreak`].length * 60)
+        dispatch(incrementRound())
+      } else if (timer.activeMode === 'session' && timer.round < timer.longBreakInterval && timer.round !== timer.longBreakInterval - 1) {
+        dispatch(setActiveMode(`shortBreak`))
+        setTimeLeft(timer.modes[`shortBreak`].length * 60)
 
-      dispatch(updateInstances({ id, instanceTime, auth }));
-      setInstanceTime(0);
-      dispatch(updateReport({ auth, id, name, length, progress }));
-      dispatch(clearProgress());
-      if (
-        timer.activeMode === 'session' &&
-        timer.round === timer.longBreakInterval
-      ) {
-        dispatch(setActiveMode(`longBreak`));
-        setTimeLeft(timer.modes[`longBreak`].length * 60);
-        dispatch(incrementRound());
-      } else if (
-        timer.activeMode === 'session' &&
-        timer.round < timer.longBreakInterval &&
-        timer.round !== timer.longBreakInterval - 1
-      ) {
-        dispatch(setActiveMode(`shortBreak`));
-        setTimeLeft(timer.modes[`shortBreak`].length * 60);
-
-        dispatch(incrementRound());
-      } else if (
-        timer.activeMode === 'session' &&
-        timer.round === timer.longBreakInterval - 1
-      ) {
-        dispatch(setActiveMode(`longBreak`));
-        setTimeLeft(timer.modes[`longBreak`].length * 60);
-
-        dispatch(incrementRound());
+        dispatch(incrementRound())
+      } else if (timer.activeMode === 'session' && timer.round === timer.longBreakInterval - 1) {
+        dispatch(setActiveMode(`longBreak`))
+        setTimeLeft(timer.modes[`longBreak`].length * 60)
+        dispatch(incrementRound())
       } else if (timer.activeMode === 'shortBreak') {
-        dispatch(setActiveMode(`session`));
-        setTimeLeft(timer.modes[`session`].length * 60);
+        dispatch(setActiveMode(`session`))
+        setTimeLeft(timer.modes[`session`].length * 60)
       } else if (timer.activeMode === 'longBreak') {
-        dispatch(setActiveMode(`session`));
-        dispatch(resetRound());
+        dispatch(setActiveMode(`session`))
+        dispatch(resetRound())
       }
     }
-  }, [timeLeft]);
+  }, [timeLeft])
 
   const setTickingHandler = () => {
-    tickingSound.toggle();
-    dispatch(setTicking(timer.ticking === true ? false : true));
-    buttonSound.play();
-
-    setInstanceTime(0);
-    console.log(instanceTime);
-    //////////////////////////////////////////////////////
+    tickingSound.toggle()
+    dispatch(setTicking(timer.ticking === true ? false : true))
+    buttonSound.play()
+    dispatch(setInstanceTime(0))
     if (instanceTime > 0) {
-      dispatch(updateInstances({ id, instanceTime, auth }));
+      dispatch(updateInstances({ id, instanceTime, auth }))
     }
-  };
+  }
 
   const tick = useCallback(() => {
     if (timeLeft > 0) {
-      setTimeLeft(timeLeft - 1);
-      dispatch(incrementProgress());
-
-      //////////////////////////////////////////////////////
-      setInstanceTime(instanceTime + 1);
+      setTimeLeft(timeLeft - 1)
+      dispatch(incrementProgress())
+      dispatch(setInstanceTime(instanceTime + 1))
     }
     if (timeLeft < 1) {
-      dispatch(setTicking(false));
-
-      clearTimer();
+      dispatch(setTicking(false))
+      clearTimer()
     }
     if (timer.ticking === false) {
-      setInstanceTime(0);
+      dispatch(setInstanceTime(0))
     }
-  }, [
-    timer.ticking,
-    timeLeft,
-    dispatch,
-    setTicking,
-    timer.modes[timer.activeMode].length
-  ]);
+  }, [timer.ticking, timeLeft, dispatch, setTicking, timer.modes[timer.activeMode].length])
 
   const setTickingInterval = useEffect(() => {
     if (timer.ticking) {
-      tickingIntervalRef.current = setInterval(tick, 1000);
+      tickingIntervalRef.current = setInterval(tick, 1000)
     } else {
-      clearTimer();
+      clearTimer()
     }
-    return clearTimer;
-  }, [tick, timer.ticking]);
+    return clearTimer
+  }, [tick, timer.ticking])
 
-  const timerDuration = activeMode.length * 60;
+  const timerDuration = activeMode.length * 60
 
   return (
     <TimerBox>
       <SwitchTimer onClick={switchTimerMode} />
       <Box>
-        {isNaN(timer.modes[timer.activeMode].length) && (
-          <Countdown timeLeft={'hi'} visibility="hidden" />
-        )}
-
-        {!isNaN(timer.modes[timer.activeMode].length) && (
-          <Countdown timeLeft={timeLeft} />
-        )}
+        {isNaN(timer.modes[timer.activeMode].length) && <Countdown timeLeft={'hi'} visibility='hidden' />}
+        {!isNaN(timer.modes[timer.activeMode].length) && <Countdown timeLeft={timeLeft} />}
       </Box>
       <ProgressBar max={timerDuration} value={progress} />
       <Round round={timer.round} interval={timer.longBreakInterval} />
-      <TimerToggleButton
-        onClick={setTickingHandler}
-        text={timer.ticking ? 'STOP' : 'START'}
-      />
+      <TimerToggleButton onClick={setTickingHandler} text={timer.ticking ? 'STOP' : 'START'} />
     </TimerBox>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  timer: state.timer
-});
+  timer: state.timer,
+})
 
-export default connect(mapStateToProps)(Timer);
+export default connect(mapStateToProps)(Timer)
