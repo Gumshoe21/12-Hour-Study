@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Flex, Text, Link } from '@chakra-ui/react';
 import { Link as ReactLink } from 'react-router-dom';
+
 import { OwlIcon } from './OwlIcon';
 
 const Logo = () => {

@@ -1,29 +1,22 @@
-import { useEffect, React } from 'react';
-import {
-  keyframes,
-  Flex,
-  Text,
-  Grid,
-  Heading,
-  Box,
-  Image,
-  Button,
-  Link
-} from '@chakra-ui/react';
-import iphoneImg from './iPhone.png';
-import { Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useEffect, React } from 'react'
+
+import { keyframes, Flex, Text, Grid, Heading, Box, Image, Button, Link } from '@chakra-ui/react'
+import { connect } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+
+import iphoneImg from './iPhone.png'
 
 const Landing = ({ auth }) => {
+  /*
+  When the component first mounts, set the body's background to a linear-gradient.
+  This way, we set the background only on the Landing component and not all other pages.
+  then, we return a cleanup function that unsets the body's background so that other pages aren't affected by it on page revisits.
+  */
 
-  // When the component first mounts, set the body's background to a linear-gradient. 
-  // This way, we set the background only on the Landing component and not all other pages.
-  // then, we return a cleanup function that unsets the body's background so that other pages aren't affected by it on page revisits.
   useEffect(() => {
     document.body.style.background = 'linear-gradient(to right, #784E8E,#260238)'
     return () => {
-      document.body.style.background = '';
+      document.body.style.background = ''
     }
   }, [])
 
@@ -31,70 +24,68 @@ const Landing = ({ auth }) => {
 		0% { opacity:0; }
 		66% { opacity:0; }
 		100% { opacity:1; }
-`;
+  `
 
   if (!auth.loading && auth.isAuthenticated) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to='/dashboard' />
   }
   return (
-    <Box
-    >
+    <Box>
       <Grid
         padding={{ md: '3.2rem 6.4rem', base: '0 0 ' }}
         templateColumns={{ md: '1fr 1fr', sm: '1fr' }}
-        alignItems="center"
-        margin="0 auto"
-        maxW="130rem"
-        h="100vh"
+        alignItems='center'
+        margin='0 auto'
+        maxW='130rem'
+        h='100vh'
         gap={{ base: '4rem', md: '0' }}
       >
         <Image
           w={{ md: '50%', base: '25%' }}
-          justifySelf="center"
+          justifySelf='center'
           alignSelf={{ md: 'center', base: 'flex-end' }}
           src={iphoneImg}
           sx={{
-            animation: `3s ${fadeIn} ease-in`
+            animation: `3s ${fadeIn} ease-in`,
           }}
         />
-        <Box
-          alignSelf={{ md: 'center', sm: 'flex-start' }}
-          color="#fff"
-          order={{ md: '2', sm: '1' }}
-        >
+        <Box alignSelf={{ md: 'center', sm: 'flex-start' }} color='#fff' order={{ md: '2', sm: '1' }}>
           <Heading
-            mb="3.2rem"
-            color="whiteAlpha.900"
-            textAlign="center"
-            letterSpacing=".3rem"
-            fontFamily="Raleway, open-sans"
-            lineHeight="6rem"
+            mb='3.2rem'
+            color='whiteAlpha.900'
+            textAlign='center'
+            letterSpacing='.3rem'
+            fontFamily='Raleway, open-sans'
+            lineHeight='6rem'
             sx={{
-              animation: `1s ${fadeIn} ease-in`
+              animation: `1s ${fadeIn} ease-in`,
             }}
           >
-            <Text fontSize={{ md: '7.4rem', base: '6.2rem' }} display='inline' fontFamily='Playfair Display, serif'>Time&nbsp;</Text>
-            <Text fontSize={{ md: '6.2rem', base: '5.2rem' }} display='inline'>is of the essence.</Text>
+            <Text fontSize={{ md: '7.4rem', base: '6.2rem' }} display='inline' fontFamily='Playfair Display, serif'>
+              Time&nbsp;
+            </Text>
+            <Text fontSize={{ md: '6.2rem', base: '5.2rem' }} display='inline'>
+              is of the essence.
+            </Text>
           </Heading>
           <Text
             sx={{
               animation: `1.5s ${fadeIn} ease-in`,
-              wordSpacing: '.5rem'
+              wordSpacing: '.5rem',
             }}
             px={{ base: '3.2rem' }}
             fontSize={{ md: 24, base: 20 }}
-            textAlign="center"
-            mb="3.2rem"
-            fontFamily="Raleway, open-sans"
+            textAlign='center'
+            mb='3.2rem'
+            fontFamily='Raleway, open-sans'
             fontWeight={500}
-            lineHeight="3.5rem"
+            lineHeight='3.5rem'
           >
-            Whether you're working, studying, or learning just for the heck of
-            it,{' '}
+            Whether you're working, studying, or learning just for the heck of it,{' '}
             <Text
-              display="inline"
+              display='inline'
               sx={{
-                'word-spacing': '.1rem'
+                'word-spacing': '.1rem',
               }}
             >
               <em>12 Hour Study</em>
@@ -102,36 +93,20 @@ const Landing = ({ auth }) => {
             gives you the time of day.
           </Text>
           <Flex
-            align="center"
-            justify="center"
+            align='center'
+            justify='center'
             sx={{
-              animation: `2s ${fadeIn} ease-in`
+              animation: `2s ${fadeIn} ease-in`,
             }}
             gap={8}
           >
-            <Link href="/signup">
-              <Button
-                bg="tint.100"
-                _hover={{ bg: 'tint.200' }}
-                color="primary.500"
-                borderRadius="25px"
-                fontSize={18}
-                py={10}
-                px="5rem"
-              >
+            <Link href='/signup'>
+              <Button bg='tint.100' _hover={{ bg: 'tint.200' }} color='primary.500' borderRadius='25px' fontSize={18} py={10} px='5rem'>
                 Sign Up
               </Button>
             </Link>
-            <Link href="/login">
-              <Button
-                bg="tint.100"
-                _hover={{ bg: 'tint.200' }}
-                color="primary.500"
-                borderRadius="25px"
-                fontSize={18}
-                py={10}
-                px="5rem"
-              >
+            <Link href='/login'>
+              <Button bg='tint.100' _hover={{ bg: 'tint.200' }} color='primary.500' borderRadius='25px' fontSize={18} py={10} px='5rem'>
                 Log In
               </Button>
             </Link>
@@ -139,13 +114,11 @@ const Landing = ({ auth }) => {
         </Box>
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-Landing.propTypes = {
-  auth: PropTypes.object.isRequired
-};
 const mapStateToProps = (state) => ({
-  auth: state.auth
-});
-export default connect(mapStateToProps)(Landing);
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps)(Landing)

@@ -2,6 +2,7 @@ import { Box, useColorModeValue } from '@chakra-ui/react';
 
 const TimerBox = (props) => {
   const timerBgColor = useColorModeValue('gray.400', 'whiteAlpha.100');
+
   return (
     <Box
       py={10}

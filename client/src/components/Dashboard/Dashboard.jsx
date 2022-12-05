@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+
 import { Container, Flex } from '@chakra-ui/react';
-import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+
 import Timer from '../Timer/Timer';
-import store from './../../store/index';
+import LoadingScreen from '../UI/LoadingScreen/LoadingScreen';
 import { getUser } from './../../store/actions/auth';
 import { getUserTimer } from './../../store/actions/timer';
+import store from './../../store/index';
 
 const Dashboard = ({ auth, timer }) => {
   useEffect(() => {
@@ -34,10 +35,6 @@ const Dashboard = ({ auth, timer }) => {
   );
 };
 
-Dashboard.propTypes = {
-  auth: PropTypes.object.isRequired,
-  timer: PropTypes.object.isRequired
-};
 
 const mapStateToProps = (state) => ({
   auth: state.auth,

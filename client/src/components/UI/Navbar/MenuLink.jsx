@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
-import { Link as ReactLink, redirect, useNavigate } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux'
+
 import {
   Button,
   Text,
@@ -11,17 +10,12 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useDisclosure,
-  useColorModeValue,
 } from '@chakra-ui/react'
-
-import { tickingSound, buttonSound } from './../../../utils/audioPlayer.js'
-import timerSlice from '../../../store/slices/timer'
-
-const { setTicking } = timerSlice.actions
+import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const MenuLink = ({ timer, props, to }) => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
 

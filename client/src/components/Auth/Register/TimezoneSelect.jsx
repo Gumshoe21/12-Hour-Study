@@ -1,5 +1,5 @@
-import { Duration, IANAZone, DateTime } from 'luxon'
 import { Select } from '@chakra-ui/react'
+import { Duration, IANAZone, DateTime } from 'luxon'
 
 const timezones = [
   'Africa/Algiers',

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link as ReactLink } from 'react-router-dom';
+
 import { Link } from '@chakra-ui/react';
+import { Link as ReactLink } from 'react-router-dom';
 
 const NavLink = (props) => {
   return (

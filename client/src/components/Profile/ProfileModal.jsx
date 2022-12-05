@@ -1,4 +1,6 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef } from 'react'
+
+import { EditIcon } from '@chakra-ui/icons'
 import {
   Flex,
   Button,
@@ -11,56 +13,53 @@ import {
   ModalCloseButton,
   useDisclosure,
   IconButton,
-  FormControl
-} from '@chakra-ui/react';
-import { connect, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { updateUser } from '../../store/actions/auth';
-import store from '../../store/index';
-import ProfileModalInput from './ProfileModalInput';
-import { EditIcon } from '@chakra-ui/icons';
+  FormControl,
+} from '@chakra-ui/react'
+import { connect, useDispatch } from 'react-redux'
 
-import timerSlice from '../../store/slices/timer';
+import { updateUser } from '../../store/actions/auth'
+import store from '../../store/index'
+import timerSlice from '../../store/slices/timer'
+import ProfileModalInput from './ProfileModalInput'
+
 const ProfileModal = ({ auth }) => {
-  const { setLoading } = timerSlice.actions;
-  const dispatch = useDispatch();
+  const { setLoading } = timerSlice.actions
+  const dispatch = useDispatch()
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  let twitterRef = useRef(null);
-  let githubRef = useRef(null);
+  let twitterRef = useRef(null)
+  let githubRef = useRef(null)
+
   const onSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const twitter = twitterRef.current.value;
-    const github = githubRef.current.value;
+    const twitter = twitterRef.current.value
+    const github = githubRef.current.value
+    await dispatch(setLoading(true))
 
-    await dispatch(setLoading(true));
     try {
       await store.dispatch(
         updateUser({
           auth,
           twitter,
-          github
+          github,
         })
-      );
+      )
     } catch (err) {}
-  };
+  }
+
   return (
     <Fragment>
-      <IconButton
-        icon={<EditIcon w={8} h={8} />}
-        variant="ghost"
-        onClick={onOpen}
-      />
+      <IconButton icon={<EditIcon w={8} h={8} />} variant='ghost' onClick={onOpen} />
 
-      <form visibility="hidden" onSubmit={(e) => onSubmit(e)}>
+      <form visibility='hidden' onSubmit={(e) => onSubmit(e)}>
         <FormControl>
           <Modal
-            size="3xl"
+            size='3xl'
             isOpen={isOpen}
             onClose={() => {
-              onClose();
+              onClose()
             }}
           >
             <ModalOverlay />
@@ -68,36 +67,23 @@ const ProfileModal = ({ auth }) => {
               <ModalHeader>Timer Settings</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Flex flexDirection="column">
-                  <Flex
-                    justifyContent="center"
-                    alignItems="center"
-                    flexDirection="column"
-                    rowGap={4}
-                  >
-                    <ProfileModalInput
-                      defaultValue={auth.user.socials.twitter.url}
-                      name={auth.user.socials.twitter.name}
-                      ref={twitterRef}
-                    />
-                    <ProfileModalInput
-                      defaultValue={auth.user.socials.github.url}
-                      name={auth.user.socials.github.name}
-                      ref={githubRef}
-                    />
+                <Flex flexDirection='column'>
+                  <Flex justifyContent='center' alignItems='center' flexDirection='column' rowGap={4}>
+                    <ProfileModalInput defaultValue={auth.user.socials.twitter.url} name={auth.user.socials.twitter.name} ref={twitterRef} />
+                    <ProfileModalInput defaultValue={auth.user.socials.github.url} name={auth.user.socials.github.name} ref={githubRef} />
                   </Flex>
                 </Flex>
               </ModalBody>
 
               <ModalFooter>
                 <Button
-                  type="submit"
-                  value="Update Timer"
+                  type='submit'
+                  value='Update Timer'
                   onClick={(e) => {
-                    onSubmit(e);
-                    onClose();
+                    onSubmit(e)
+                    onClose()
                   }}
-                  variant="ghost"
+                  variant='ghost'
                 >
                   Save
                 </Button>
@@ -107,14 +93,11 @@ const ProfileModal = ({ auth }) => {
         </FormControl>
       </form>
     </Fragment>
-  );
-};
-ProfileModal.propTypes = {
-  auth: PropTypes.object.isRequired
-};
+  )
+}
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
-});
+  auth: state.auth,
+})
 
-export default connect(mapStateToProps)(ProfileModal);
+export default connect(mapStateToProps)(ProfileModal)

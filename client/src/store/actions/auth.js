@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import authSlice from '../slices/auth';
 import { APIVERSION } from './../../constants/index';
 

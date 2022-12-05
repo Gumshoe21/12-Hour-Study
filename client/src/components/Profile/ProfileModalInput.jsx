@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+
 import { Flex, Input, InputGroup, InputLeftAddon } from '@chakra-ui/react';
 
 const NavbarModalInput = forwardRef((props, ref) => {
@@ -24,4 +25,5 @@ const NavbarModalInput = forwardRef((props, ref) => {
     </Flex>
   );
 });
+
 export default NavbarModalInput;

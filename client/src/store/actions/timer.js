@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import timerSlice from '../slices/timer';
 import { APIVERSION } from './../../constants/index';
 

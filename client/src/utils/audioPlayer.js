@@ -1,4 +1,4 @@
-const sound = (src, volume = 1, loop) => {
+export default function sound(src, volume = 1, loop) {
   let audio = new Audio(src)
   audio.volume = volume
   audio.loop = loop
@@ -52,4 +52,3 @@ const sound = (src, volume = 1, loop) => {
 export const tickingSound = sound('./../../audio/ticking.wav', undefined, true)
 export const buttonSound = sound('./../../audio/button_click.mp3', undefined, false)
 
-export default sound

@@ -1,21 +1,22 @@
 import React, { Fragment, useEffect } from 'react';
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/UI/Navbar/Navbar';
-import Register from './components/Auth/Register/Register';
-import Login from './components/Auth/Login/Login';
+
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
+import Login from './components/Auth/Login/Login';
+import Register from './components/Auth/Register/Register';
 import ResetPassword from './components/Auth/ResetPassword/ResetPassword';
 import Dashboard from './components/Dashboard/Dashboard';
-import Profile from './components/Profile/Profile';
-
-import Report from './components/Reports/Reports';
 import Landing from './components/Landing/Landing';
-import { getUser } from './store/actions/auth';
-import { connect } from 'react-redux';
-import store from './store/index';
-import PropTypes from 'prop-types';
+import Profile from './components/Profile/Profile';
+import Report from './components/Reports/Reports';
 import PrivateRoute from './components/Routing/PrivateRoute';
 import PublicRoute from './components/Routing/PublicRoute';
+import Navbar from './components/UI/Navbar/Navbar';
+import { getUser } from './store/actions/auth';
+import store from './store/index';
 
 const App = ({ auth }) => {
   useEffect(() => {

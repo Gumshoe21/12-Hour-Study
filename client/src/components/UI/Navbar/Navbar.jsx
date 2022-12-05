@@ -1,19 +1,19 @@
-import React, { Fragment, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { useLocation } from 'react-router-dom'
-import { logout } from '../../../store/actions/auth'
+import React, { Fragment } from 'react'
+
+import { Box, Flex, Avatar, HStack, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Container, Spacer } from '@chakra-ui/react'
 import { connect } from 'react-redux'
+import { Link as ReactLink } from 'react-router-dom'
+
+import { logout } from '../../../store/actions/auth'
+import ColorModeToggleButton from '../ColorModeToggleButton/ColorModeToggleButton'
+import Logo from '../Logo/Logo'
+import MenuLink from '../Navbar/MenuLink'
 import NavbarModal from './NavbarModal'
 import NavLink from './NavLink'
-import MenuLink from '../Navbar/MenuLink'
-import Logo from '../Logo/Logo'
-import ColorModeToggleButton from '../ColorModeToggleButton/ColorModeToggleButton'
-import { Link as ReactLink } from 'react-router-dom'
-import { Link } from '@chakra-ui/react'
-import { Box, Flex, Avatar, HStack, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Container, Spacer } from '@chakra-ui/react'
 
 const Navbar = ({ auth, logout }) => {
   const showNav = auth.isAuthenticated ? 'block' : 'none'
+
   const guestLinks = (
     <Fragment>
       <Spacer />
@@ -72,13 +72,9 @@ const Navbar = ({ auth, logout }) => {
   )
 }
 
-Navbar.propTypes = {
-  logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  timer: PropTypes.object.isRequired,
-}
 const mapStateToProps = (state) => ({
   auth: state.auth,
   timer: state.timer,
 })
+
 export default connect(mapStateToProps, { logout })(Navbar)

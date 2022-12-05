@@ -46,9 +46,37 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/**/*.jsx --fix"
   },
   "eslintConfig": {
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "groups": [
+            "builtin",
+            "external",
+            "internal"
+          ],
+          "pathGroups": [
+            {
+              "pattern": "react",
+              "group": "external",
+              "position": "before"
+            }
+          ],
+          "pathGroupsExcludedImportTypes": [
+            "react"
+          ],
+          "newlines-between": "always",
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
     "extends": [
       "react-app",
       "react-app/jest"
@@ -66,5 +94,8 @@
       "last 1 safari version"
     ],
     "proxy": "localhost:8000"
+  },
+  "devDependencies": {
+    "eslint-plugin-import": "^2.26.0"
   }
 }
