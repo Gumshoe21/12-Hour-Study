@@ -6,22 +6,22 @@ import { Global, css } from '@emotion/react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 
-import App from './App'
-import store from './store/index'
-
 import '@fontsource/inter/500.css'
 import '@fontsource/source-sans-pro/400.css'
 import '@fontsource/raleway/400.css'
 import '@fontsource/raleway/500.css'
 import '@fontsource/playfair-display/500.css'
 
+import App from './App'
+import store from './store/index'
 import theme from './theme'
 
 // THEME
 const GlobalStyles = css`
   /*
-    This will hide the focus indicator if the element receives focus  via the mouse,
-    but it will still show up on keyboard focus.
+    Hides the focus indicator if an element receives focus via the cursor; 
+    the focus indicator will still show on keyboard focus. 
+    This is for accessibility reasons.
   */
   .js-focus-visible :focus:not([data-focus-visible-added]) {
     outline: none;
