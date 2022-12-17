@@ -16,7 +16,7 @@ export const getUser = () => async dispatch => {
 	};
 	try {
 		const req = await axios.get(
-			`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`,
+			`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me/`,
 			config,
 		);
 		dispatch(authSlice.actions.getUser(req.data.user));
@@ -38,7 +38,7 @@ export const login =
 		const body = JSON.stringify({ email, password });
 		try {
 			const req = await axios.post(
-				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/login`,
+				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/login/`,
 				body,
 				config,
 			);
@@ -59,7 +59,7 @@ export const logout = () => async dispatch => {
 	};
 	try {
 		const res = await axios.get(
-			`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/logout`,
+			`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/logout/`,
 			config,
 		);
 		dispatch(authSlice.actions.logout());
@@ -85,7 +85,7 @@ export const register =
 		});
 		try {
 			const req = await axios.post(
-				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/signup`,
+				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/signup/`,
 				body,
 				config,
 			);
@@ -121,7 +121,7 @@ export const updateUser =
 		});
 		try {
 			const res = await axios.patch(
-				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/${auth.user._id}`,
+				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/${auth.user._id}/`,
 				body,
 				config,
 			);
@@ -143,7 +143,7 @@ export const forgotPassword =
 		const body = JSON.stringify({ email, API_URL });
 		try {
 			const req = await axios.post(
-				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/forgotPassword`,
+				`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/forgotPassword/`,
 				body,
 				config,
 			);
@@ -175,7 +175,7 @@ export const resetPassword =
 				body,
 				config,
 			);
-			const res = await axios.get(`/api/${APIVERSION}/users/me`);
+			const res = await axios.get(`/api/${APIVERSION}/users/me/`);
 			await dispatch(authSlice.actions.login(res.data));
 		} catch (err) {}
 	};

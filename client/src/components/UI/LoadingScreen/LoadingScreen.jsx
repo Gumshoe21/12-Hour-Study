@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Container, Flex, Text, Heading, Spinner } from '@chakra-ui/react';
+import { Container, Flex, Heading, Spinner } from '@chakra-ui/react';
 
 const LoadingScreen = () => {
   return (
