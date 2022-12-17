@@ -13,7 +13,7 @@ export const getReports = () => async (dispatch) => {
   };
   try {
     const req = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/reports/getCurrentUserReports?modes=session`,
+      `${process.env.REACT_APP_API_URL}/api/${APIVERSION}/reports/getCurrentUserReports?modes=session,shortBreak`,
       config
     );
     dispatch(reportSlice.actions.getReports(req.data));
@@ -68,7 +68,7 @@ export const updateInstances =
 
       try {
         const req = await axios.patch(
-          `${process.env.REACT_APP_API_URL}/api/v1/reports/updateReportInstances/`,
+          `${process.env.REACT_APP_API_URL}/api/v1/reports/updateReportInstances`,
           body,
           config
         );
