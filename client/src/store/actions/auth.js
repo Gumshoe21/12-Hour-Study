@@ -3,13 +3,10 @@ import axios from 'axios'
 import authSlice from '../slices/auth'
 import { APIVERSION } from './../../constants/index'
 
-// Load User
 export const getUser = () => async (dispatch) => {
-  // if the auth token is in the user's localStorage, set the auth token to that
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      //
     },
     withCredentials: true,
     credentials: 'include',
@@ -18,6 +15,7 @@ export const getUser = () => async (dispatch) => {
     const req = await axios.get(`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`, config)
     dispatch(authSlice.actions.getUser(req.data.user))
   } catch (err) {
+    console.log(err)
     dispatch(authSlice.actions.userNotFound())
   }
 }
@@ -45,7 +43,6 @@ export const logout = () => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
-      //
     },
     withCredentials: true,
     credentials: 'include',
