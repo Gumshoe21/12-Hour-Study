@@ -32,13 +32,13 @@ const Landing = ({ auth }) => {
   return (
     <Box>
       <Grid
-        padding={{ md: '3.2rem 6.4rem', base: '0 0 ' }}
+        padding={{ md: '3.2rem 6.4rem', base: '0 0' }}
         templateColumns={{ md: '1fr 1fr', sm: '1fr' }}
         alignItems='center'
         margin='0 auto'
         maxW='130rem'
         h='100vh'
-        gap={{ base: '4rem', md: '0' }}
+        gap={{ base: '3rem', md: '0' }}
       >
         <Image
           w={{ md: '50%', base: '25%' }}
@@ -49,22 +49,22 @@ const Landing = ({ auth }) => {
             animation: `3s ${fadeIn} ease-in`,
           }}
         />
-        <Box alignSelf={{ md: 'center', sm: 'flex-start' }} color='#fff' order={{ md: '2', sm: '1' }}>
+        <Box alignSelf={{ md: 'center', base: 'flex-start' }} color='#fff' order={{ md: '2', sm: '1' }}>
           <Heading
-            mb='3.2rem'
+            mb={{ base: '1rem', md: '3.2rem' }}
             color='whiteAlpha.900'
             textAlign='center'
             letterSpacing='.3rem'
             fontFamily='Raleway, open-sans'
-            lineHeight='6rem'
+            lineHeight={{ base: '4rem', md: '6rem' }}
             sx={{
               animation: `1s ${fadeIn} ease-in`,
             }}
           >
-            <Text fontSize={{ md: '7.4rem', base: '6.2rem' }} display='inline' fontFamily='Playfair Display, serif'>
+            <Text fontSize={{ md: '7.4rem', base: '4.8rem' }} display='inline' fontFamily='Playfair Display, serif'>
               Time&nbsp;
             </Text>
-            <Text fontSize={{ md: '6.2rem', base: '5.2rem' }} display='inline'>
+            <Text fontSize={{ md: '6.2rem', base: '3.6rem' }} display='inline'>
               is of the essence.
             </Text>
           </Heading>
@@ -74,12 +74,12 @@ const Landing = ({ auth }) => {
               wordSpacing: '.5rem',
             }}
             px={{ base: '3.2rem' }}
-            fontSize={{ md: 24, base: 20 }}
+            fontSize={{ base: '1.8rem', md: '2.4rem' }}
             textAlign='center'
             mb='3.2rem'
             fontFamily='Raleway, open-sans'
             fontWeight={500}
-            lineHeight='3.5rem'
+            lineHeight={{ base: '2.75rem', md: '3.5rem' }}
           >
             Whether you're working, studying, or learning just for the heck of it,{' '}
             <Text
@@ -101,12 +101,28 @@ const Landing = ({ auth }) => {
             gap={8}
           >
             <Link href='/signup'>
-              <Button bg='tint.100' _hover={{ bg: 'tint.200' }} color='primary.500' borderRadius='25px' fontSize={18} py={10} px='5rem'>
+              <Button
+                bg='tint.100'
+                _hover={{ bg: 'tint.200' }}
+                color='primary.500'
+                borderRadius='25px'
+                fontSize={18}
+                py={{ base: '2.5rem', md: 10 }}
+                px={{ base: '4rem', md: '5rem' }}
+              >
                 Sign Up
               </Button>
             </Link>
             <Link href='/login'>
-              <Button bg='tint.100' _hover={{ bg: 'tint.200' }} color='primary.500' borderRadius='25px' fontSize={18} py={10} px='5rem'>
+              <Button
+                bg='tint.100'
+                _hover={{ bg: 'tint.200' }}
+                color='primary.500'
+                borderRadius='25px'
+                fontSize={18}
+                py={{ base: '2.5rem', md: 10 }}
+                px={{ base: '4rem', md: '5rem' }}
+              >
                 Log In
               </Button>
             </Link>
