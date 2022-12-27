@@ -44,7 +44,7 @@ const TimeRange = ({ report }) => {
     <ResponsiveCalendar
       theme={theme}
       onClick={(d, e) => {
-        console.log(d, e)
+        // console.log(d, e)
       }}
       data={report.reports.timeRange}
       from={new Date(new Date().getFullYear(), 0, 1)}

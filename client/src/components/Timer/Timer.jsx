@@ -71,7 +71,6 @@ const Timer = ({ timer, auth }) => {
       dispatch(setTicking(false))
 
       if (true) {
-        console.log(instanceTime)
         dispatch(updateInstances({ id, instanceTime, auth }))
       }
     }

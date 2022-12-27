@@ -61,7 +61,6 @@ const RegisterForm = ({ register }) => {
   const handleSelectChange = (e) => {
     let { value } = e.target
     setFormData({ ...formData, timezone: value })
-    console.log(e.target.value)
   }
 
   // Show password functionality.

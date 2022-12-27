@@ -15,7 +15,6 @@ export const getUser = () => async (dispatch) => {
     const req = await axios.get(`${process.env.REACT_APP_API_URL}/api/${APIVERSION}/users/me`, config)
     dispatch(authSlice.actions.getUser(req.data.user))
   } catch (err) {
-    console.log(err)
     dispatch(authSlice.actions.userNotFound())
   }
 }
