@@ -11,7 +11,7 @@ const Register = ({ isAuthenticated }) => {
 
   return (
     <Flex align='center' justifyContent='center' flexDirection='column' height='100vh'>
-      <Flex borderWidth={1} borderColor='gray.400' borderRadius={8} p={20} justifyContent='center' alignItems='center'>
+      <Flex borderWidth='1px' borderColor='gray.400' borderRadius='8px' p='5rem' justifyContent='center' alignItems='center'>
         <RegisterForm />
       </Flex>
     </Flex>

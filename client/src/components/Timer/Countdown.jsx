@@ -7,7 +7,7 @@ const Countdown = (props) => {
   const spinnerColor = useColorModeValue('whiteAlpha.900', 'purple.500')
 
   return (
-    <Flex justifyContent='center' mb={5} fontSize={96}>
+    <Flex justifyContent='center' mb='1.25rem' fontSize='9.6rem'>
       <Box color={countdownFontColor} letterSpacing='.5rem' fontWeight='600' fontFamily='Arial' overflow='hidden' width='100%'>
         {isNaN(props.timeLeft) || !props.timeLeft ? (
           <Spinner size='xl' color={spinnerColor} thickness='4px' />

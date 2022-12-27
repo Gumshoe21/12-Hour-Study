@@ -11,13 +11,12 @@ const Login = ({ isAuthenticated }) => {
 
   return (
     <Flex align='center' flexDirection='column' justifyContent='center' width='100wv' height='100vh'>
-      <Flex borderWidth={1} borderColor='gray.400' borderRadius={8} p={20} justifyContent='center' alignItems='center'>
+      <Flex borderWidth='1px' borderColor='gray.400' borderRadius='8px' p='5rem' justifyContent='center' alignItems='center'>
         <LoginForm />
       </Flex>
     </Flex>
   )
 }
-
 
 const mapStateToProps = (state) => {
   return {

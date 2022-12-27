@@ -11,7 +11,7 @@ import store from './../../../store/index'
 const LoginForm = ({ login, auth, props }) => {
   useEffect(() => {
     store.dispatch(getUser())
-  }, []) 
+  }, [])
 
   const [formData, setFormData] = useState({
     email: '',
@@ -37,29 +37,29 @@ const LoginForm = ({ login, auth, props }) => {
             Email and/or password is wrong.
           </FormErrorMessage>
         )}
-        <VStack spacing={2} mb={4} display='inline-block' maxW='sm'>
-          <Input fontSize={16} type='email' placeholder='Email Address' name='email' value={props.email} height={16} onChange={(e) => onChange(e)} />
+        <VStack spacing='1rem' mb='1rem' display='inline-block' maxW='sm'>
+          <Input fontSize='1.6rem' type='email' placeholder='Email Address' name='email' value={props.email} height='4rem' onChange={(e) => onChange(e)} />
           <Input
-            fontSize={16}
-            width='100%'
+            fontSize='1.6rem'
+            w='100%'
             type='password'
             placeholder='Password'
             name='password'
             value={props.password}
-            height={16}
+            h='4rem'
             onChange={(e) => onChange(e)}
           />
-          <Button h={16} fontSize={16} type='submit' value='Login' width='100%'>
+          <Button h='4rem' fontSize='1.6rem' type='submit' value='Login' width='100%'>
             Log In
           </Button>
         </VStack>
       </FormControl>
-      <Flex direction='column' justify='center' align='center' textDecoration='underline' gap={4}>
+      <Flex direction='column' justify='center' align='center' textDecoration='underline' gap='1rem'>
         <Link to='/signup'>
-          <Text fontSize={16}>Not Registered? Sign Up Here</Text>
+          <Text fontSize='1.6rem'>Not Registered? Sign Up Here</Text>
         </Link>
         <Link to='/forgotpassword'>
-          <Text fontSize={16}>Forgot Your Password?</Text>
+          <Text fontSize='1.6rem'>Forgot Your Password?</Text>
         </Link>
       </Flex>
     </form>

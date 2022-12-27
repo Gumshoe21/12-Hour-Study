@@ -56,7 +56,7 @@ const MenuLink = ({ timer, props, to }) => {
                   onClose()
                   switchTimerMode()
                 }}
-                ml={3}
+                ml='.75rem'
               >
                 Confirm
               </Button>

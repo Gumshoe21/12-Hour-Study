@@ -46,7 +46,6 @@ const NavbarModal = ({ timer, auth }) => {
 
   const handleTickingSoundVolumeSliderChange = async (val) => {
     setTickingSoundVolume(val)
-    console.log(val)
     dispatch(timerSlice.actions.updateTickingSoundVolume(val))
   }
 
@@ -84,7 +83,7 @@ const NavbarModal = ({ timer, auth }) => {
 
   return (
     <Fragment>
-      <IconButton icon={<SettingsIcon w={6} h={6} />} variant='ghost' onClick={onOpen} />
+      <IconButton icon={<SettingsIcon h='1.5rem' w='1.5rem' />} variant='ghost' onClick={onOpen} />
 
       <form visibility='hidden' onSubmit={(e) => onSubmit(e)}>
         <FormControl>

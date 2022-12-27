@@ -78,7 +78,7 @@ const Landing = ({ auth }) => {
             textAlign='center'
             mb='3.2rem'
             fontFamily='Raleway, open-sans'
-            fontWeight={500}
+            fontWeight='500'
             lineHeight={{ base: '2.75rem', md: '3.5rem' }}
           >
             Whether you're working, studying, or learning just for the heck of it,{' '}
@@ -98,7 +98,7 @@ const Landing = ({ auth }) => {
             sx={{
               animation: `2s ${fadeIn} ease-in`,
             }}
-            gap={8}
+            gap='2rem'
           >
             <Link href='/signup'>
               <Button
@@ -106,8 +106,8 @@ const Landing = ({ auth }) => {
                 _hover={{ bg: 'tint.200' }}
                 color='primary.500'
                 borderRadius='25px'
-                fontSize={18}
-                py={{ base: '2.5rem', md: 10 }}
+                fontSize='1.8rem'
+                py='2.5rem'
                 px={{ base: '4rem', md: '5rem' }}
               >
                 Sign Up
@@ -119,8 +119,8 @@ const Landing = ({ auth }) => {
                 _hover={{ bg: 'tint.200' }}
                 color='primary.500'
                 borderRadius='25px'
-                fontSize={18}
-                py={{ base: '2.5rem', md: 10 }}
+                fontSize='1.8rem'
+                py='2.5rem'
                 px={{ base: '4rem', md: '5rem' }}
               >
                 Log In

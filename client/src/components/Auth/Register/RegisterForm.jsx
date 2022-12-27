@@ -72,13 +72,13 @@ const RegisterForm = ({ register }) => {
 
   return (
     <form onSubmit={(e) => onSubmit(e)}>
-      <VStack spacing={2} mb={10} display='inline-block' maxW={{ base: 'sm', md: 'lg' }}>
+      <VStack spacing='1rem' mb='2.5rem' display='inline-block' maxW={{ base: 'sm', md: 'lg' }}>
         <TimezoneSelect handleSelectChange={handleSelectChange} />
         <FormControl isInvalid={hasErrors(usernameErrors)}>
           <Input
             variant='filled'
-            fontSize={16}
-            height={16}
+            fontSize='1.6rem'
+            h='4rem'
             type='username'
             placeholder='Username'
             name='username'
@@ -89,23 +89,32 @@ const RegisterForm = ({ register }) => {
         </FormControl>
 
         <FormControl isInvalid={hasErrors(emailErrors)}>
-          <Input variant='filled' fontSize={16} height={16} type='email' placeholder='Email Address' name='email' value={email} onChange={(e) => onChange(e)} />
+          <Input
+            variant='filled'
+            fontSize='1.6rem'
+            h='4rem'
+            type='email'
+            placeholder='Email Address'
+            name='email'
+            value={email}
+            onChange={(e) => onChange(e)}
+          />
           <ErrorMessage errors={emailErrors} label='Email' />
         </FormControl>
         <FormControl isInvalid={hasErrors(passwordErrors)}>
           <InputGroup size='md'>
             <Input
               variant='filled'
-              fontSize={16}
-              height={16}
-              width='100%'
+              fontSize='1.6rem'
+              h='4rem'
+              w='100%'
               type={show ? 'text' : 'password'}
               placeholder='Password'
               name='password'
               value={password}
               onChange={(e) => onChange(e)}
             />
-            <InputRightElement flex='column' justify='center' align='center' h={8} mt={4} mr={4} width='4rem'>
+            <InputRightElement flex='column' justify='center' align='center' h='2rem' mt='1rem' mr='1rem' w='4rem'>
               <Button h='inherit' size='lg' onClick={handleClick}>
                 {show ? 'Hide' : 'Show'}
               </Button>
@@ -118,8 +127,8 @@ const RegisterForm = ({ register }) => {
         <FormControl isInvalid={hasErrors(passwordConfirmErrors)}>
           <Input
             variant='filled'
-            fontSize={16}
-            height={16}
+            fontSize='1.6rem'
+            height='4rem'
             type='password'
             placeholder='Confirm Password'
             name='passwordConfirm'
@@ -128,13 +137,13 @@ const RegisterForm = ({ register }) => {
           />
           <ErrorMessage errors={passwordConfirmErrors} label='Password Confirmation' />
         </FormControl>
-        <Button disabled={disableSubmit} h={16} fontSize={16} type='submit' value='Login' width='100%'>
+        <Button disabled={disableSubmit} h='4rem' fontSize='1.6rem' type='submit' value='Login' width='100%'>
           Sign Up
         </Button>
       </VStack>
-      <Flex direction='column' justify='center' align='center' gap={4} textDecoration='underline'>
+      <Flex direction='column' justify='center' align='center' gap='1rem' textDecoration='underline'>
         <Link to='/login'>
-          <Text fontSize={16}>Already Registered? Log In Here</Text>
+          <Text fontSize='1.6rem'>Already Registered? Log In Here</Text>
         </Link>
       </Flex>
     </form>

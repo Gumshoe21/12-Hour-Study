@@ -36,7 +36,7 @@ const SwitchTimerButton = ({ props, timer }) => {
                 props.onClick(e)
               }
         }
-        fontSize={14}
+        fontSize='1.4rem'
       >
         {props.text}
       </Button>
@@ -60,7 +60,7 @@ const SwitchTimerButton = ({ props, timer }) => {
                   onClose()
                   props.onClick(e)
                 }}
-                ml={3}
+                ml='0.75'
               >
                 Confirm
               </Button>

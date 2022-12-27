@@ -35,7 +35,7 @@ const Navbar = ({ auth, logout }) => {
 
       <ColorModeToggleButton />
       <Menu size='lg'>
-        <MenuButton display='inline' s={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+        <MenuButton display='inline' s={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW='0'>
           <Avatar size={'md'} borderRadius='none' src={auth.isAuthenticated && auth.user.avatar} />
         </MenuButton>
         <MenuList fontSize='1.4rem' size='lg'>
@@ -60,9 +60,9 @@ const Navbar = ({ auth, logout }) => {
         display: `${showNav}`,
       }}
     >
-      <Box mb={5}>
+      <Box mb='1.25rem'>
         <Flex h='6rem' alignItems='center' justify='center'>
-          <HStack as={'nav'} spacing={{ md: 6, base: 2 }} display='flex'>
+          <HStack as={'nav'} spacing={{ md: '1.5rem', base: '.5rem' }} display='flex'>
             <Logo />
             {<Fragment>{auth.isAuthenticated ? authLinks : guestLinks}</Fragment>}
           </HStack>

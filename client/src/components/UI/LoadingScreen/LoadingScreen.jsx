@@ -9,8 +9,8 @@ const LoadingScreen = () => {
         direction="column"
         align="center"
         justifyContent="center"
-        gap={8}
-        my={40}
+        gap='2rem'
+        my='8rem'
       >
         <Heading size="lg">12 Hour Study</Heading>
         <Spinner size="xl" />

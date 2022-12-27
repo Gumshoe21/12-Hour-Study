@@ -51,7 +51,7 @@ const ProfileModal = ({ auth }) => {
 
   return (
     <Fragment>
-      <IconButton icon={<EditIcon w={8} h={8} />} variant='ghost' onClick={onOpen} />
+      <IconButton icon={<EditIcon w='2rem' h='2rem' />} variant='ghost' onClick={onOpen} />
 
       <form visibility='hidden' onSubmit={(e) => onSubmit(e)}>
         <FormControl>
@@ -68,7 +68,7 @@ const ProfileModal = ({ auth }) => {
               <ModalCloseButton />
               <ModalBody>
                 <Flex flexDirection='column'>
-                  <Flex justifyContent='center' alignItems='center' flexDirection='column' rowGap={4}>
+                  <Flex justifyContent='center' alignItems='center' flexDirection='column' rowGap='1rem'>
                     <ProfileModalInput defaultValue={auth.user.socials.twitter.url} name={auth.user.socials.twitter.name} ref={twitterRef} />
                     <ProfileModalInput defaultValue={auth.user.socials.github.url} name={auth.user.socials.github.name} ref={githubRef} />
                   </Flex>

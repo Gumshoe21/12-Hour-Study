@@ -14,18 +14,18 @@ const Profile = ({ auth }) => {
   return (
     <Container maxW='container.xl' overflow='hidden'>
       <Flex align='center' overflow='hidden' justify='center'>
-        <Box margin='0 auto' minW='39rem' h='full' pt={8} pb={20} px={10} bg={profileBgColor} borderRadius={8}>
-          <Flex flexDirection='column' align='center' justify='center' gap={6}>
+        <Box margin='0 auto' minW='39rem' h='full' pt='2rem' pb='5rem' px='2.5rem' bg={profileBgColor} borderRadius='8px'>
+          <Flex flexDirection='column' align='center' justify='center' gap='1.5rem'>
             <Flex alignSelf='end'>
               <ProfileModal />
             </Flex>
             <WrapItem>
               <Avatar h='128px' w='128px' borderRadius='none' objectFit='contain' name='Matthew Smilansky' src={auth.user.avatar} />
             </WrapItem>
-            <Text fontSize='16px' letterSpacing={2}>
+            <Text fontSize='1.6rem' letterSpacing='2px'>
               Gumshoe21
             </Text>
-            <Flex align='center' justify='center' border='none' gap={8}>
+            <Flex align='center' justify='center' border='none' gap='2rem'>
               {github.url && github.url !== '' && <SocialLink icon={FaGithubSquare} url={`https://www.github.com/${github.url}`} />}
               {twitter.url && twitter.url !== '' && <SocialLink icon={FaTwitterSquare} url={`https://www.twitter.com/${twitter.url}`} />}
             </Flex>

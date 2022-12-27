@@ -4,11 +4,11 @@ const TimerToggleButton = (props) => {
   return (
     <Button
       onClick={props.onClick}
-      fontSize={24}
-      padding={10}
-      letterSpacing={5}
+      fontSize='2.4rem'
+      padding='2.5rem'
+      letterSpacing='1.25px'
       textAlign="center"
-      borderRadius={8}
+      borderRadius='8px'
       size="lg"
       w="15rem"
     >

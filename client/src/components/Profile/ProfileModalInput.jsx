@@ -9,7 +9,7 @@ const NavbarModalInput = forwardRef((props, ref) => {
       alignItems="center"
       direction="column"
       width="100%"
-      gap={8}
+      gap='2rem'
     >
       <InputGroup>
         <InputLeftAddon children={`https://${props.name}.com/`} />

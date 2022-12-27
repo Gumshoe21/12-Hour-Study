@@ -26,23 +26,23 @@ const ForgotPasswordForm = ({ forgotPassword, auth }) => {
     <form onSubmit={(e) => onSubmit(e)}>
       <FormControl isInvalid={emailNotFound}>
         {!emailNotFound ? null : (
-          <FormErrorMessage fontSize={14} mb={4}>
+          <FormErrorMessage fontSize='1.4rem' mb='1rem'>
             Email not found.
           </FormErrorMessage>
         )}
-        <VStack spacing={8} mb={4} display='inline-block' maxW='sm'>
-          <Input fontSize={16} type='email' placeholder='Email Address' name='email' value={email} height={16} onChange={(e) => onChange(e)} />
-          <Button h={16} fontSize={16} type='submit' value='Forogt Password' width='100%'>
+        <VStack spacing='2rem' mb='1rem' display='inline-block' maxW='sm'>
+          <Input fontSize='1.6rem' type='email' placeholder='Email Address' name='email' value={email} height='4rem' onChange={(e) => onChange(e)} />
+          <Button h='4rem' fontSize='1.6rem' type='submit' value='Forogt Password' width='100%'>
             Submit
           </Button>
         </VStack>
       </FormControl>
-      <Flex direction='column' justify='center' align='center' gap={4} textDecoration='underline'>
+      <Flex direction='column' justify='center' align='center' gap='1rem' textDecoration='underline'>
         <Link to='/login'>
-          <Text fontSize={16}>Back to Log In</Text>
+          <Text fontSize='1.6rem'>Back to Log In</Text>
         </Link>
         <Link to='/signup'>
-          <Text fontSize={16}>Not Registered? Sign Up Here</Text>
+          <Text fontSize='1.6rem'>Not Registered? Sign Up Here</Text>
         </Link>
       </Flex>
     </form>

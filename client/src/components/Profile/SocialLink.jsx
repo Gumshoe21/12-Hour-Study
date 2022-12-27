@@ -5,7 +5,7 @@ import { Link, Icon } from '@chakra-ui/react';
 const SocialLink = (props) => {
   return (
     <Link href={props.url} isExternal>
-      <Icon w={8} h={8} as={props.icon} />
+      <Icon w='2rem' h='2rem' as={props.icon} />
     </Link>
   );
 };

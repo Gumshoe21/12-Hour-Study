@@ -8,9 +8,9 @@ const Round = ({ timer, props }) => {
   const roundIndicatorColor = useColorModeValue('whiteAlpha.900', 'whiteAlpha.900')
 
   return (
-    <Flex direction='column' mb={8}>
+    <Flex direction='column' mb='2rem'>
       <Box>
-        <Text fontSize={18} color={roundIndicatorColor} fontWeight='700'>
+        <Text fontSize='1.8rem' color={roundIndicatorColor} fontWeight='700'>
           Rounds Until Long Break:
         </Text>
       </Box>

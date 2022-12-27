@@ -28,18 +28,18 @@ const ResetPasswordForm = ({ resetPassword, auth, props }) => {
   return (
     <form onSubmit={(e) => onSubmit(e)}>
       <FormControl>
-        <VStack spacing={2} mb={4} display='inline-block' maxW='sm'>
-          <Input fontSize={16} type='password' placeholder='New Password' name='password' value={props.password} height={16} onChange={(e) => onChange(e)} />
+        <VStack spacing='2rem' mb='1rem' display='inline-block' maxW='sm'>
+          <Input fontSize='1.6rem' type='password' placeholder='New Password' name='password' value={props.password} height='4rem' onChange={(e) => onChange(e)} />
           <Input
-            fontSize={16}
+            fontSize='1.6rem'
             type='password'
             placeholder='Confirm New Password'
             name='passwordConfirm'
             value={props.password}
-            height={16}
+            h='4rem'
             onChange={(e) => onChange(e)}
           />
-          <Button h={16} fontSize={16} type='submit' value='Reset Password' width='100%'>
+          <Button h='4rem' fontSize='1.6rem' type='submit' value='Reset Password' width='100%'>
             Reset Password
           </Button>
         </VStack>
