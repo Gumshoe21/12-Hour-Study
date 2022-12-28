@@ -4,7 +4,7 @@ import { keyframes, Flex, Text, Grid, Heading, Box, Image, Button, Link } from '
 import { connect } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
-import iphoneImg from './iphone.png'
+import iphoneImg from './iPhone.png'
 
 const Landing = ({ auth }) => {
   /*
