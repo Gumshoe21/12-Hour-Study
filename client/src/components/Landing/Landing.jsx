@@ -4,7 +4,7 @@ import { keyframes, Flex, Text, Grid, Heading, Box, Image, Button, Link } from '
 import { connect } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
-import iphoneImg from './iPhone.png'
+import iphoneImg from './iphone.png'
 
 const Landing = ({ auth }) => {
   /*
@@ -45,6 +45,7 @@ const Landing = ({ auth }) => {
           justifySelf='center'
           alignSelf={{ md: 'center', base: 'flex-end' }}
           src={iphoneImg}
+          alt='iPhone running 12 Hour Study app'
           sx={{
             animation: `3s ${fadeIn} ease-in`,
           }}
@@ -85,7 +86,7 @@ const Landing = ({ auth }) => {
             <Text
               display='inline'
               sx={{
-                'word-spacing': '.1rem',
+                wordSpacing: '.1rem',
               }}
             >
               <em>12 Hour Study</em>

@@ -49,6 +49,5 @@ export default function sound(src, volume = 1, loop) {
   }
 }
 
-export const tickingSound = sound('./../../audio/ticking.wav', undefined, true)
+export const tickingSound = sound('./../../audio/ticking.mp3', undefined, true)
 export const buttonSound = sound('./../../audio/button_click.mp3', undefined, false)
-

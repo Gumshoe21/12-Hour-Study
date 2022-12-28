@@ -118,7 +118,7 @@ const BarGraph = ({ report }) => {
             <Text>{formatTime(value)}</Text>
           </Flex>
         )}
-        onClick={(d, e) => {}}// console.log(d, e)
+        onClick={(d, e) => {}} // console.log(d, e)
       />
     )
   )

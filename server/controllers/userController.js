@@ -54,7 +54,6 @@ exports.getUser = catchAsync(async (req, res, _next) => {
       user,
     })
   } catch (err) {
-    console.log(err)
     res.status(500).send('Server Error')
   }
 })
