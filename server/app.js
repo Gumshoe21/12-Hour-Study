@@ -15,7 +15,6 @@ const timerRouter = require('./routes/timerRoutes')
 const userRouter = require('./routes/userRoutes')
 const reportRouter = require('./routes/reportRoutes')
 
-
 const app = express()
 app.enable('trust proxy')
 app.use(
