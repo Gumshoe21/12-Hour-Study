@@ -1,6 +1,6 @@
 # 12 Hour Study
 
-![Homepage for 12 12 Hour Study at https://12hourstudy.netlify.app](./readme/homepage.png)
+![Homepage for 12 Hour Study at https://12hourstudy.netlify.app](./readme/homepage.png)
 
 ## Live Demo
 
